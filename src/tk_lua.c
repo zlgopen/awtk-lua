@@ -4043,6 +4043,41 @@ static int wrap_widget_equal(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_set_self_layout_params(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  char* x = (char*)luaL_checkstring(L, 2);
+  char* y = (char*)luaL_checkstring(L, 3);
+  char* w = (char*)luaL_checkstring(L, 4);
+  char* h = (char*)luaL_checkstring(L, 5);
+  ret = (ret_t)widget_set_self_layout_params(widget, x, y, w, h);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_widget_set_children_layout_params(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  char* params = (char*)luaL_checkstring(L, 2);
+  ret = (ret_t)widget_set_children_layout_params(widget, params);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_widget_layout(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)widget_layout(widget);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_widget_destroy(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -4083,6 +4118,9 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
   {"get_type", wrap_widget_get_type},
   {"clone", wrap_widget_clone},
   {"equal", wrap_widget_equal},
+  {"set_self_layout_params", wrap_widget_set_self_layout_params},
+  {"set_children_layout_params", wrap_widget_set_children_layout_params},
+  {"layout", wrap_widget_layout},
   {"destroy", wrap_widget_destroy},
   {NULL, NULL}
 };
