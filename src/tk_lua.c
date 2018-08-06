@@ -4453,8 +4453,296 @@ static void value_type_t_init(lua_State* L) {
 
 }
 
+static int wrap_value_set_bool(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  bool_t value = (bool_t)lua_toboolean(L, 2);
+  ret = (value_t*)value_set_bool(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_bool(lua_State* L) {
+  bool_t ret = 0;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (bool_t)value_bool(v);
+
+  lua_pushboolean(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_value_set_int8(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  int8_t value = (int8_t)luaL_checkinteger(L, 2);
+  ret = (value_t*)value_set_int8(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_int8(lua_State* L) {
+  int8_t ret = 0;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (int8_t)value_int8(v);
+
+  lua_pushinteger(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_value_set_uint8(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  uint8_t value = (uint8_t)luaL_checkinteger(L, 2);
+  ret = (value_t*)value_set_uint8(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_uint8(lua_State* L) {
+  int8_t ret = 0;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (int8_t)value_uint8(v);
+
+  lua_pushinteger(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_value_set_int16(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  int16_t value = (int16_t)luaL_checkinteger(L, 2);
+  ret = (value_t*)value_set_int16(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_int16(lua_State* L) {
+  int16_t ret = 0;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (int16_t)value_int16(v);
+
+  lua_pushinteger(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_value_set_uint16(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  uint16_t value = (uint16_t)luaL_checkinteger(L, 2);
+  ret = (value_t*)value_set_uint16(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_uint16(lua_State* L) {
+  uint16_t ret = 0;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (uint16_t)value_uint16(v);
+
+  lua_pushinteger(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_value_set_int32(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  int32_t value = (int32_t)luaL_checkinteger(L, 2);
+  ret = (value_t*)value_set_int32(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_int32(lua_State* L) {
+  int32_t ret = 0;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (int32_t)value_int32(v);
+
+  lua_pushinteger(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_value_set_uint32(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  uint32_t value = (uint32_t)luaL_checkinteger(L, 2);
+  ret = (value_t*)value_set_uint32(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_set_int64(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  int64_t value = (int64_t)luaL_checkinteger(L, 2);
+  ret = (value_t*)value_set_int64(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_int64(lua_State* L) {
+  int64_t ret = 0;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (int64_t)value_int64(v);
+
+  lua_pushinteger(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_value_set_uint64(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  uint64_t value = (uint64_t)luaL_checkinteger(L, 2);
+  ret = (value_t*)value_set_uint64(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_uint64(lua_State* L) {
+  uint64_t ret = 0;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (uint64_t)value_uint64(v);
+
+  lua_pushinteger(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_value_set_float(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  float value = (float)luaL_checknumber(L, 2);
+  ret = (value_t*)value_set_float(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_float(lua_State* L) {
+  float ret = 0;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (float)value_float(v);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_value_set_double(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  double value = (double)luaL_checknumber(L, 2);
+  ret = (value_t*)value_set_double(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_double(lua_State* L) {
+  double ret = 0;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (double)value_double(v);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_value_set_str(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  char* value = (char*)luaL_checkstring(L, 2);
+  ret = (value_t*)value_set_str(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_str(lua_State* L) {
+  const char* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (const char*)value_str(v);
+
+  lua_pushstring(L,(char*)(ret));
+
+  return 1;
+}
+
+static int wrap_value_is_null(lua_State* L) {
+  bool_t ret = 0;
+  value_t* value = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (bool_t)value_is_null(value);
+
+  lua_pushboolean(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_value_int(lua_State* L) {
+  int ret = 0;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (int)value_int(v);
+
+  lua_pushinteger(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_value_set_int(lua_State* L) {
+  value_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  int32_t value = (int32_t)luaL_checkinteger(L, 2);
+  ret = (value_t*)value_set_int(v, value);
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_create(lua_State* L) {
+  value_t* ret = NULL;
+  ret = (value_t*)value_create();
+
+  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
+}
+
+static int wrap_value_destroy(lua_State* L) {
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  (void)value_destroy(v);
+
+  return 0;
+}
+
 
 static const struct luaL_Reg value_t_member_funcs[] = {
+  {"set_bool", wrap_value_set_bool},
+  {"bool", wrap_value_bool},
+  {"set_int8", wrap_value_set_int8},
+  {"int8", wrap_value_int8},
+  {"set_uint8", wrap_value_set_uint8},
+  {"uint8", wrap_value_uint8},
+  {"set_int16", wrap_value_set_int16},
+  {"int16", wrap_value_int16},
+  {"set_uint16", wrap_value_set_uint16},
+  {"uint16", wrap_value_uint16},
+  {"set_int32", wrap_value_set_int32},
+  {"int32", wrap_value_int32},
+  {"set_uint32", wrap_value_set_uint32},
+  {"set_int64", wrap_value_set_int64},
+  {"int64", wrap_value_int64},
+  {"set_uint64", wrap_value_set_uint64},
+  {"uint64", wrap_value_uint64},
+  {"set_float", wrap_value_set_float},
+  {"float", wrap_value_float},
+  {"set_double", wrap_value_set_double},
+  {"double", wrap_value_double},
+  {"set_str", wrap_value_set_str},
+  {"str", wrap_value_str},
+  {"is_null", wrap_value_is_null},
+  {"int", wrap_value_int},
+  {"set_int", wrap_value_set_int},
+  {"destroy", wrap_value_destroy},
   {NULL, NULL}
 };
 
@@ -4463,8 +4751,15 @@ static int wrap_value_t_set_prop(lua_State* L) {
   const char* name = (const char*)luaL_checkstring(L, 2);
   (void)obj;
   (void)name;
+  if(strcmp(name, "type") == 0) {
+    int8_t type = (int8_t)luaL_checkinteger(L, 3);
+    obj->type = type;
+    return 1;
+  }
+  else {
     printf("%s: not supported %s\n", __FUNCTION__, name);
     return 0;
+  }
 }
 
 static int wrap_value_t_get_prop(lua_State* L) {
@@ -4478,6 +4773,11 @@ static int wrap_value_t_get_prop(lua_State* L) {
     lua_pushcfunction(L, ret->func);
     return 1;
   }
+  if(strcmp(name, "type") == 0) {
+    lua_pushinteger(L,(lua_Integer)(obj->type));
+
+  return 1;
+  }
   else {
     printf("%s: not supported %s\n", __FUNCTION__, name);
     return 0;
@@ -4486,6 +4786,7 @@ static int wrap_value_t_get_prop(lua_State* L) {
 
 static void value_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
+    {"create", wrap_value_create},
     {NULL, NULL}
   };
 
