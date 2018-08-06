@@ -673,6 +673,17 @@ static int wrap_combo_box_append_option(lua_State* L) {
   return 1;
 }
 
+static int wrap_combo_box_set_options(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  char* options = (char*)luaL_checkstring(L, 2);
+  ret = (ret_t)combo_box_set_options(widget, options);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_combo_box_get_value(lua_State* L) {
   int32_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -700,6 +711,7 @@ static const struct luaL_Reg combo_box_t_member_funcs[] = {
   {"count_options", wrap_combo_box_count_options},
   {"set_selected_index", wrap_combo_box_set_selected_index},
   {"append_option", wrap_combo_box_append_option},
+  {"set_options", wrap_combo_box_set_options},
   {"get_value", wrap_combo_box_get_value},
   {"get_text", wrap_combo_box_get_text},
   {NULL, NULL}
