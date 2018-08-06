@@ -201,8 +201,9 @@ class LuaGenerator {
       str += `    printf("${p.name} is readonly\\n");\n`;
       str += `    return 0;\n`;
     } else {
-      str += this.genDecl(2, p.type, p.name);
+      str += '  ' + this.genDecl(2, p.type, p.name);
       str += `    obj->${p.name} = ${p.name};\n`;
+      str += `    return 1;\n`;
     }
     str += '  }\n';
 
@@ -249,7 +250,7 @@ class LuaGenerator {
       str += `  else {\n`;
     }
     if (cls.parent) {
-      str += `  return wrap_${cls.parent}_set_prop(L);\n`;
+      str += `    return wrap_${cls.parent}_set_prop(L);\n`;
     } else if (hasSetProps) {
       str += `    printf("%s: not supported %s\\n", __FUNCTION__, name);\n`;
       str += `    return 0;\n`;
@@ -511,7 +512,7 @@ class LuaGenerator {
         iter.methods = iter.methods.filter(isScriptable);
       }
 
-      if (iter.properties) {
+      if (iter.properties && iter.properties.length) {
         iter.properties = iter.properties.filter(isScriptable);
       }
     })
