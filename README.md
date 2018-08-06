@@ -29,6 +29,6 @@ scons
 ## 四、运行
 
 ```
-./bin/runLua demos/demo1.lua
+./bin/runLua demos/xxxx.lua
 ```
 
