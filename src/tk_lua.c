@@ -1177,6 +1177,26 @@ static int wrap_edit_create(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/edit_t/widget_t", "awtk.edit_t");
 }
 
+static int wrap_edit_get_int(lua_State* L) {
+  int32_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (int32_t)edit_get_int(widget);
+
+  lua_pushinteger(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_edit_get_double(lua_State* L) {
+  double ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (double)edit_get_double(widget);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_edit_set_text_limit(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -1272,6 +1292,8 @@ static int wrap_edit_set_password_visible(lua_State* L) {
 
 
 static const struct luaL_Reg edit_t_member_funcs[] = {
+  {"get_int", wrap_edit_get_int},
+  {"get_double", wrap_edit_get_double},
   {"set_text_limit", wrap_edit_set_text_limit},
   {"set_int_limit", wrap_edit_set_int_limit},
   {"set_float_limit", wrap_edit_set_float_limit},
@@ -3968,6 +3990,18 @@ static void slider_t_init(lua_State* L) {
   luaL_openlib(L, "Slider", static_funcs, 0);
   lua_settop(L, 0);
 }
+static int wrap_spin_box_create(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* parent = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  xy_t x = (xy_t)luaL_checkinteger(L, 2);
+  xy_t y = (xy_t)luaL_checkinteger(L, 3);
+  wh_t w = (wh_t)luaL_checkinteger(L, 4);
+  wh_t h = (wh_t)luaL_checkinteger(L, 5);
+  ret = (widget_t*)spin_box_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/spin_box_t/edit_t/widget_t", "awtk.spin_box_t");
+}
+
 
 static const struct luaL_Reg spin_box_t_member_funcs[] = {
   {NULL, NULL}
@@ -3978,7 +4012,7 @@ static int wrap_spin_box_t_set_prop(lua_State* L) {
   const char* name = (const char*)luaL_checkstring(L, 2);
   (void)obj;
   (void)name;
-    return wrap_widget_t_set_prop(L);
+    return wrap_edit_t_set_prop(L);
     printf("%s: not supported %s\n", __FUNCTION__, name);
     return 0;
 }
@@ -3995,12 +4029,13 @@ static int wrap_spin_box_t_get_prop(lua_State* L) {
     return 1;
   }
   else {
-    return wrap_widget_t_get_prop(L);
+    return wrap_edit_t_get_prop(L);
   }
 }
 
 static void spin_box_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
+    {"create", wrap_spin_box_create},
     {NULL, NULL}
   };
 
