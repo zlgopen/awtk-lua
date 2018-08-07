@@ -1,7 +1,3 @@
-function on_click(ctx, evt) 
-  print('on_click');
-end
-
 function application_init()
   local win = Window.create(NULL, 0, 0, 0, 0);
   local label = Label.create(win, 0, 0, 0, 0);

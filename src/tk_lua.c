@@ -43,6 +43,7 @@
 #include "base/widget_consts.h"
 #include "base/widget.h"
 #include "base/window.h"
+#include "ext_widgets/ext_widgets.h"
 #include "rich_text/rich_text.h"
 
 #include "custom.c"
@@ -130,7 +131,18 @@ static int wrap_window_t_set_prop(lua_State* L);
 static int wrap_rich_text_t_get_prop(lua_State* L);
 static int wrap_rich_text_t_set_prop(lua_State* L);
 
+static int wrap_tk_ext_widgets_init(lua_State* L) {
+  ret_t ret = 0;
+  ret = (ret_t)tk_ext_widgets_init();
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static void globals_init(lua_State* L) {
+  lua_pushcfunction(L, wrap_tk_ext_widgets_init);
+  lua_setglobal(L, "tk_ext_widgets_init");
   lua_pushcfunction(L, to_str);
   lua_setglobal(L, "to_str");
   lua_pushcfunction(L, to_wstr);
@@ -5569,8 +5581,20 @@ static int wrap_rich_text_create(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/rich_text_t/widget_t", "awtk.rich_text_t");
 }
 
+static int wrap_rich_text_set_text(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  char* text = (char*)luaL_checkstring(L, 2);
+  ret = (ret_t)rich_text_set_text(widget, text);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 
 static const struct luaL_Reg rich_text_t_member_funcs[] = {
+  {"set_text", wrap_rich_text_set_text},
   {NULL, NULL}
 };
 
