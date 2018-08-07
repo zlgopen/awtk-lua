@@ -13,7 +13,7 @@ function isStatic(obj) {
 }
 
 function isReadOnly(obj) {
-  return obj.annotation && obj.annotation.readonly;
+  return obj.annotation && !obj.annotation.writable;
 }
 
 function isPrivate(obj) {
@@ -202,7 +202,7 @@ class LuaGenerator {
       str += `  else if(strcmp(name, "${p.name}") == 0) {\n`;
     }
     if (p.readonly) {
-      str += `    printf("${p.name} is readonly\\n");\n`;
+      str += `    log_debug("${p.name} is readonly\\n");\n`;
       str += `    return 0;\n`;
     } else {
       str += '  ' + this.genDecl(2, p.type, p.name);
@@ -256,14 +256,14 @@ class LuaGenerator {
     if (cls.parent) {
       str += `    return wrap_${cls.parent}_set_prop(L);\n`;
     } else if (hasSetProps) {
-      str += `    printf("%s: not supported %s\\n", __FUNCTION__, name);\n`;
+      str += `    log_debug("%s: not supported %s\\n", __FUNCTION__, name);\n`;
       str += `    return 0;\n`;
     }
     if (hasSetProps) {
       str += `  }\n`;
-    } else {
-      str += `    printf("%s: not supported %s\\n", __FUNCTION__, name);\n`;
-      str += `    return 0;\n`;
+    } else if(!cls.parent) {
+      str += `  log_debug("%s: not supported %s\\n", __FUNCTION__, name);\n`;
+      str += `  return 0;\n`;
     }
 
     str += `}\n\n`;
@@ -303,7 +303,7 @@ class LuaGenerator {
         str += `      return tk_newuserdata(L, (void*)child, "/widget_t", "awtk.widget_t");\n`;
         str += `    }\n`;
       }
-      str += `    printf("%s: not supported %s\\n", __FUNCTION__, name);\n`;
+      str += `    log_debug("%s: not supported %s\\n", __FUNCTION__, name);\n`;
       str += `    return 0;\n`;
     }
     str += `  }\n`;
