@@ -28,6 +28,10 @@ function isConstructor(obj) {
   return obj.annotation && obj.annotation.constructor === true;
 }
 
+function isEnumString(obj) {
+  return obj.annotation && obj.annotation.string === true;
+}
+
 class LuaGenerator {
   constructor() {
     this.result = '';
@@ -388,6 +392,7 @@ class LuaGenerator {
 
   genEnum(cls) {
     let str = `static void ${cls.name}_init(lua_State* L) {\n`;
+    let isConstString = isEnumString(cls);
 
     str += '  lua_newtable(L);\n';
     str += `  lua_setglobal(L, "${this.toLuaClassName(cls.name)}");\n`;
@@ -398,7 +403,11 @@ class LuaGenerator {
       const name = iter.name.replace(clsNamePrefix, "");
 
       str += `  lua_pushstring(L, "${name}");\n`
-      str += `  lua_pushinteger(L, ${iter.name});\n`;
+      if(isConstString) {
+        str += `  lua_pushstring(L, ${iter.name});\n`;
+      } else {
+        str += `  lua_pushinteger(L, ${iter.name});\n`;
+      }
       str += `  lua_settable(L, -3); \n\n`;
     });
 

@@ -4926,6 +4926,480 @@ static void view_t_init(lua_State* L) {
   luaL_openlib(L, "View", static_funcs, 0);
   lua_settop(L, 0);
 }
+static void widget_prop_t_init(lua_State* L) {
+  lua_newtable(L);
+  lua_setglobal(L, "WidgetProp");
+  lua_getglobal(L, "WidgetProp");
+
+  lua_pushstring(L, "X");
+  lua_pushstring(L, WIDGET_PROP_X);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "Y");
+  lua_pushstring(L, WIDGET_PROP_Y);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "W");
+  lua_pushstring(L, WIDGET_PROP_W);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "H");
+  lua_pushstring(L, WIDGET_PROP_H);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "MIN_W");
+  lua_pushstring(L, WIDGET_PROP_MIN_W);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "MAX_W");
+  lua_pushstring(L, WIDGET_PROP_MAX_W);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "LAYOUT_W");
+  lua_pushstring(L, WIDGET_PROP_LAYOUT_W);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "LAYOUT_H");
+  lua_pushstring(L, WIDGET_PROP_LAYOUT_H);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "VIRTUAL_W");
+  lua_pushstring(L, WIDGET_PROP_VIRTUAL_W);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "VIRTUAL_H");
+  lua_pushstring(L, WIDGET_PROP_VIRTUAL_H);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "NAME");
+  lua_pushstring(L, WIDGET_PROP_NAME);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "VALUE");
+  lua_pushstring(L, WIDGET_PROP_VALUE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "TEXT");
+  lua_pushstring(L, WIDGET_PROP_TEXT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "TR_TEXT");
+  lua_pushstring(L, WIDGET_PROP_TR_TEXT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STYLE");
+  lua_pushstring(L, WIDGET_PROP_STYLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ENABLE");
+  lua_pushstring(L, WIDGET_PROP_ENABLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "MARGIN");
+  lua_pushstring(L, WIDGET_PROP_MARGIN);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SPACING");
+  lua_pushstring(L, WIDGET_PROP_SPACING);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "LEFT_MARGIN");
+  lua_pushstring(L, WIDGET_PROP_LEFT_MARGIN);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "RIGHT_MARGIN");
+  lua_pushstring(L, WIDGET_PROP_RIGHT_MARGIN);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "TOP_MARGIN");
+  lua_pushstring(L, WIDGET_PROP_TOP_MARGIN);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "BOTTOM_MARGIN");
+  lua_pushstring(L, WIDGET_PROP_BOTTOM_MARGIN);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STEP");
+  lua_pushstring(L, WIDGET_PROP_STEP);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "VISIBLE");
+  lua_pushstring(L, WIDGET_PROP_VISIBLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "VISIBLE");
+  lua_pushstring(L, WIDGET_PROP_VISIBLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "OPEN_ANIM_HINT");
+  lua_pushstring(L, WIDGET_PROP_OPEN_ANIM_HINT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "CLOSE_ANIM_HINT");
+  lua_pushstring(L, WIDGET_PROP_CLOSE_ANIM_HINT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "MIN");
+  lua_pushstring(L, WIDGET_PROP_MIN);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "MAX");
+  lua_pushstring(L, WIDGET_PROP_MAX);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "TIPS");
+  lua_pushstring(L, WIDGET_PROP_TIPS);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "INPUT_TYPE");
+  lua_pushstring(L, WIDGET_PROP_INPUT_TYPE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "READONLY");
+  lua_pushstring(L, WIDGET_PROP_READONLY);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "PASSWORD_VISIBLE");
+  lua_pushstring(L, WIDGET_PROP_PASSWORD_VISIBLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ACTIVE");
+  lua_pushstring(L, WIDGET_PROP_ACTIVE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "VERTICAL");
+  lua_pushstring(L, WIDGET_PROP_VERTICAL);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SHOW_TEXT");
+  lua_pushstring(L, WIDGET_PROP_SHOW_TEXT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "XOFFSET");
+  lua_pushstring(L, WIDGET_PROP_XOFFSET);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "YOFFSET");
+  lua_pushstring(L, WIDGET_PROP_YOFFSET);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "AUTO_PLAY");
+  lua_pushstring(L, WIDGET_PROP_AUTO_PLAY);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "AUTO_FIX");
+  lua_pushstring(L, WIDGET_PROP_AUTO_FIX);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "X_MIN");
+  lua_pushstring(L, WIDGET_PROP_X_MIN);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "X_MAX");
+  lua_pushstring(L, WIDGET_PROP_X_MAX);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "Y_MIN");
+  lua_pushstring(L, WIDGET_PROP_Y_MIN);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "Y_MAX");
+  lua_pushstring(L, WIDGET_PROP_Y_MAX);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "MAX");
+  lua_pushstring(L, WIDGET_PROP_MAX);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ROW");
+  lua_pushstring(L, WIDGET_PROP_ROW);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "THEME");
+  lua_pushstring(L, WIDGET_PROP_THEME);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SCRIPT");
+  lua_pushstring(L, WIDGET_PROP_SCRIPT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ITEM_WIDTH");
+  lua_pushstring(L, WIDGET_PROP_ITEM_WIDTH);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ITEM_HEIGHT");
+  lua_pushstring(L, WIDGET_PROP_ITEM_HEIGHT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "DEFAULT_ITEM_HEIGHT");
+  lua_pushstring(L, WIDGET_PROP_DEFAULT_ITEM_HEIGHT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "XSLIDABLE");
+  lua_pushstring(L, WIDGET_PROP_XSLIDABLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "YSLIDABLE");
+  lua_pushstring(L, WIDGET_PROP_YSLIDABLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "REPEAT");
+  lua_pushstring(L, WIDGET_PROP_REPEAT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ANIMATABLE");
+  lua_pushstring(L, WIDGET_PROP_ANIMATABLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "AUTO_HIDE_SCROLL_BAR");
+  lua_pushstring(L, WIDGET_PROP_AUTO_HIDE_SCROLL_BAR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "IMAGE");
+  lua_pushstring(L, WIDGET_PROP_IMAGE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "DRAW_TYPE");
+  lua_pushstring(L, WIDGET_PROP_DRAW_TYPE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SELECTABLE");
+  lua_pushstring(L, WIDGET_PROP_SELECTABLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "CLICKABLE");
+  lua_pushstring(L, WIDGET_PROP_CLICKABLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SCALE_X");
+  lua_pushstring(L, WIDGET_PROP_SCALE_X);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SCALE_Y");
+  lua_pushstring(L, WIDGET_PROP_SCALE_Y);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ANCHOR_X");
+  lua_pushstring(L, WIDGET_PROP_ANCHOR_X);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ANCHOR_Y");
+  lua_pushstring(L, WIDGET_PROP_ANCHOR_Y);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ROTATION");
+  lua_pushstring(L, WIDGET_PROP_ROTATION);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SUB_THEME");
+  lua_pushstring(L, WIDGET_PROP_SUB_THEME);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "COMPACT");
+  lua_pushstring(L, WIDGET_PROP_COMPACT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ICON");
+  lua_pushstring(L, WIDGET_PROP_ICON);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "OPTIONS");
+  lua_pushstring(L, WIDGET_PROP_OPTIONS);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SELECTED");
+  lua_pushstring(L, WIDGET_PROP_SELECTED);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ACTIVE_ICON");
+  lua_pushstring(L, WIDGET_PROP_ACTIVE_ICON);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "OPEN_WINDOW");
+  lua_pushstring(L, WIDGET_PROP_OPEN_WINDOW);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SELECTED_INDEX");
+  lua_pushstring(L, WIDGET_PROP_SELECTED_INDEX);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "CLOSE_WHEN_CLICK");
+  lua_pushstring(L, WIDGET_PROP_CLOSE_WHEN_CLICK);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "CLOSE_WHEN_CLICK_OUTSIDE");
+  lua_pushstring(L, WIDGET_PROP_CLOSE_WHEN_CLICK_OUTSIDE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "LINE_GAP");
+  lua_pushstring(L, WIDGET_PROP_LINE_GAP);
+  lua_settable(L, -3); 
+
+}
+
+static void widget_type_t_init(lua_State* L) {
+  lua_newtable(L);
+  lua_setglobal(L, "WidgetType");
+  lua_getglobal(L, "WidgetType");
+
+  lua_pushstring(L, "NONE");
+  lua_pushstring(L, WIDGET_TYPE_NONE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "WINDOW_MANAGER");
+  lua_pushstring(L, WIDGET_TYPE_WINDOW_MANAGER);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "NORMAL_WINDOW");
+  lua_pushstring(L, WIDGET_TYPE_NORMAL_WINDOW);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "TOOL_BAR");
+  lua_pushstring(L, WIDGET_TYPE_TOOL_BAR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "DIALOG");
+  lua_pushstring(L, WIDGET_TYPE_DIALOG);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "POPUP");
+  lua_pushstring(L, WIDGET_TYPE_POPUP);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SPRITE");
+  lua_pushstring(L, WIDGET_TYPE_SPRITE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "KEYBOARD");
+  lua_pushstring(L, WIDGET_TYPE_KEYBOARD);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "DND");
+  lua_pushstring(L, WIDGET_TYPE_DND);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "LABEL");
+  lua_pushstring(L, WIDGET_TYPE_LABEL);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "BUTTON");
+  lua_pushstring(L, WIDGET_TYPE_BUTTON);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "IMAGE");
+  lua_pushstring(L, WIDGET_TYPE_IMAGE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "EDIT");
+  lua_pushstring(L, WIDGET_TYPE_EDIT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "PROGRESS_BAR");
+  lua_pushstring(L, WIDGET_TYPE_PROGRESS_BAR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "GROUP_BOX");
+  lua_pushstring(L, WIDGET_TYPE_GROUP_BOX);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "CHECK_BUTTON");
+  lua_pushstring(L, WIDGET_TYPE_CHECK_BUTTON);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "RADIO_BUTTON");
+  lua_pushstring(L, WIDGET_TYPE_RADIO_BUTTON);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "DIALOG_TITLE");
+  lua_pushstring(L, WIDGET_TYPE_DIALOG_TITLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "DIALOG_CLIENT");
+  lua_pushstring(L, WIDGET_TYPE_DIALOG_CLIENT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SLIDER");
+  lua_pushstring(L, WIDGET_TYPE_SLIDER);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "VIEW");
+  lua_pushstring(L, WIDGET_TYPE_VIEW);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "COMBO_BOX");
+  lua_pushstring(L, WIDGET_TYPE_COMBO_BOX);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "COMBO_BOX_ITEM");
+  lua_pushstring(L, WIDGET_TYPE_COMBO_BOX_ITEM);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SLIDE_VIEW");
+  lua_pushstring(L, WIDGET_TYPE_SLIDE_VIEW);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "PAGES");
+  lua_pushstring(L, WIDGET_TYPE_PAGES);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "TAB_BUTTON");
+  lua_pushstring(L, WIDGET_TYPE_TAB_BUTTON);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "TAB_CONTROL");
+  lua_pushstring(L, WIDGET_TYPE_TAB_CONTROL);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "TAB_BUTTON_GROUP");
+  lua_pushstring(L, WIDGET_TYPE_TAB_BUTTON_GROUP);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "BUTTON_GROUP");
+  lua_pushstring(L, WIDGET_TYPE_BUTTON_GROUP);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "CANDIDATES");
+  lua_pushstring(L, WIDGET_TYPE_CANDIDATES);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SPIN_BOX");
+  lua_pushstring(L, WIDGET_TYPE_SPIN_BOX);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "DRAGGER");
+  lua_pushstring(L, WIDGET_TYPE_DRAGGER);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SCROLL_BAR");
+  lua_pushstring(L, WIDGET_TYPE_SCROLL_BAR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SCROLL_BAR_DESKTOP");
+  lua_pushstring(L, WIDGET_TYPE_SCROLL_BAR_DESKTOP);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SCROLL_BAR_MOBILE");
+  lua_pushstring(L, WIDGET_TYPE_SCROLL_BAR_MOBILE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "SCROLL_VIEW");
+  lua_pushstring(L, WIDGET_TYPE_SCROLL_VIEW);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "LIST_VIEW");
+  lua_pushstring(L, WIDGET_TYPE_LIST_VIEW);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "LIST_VIEW_H");
+  lua_pushstring(L, WIDGET_TYPE_LIST_VIEW_H);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "LIST_ITEM");
+  lua_pushstring(L, WIDGET_TYPE_LIST_ITEM);
+  lua_settable(L, -3); 
+
+}
+
 static void widget_state_t_init(lua_State* L) {
   lua_newtable(L);
   lua_setglobal(L, "WidgetState");
@@ -5704,6 +6178,8 @@ void luaL_openawtk(lua_State* L) {
   value_type_t_init(L);
   value_t_init(L);
   view_t_init(L);
+  widget_prop_t_init(L);
+  widget_type_t_init(L);
   widget_state_t_init(L);
   widget_t_init(L);
   window_t_init(L);
