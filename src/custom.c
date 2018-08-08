@@ -72,7 +72,7 @@ static ret_t call_on_event(void* ctx, event_t* e) {
 
   lua_pcall(L, 1, 1, 0);
 
-  return 1;
+  return RET_OK;
 }
 
 static int wrap_widget_on(lua_State* L) {
@@ -108,6 +108,40 @@ static int wrap_widget_off(lua_State* L) {
   lua_pushnumber(L, (lua_Number)(ret));
 
   return 1;
+}
+
+static ret_t call_on_each(void* ctx, void* widget) {
+  lua_State* L = (lua_State*)s_current_L;
+  int func_id = (char*)ctx - (char*)NULL;
+
+  lua_settop(L, 0);
+  lua_rawgeti(L, LUA_REGISTRYINDEX, func_id);
+  tk_newuserdata(L, widget, "/widget_t", "awtk.widget_t");
+
+  lua_pcall(L, 1, 1, 0);
+
+  return RET_OK;
+}
+
+static int wrap_widget_foreach(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+
+  if (lua_isfunction(L, 2)) {
+    int func_id = 0;
+    lua_pushvalue(L, 2);
+    func_id = luaL_ref(L, LUA_REGISTRYINDEX);
+
+    ret = (ret_t)widget_foreach(widget, call_on_each, (char*)NULL + func_id);
+    
+    luaL_unref(L, LUA_REGISTRYINDEX, func_id);
+
+    lua_pushnumber(L, (lua_Number)ret);
+
+    return 1;
+  } else {
+    return 0;
+  }
 }
 
 static int to_wstr(lua_State* L) {

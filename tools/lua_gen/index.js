@@ -228,7 +228,9 @@ class LuaGenerator {
     return str;
   }
 
-  methodToShortName(clsName, methodName) {
+  methodToShortName(clsName, m) {
+    const methodName = m.alias || m.name;
+
     return methodName.replace(clsName.replace(/_t$/, '') + "_", '')
   }
 
@@ -320,7 +322,7 @@ class LuaGenerator {
     str += `static void ${cls.name}_init(lua_State* L) {\n`;
     str += '  static const struct luaL_Reg static_funcs[] = {\n'
     cls.methods.forEach(m => {
-      const name = this.methodToShortName(cls.name, m.name);
+      const name = this.methodToShortName(cls.name, m);
       if (isConstructor(m) || isStatic(m)) {
         str += `    {"${name}", wrap_${m.name}},\n`;
       }
@@ -365,7 +367,7 @@ class LuaGenerator {
     if (!cls.annotation.fake) {
       str += `\nstatic const struct luaL_Reg ${cls.name}_member_funcs[] = {\n`
       cls.methods.forEach(m => {
-        const name = this.methodToShortName(cls.name, m.name);
+        const name = this.methodToShortName(cls.name, m);
         if (!isConstructor(m) && !isStatic(m)) {
           str += `  {"${name}", wrap_${m.name}},\n`;
         }
