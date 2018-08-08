@@ -39,6 +39,7 @@
 #include "base/tab_button.h"
 #include "base/tab_control.h"
 #include "base/timer.h"
+#include "base/tklocale.h"
 #include "base/types_def.h"
 #include "base/value.h"
 #include "base/view.h"
@@ -131,6 +132,8 @@ static int wrap_tab_button_t_get_prop(lua_State* L);
 static int wrap_tab_button_t_set_prop(lua_State* L);
 static int wrap_tab_control_t_get_prop(lua_State* L);
 static int wrap_tab_control_t_set_prop(lua_State* L);
+static int wrap_tklocale_t_get_prop(lua_State* L);
+static int wrap_tklocale_t_set_prop(lua_State* L);
 static int wrap_value_t_get_prop(lua_State* L);
 static int wrap_value_t_set_prop(lua_State* L);
 static int wrap_view_t_get_prop(lua_State* L);
@@ -381,6 +384,14 @@ static int wrap_button_group_create(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/button_group_t/widget_t", "awtk.button_group_t");
 }
 
+static int wrap_button_group_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)button_group_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/button_group_t/widget_t", "awtk.button_group_t");
+}
+
 
 static const struct luaL_Reg button_group_t_member_funcs[] = {
   {NULL, NULL}
@@ -413,6 +424,7 @@ static int wrap_button_group_t_get_prop(lua_State* L) {
 static void button_group_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_button_group_create},
+    {"cast", wrap_button_group_cast},
     {NULL, NULL}
   };
 
@@ -438,6 +450,14 @@ static int wrap_button_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)button_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/button_t/widget_t", "awtk.button_t");
+}
+
+static int wrap_button_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)button_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/button_t/widget_t", "awtk.button_t");
 }
@@ -491,6 +511,7 @@ static int wrap_button_t_get_prop(lua_State* L) {
 static void button_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_button_create},
+    {"cast", wrap_button_cast},
     {NULL, NULL}
   };
 
@@ -593,6 +614,14 @@ static int wrap_check_button_set_value(lua_State* L) {
   return 1;
 }
 
+static int wrap_check_button_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)check_button_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/check_button_t/widget_t", "awtk.check_button_t");
+}
+
 
 static const struct luaL_Reg check_button_t_member_funcs[] = {
   {"set_value", wrap_check_button_set_value},
@@ -632,6 +661,7 @@ static void check_button_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_check_button_create},
     {"create_radio", wrap_check_button_create_radio},
+    {"cast", wrap_check_button_cast},
     {NULL, NULL}
   };
 
@@ -657,6 +687,14 @@ static int wrap_combo_box_item_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)combo_box_item_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/combo_box_item_t/widget_t", "awtk.combo_box_item_t");
+}
+
+static int wrap_combo_box_item_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)combo_box_item_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/combo_box_item_t/widget_t", "awtk.combo_box_item_t");
 }
@@ -727,6 +765,7 @@ static int wrap_combo_box_item_t_get_prop(lua_State* L) {
 static void combo_box_item_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_combo_box_item_create},
+    {"cast", wrap_combo_box_item_cast},
     {NULL, NULL}
   };
 
@@ -752,6 +791,14 @@ static int wrap_combo_box_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)combo_box_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/combo_box_t/widget_t", "awtk.combo_box_t");
+}
+
+static int wrap_combo_box_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)combo_box_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/combo_box_t/widget_t", "awtk.combo_box_t");
 }
@@ -901,6 +948,7 @@ static int wrap_combo_box_t_get_prop(lua_State* L) {
 static void combo_box_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_combo_box_create},
+    {"cast", wrap_combo_box_cast},
     {NULL, NULL}
   };
 
@@ -926,6 +974,14 @@ static int wrap_dialog_client_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)dialog_client_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/dialog_client_t/widget_t", "awtk.dialog_client_t");
+}
+
+static int wrap_dialog_client_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)dialog_client_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/dialog_client_t/widget_t", "awtk.dialog_client_t");
 }
@@ -962,6 +1018,7 @@ static int wrap_dialog_client_t_get_prop(lua_State* L) {
 static void dialog_client_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_dialog_client_create},
+    {"cast", wrap_dialog_client_cast},
     {NULL, NULL}
   };
 
@@ -987,6 +1044,14 @@ static int wrap_dialog_title_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)dialog_title_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/dialog_title_t/widget_t", "awtk.dialog_title_t");
+}
+
+static int wrap_dialog_title_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)dialog_title_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/dialog_title_t/widget_t", "awtk.dialog_title_t");
 }
@@ -1023,6 +1088,7 @@ static int wrap_dialog_title_t_get_prop(lua_State* L) {
 static void dialog_title_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_dialog_title_create},
+    {"cast", wrap_dialog_title_cast},
     {NULL, NULL}
   };
 
@@ -1066,8 +1132,8 @@ static int wrap_dialog_create_simple(lua_State* L) {
 
 static int wrap_dialog_cast(lua_State* L) {
   widget_t* ret = NULL;
-  widget_t* dialog = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  ret = (widget_t*)dialog_cast(dialog);
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)dialog_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/dialog_t/widget_t", "awtk.dialog_t");
 }
@@ -1179,6 +1245,14 @@ static int wrap_dragger_create(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/dragger_t/widget_t", "awtk.dragger_t");
 }
 
+static int wrap_dragger_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)dragger_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/dragger_t/widget_t", "awtk.dragger_t");
+}
+
 static int wrap_dragger_set_range(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -1244,6 +1318,7 @@ static int wrap_dragger_t_get_prop(lua_State* L) {
 static void dragger_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_dragger_create},
+    {"cast", wrap_dragger_cast},
     {NULL, NULL}
   };
 
@@ -1269,6 +1344,14 @@ static int wrap_edit_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)edit_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/edit_t/widget_t", "awtk.edit_t");
+}
+
+static int wrap_edit_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)edit_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/edit_t/widget_t", "awtk.edit_t");
 }
@@ -1468,6 +1551,7 @@ static int wrap_edit_t_get_prop(lua_State* L) {
 static void edit_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_edit_create},
+    {"cast", wrap_edit_cast},
     {NULL, NULL}
   };
 
@@ -2140,6 +2224,14 @@ static int wrap_group_box_create(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/group_box_t/widget_t", "awtk.group_box_t");
 }
 
+static int wrap_group_box_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)group_box_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/group_box_t/widget_t", "awtk.group_box_t");
+}
+
 
 static const struct luaL_Reg group_box_t_member_funcs[] = {
   {NULL, NULL}
@@ -2172,6 +2264,7 @@ static int wrap_group_box_t_get_prop(lua_State* L) {
 static void group_box_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_group_box_create},
+    {"cast", wrap_group_box_cast},
     {NULL, NULL}
   };
 
@@ -2548,6 +2641,26 @@ static void label_t_init(lua_State* L) {
   luaL_openlib(L, "Label", static_funcs, 0);
   lua_settop(L, 0);
 }
+static int wrap_list_item_create(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* parent = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  xy_t x = (xy_t)luaL_checkinteger(L, 2);
+  xy_t y = (xy_t)luaL_checkinteger(L, 3);
+  wh_t w = (wh_t)luaL_checkinteger(L, 4);
+  wh_t h = (wh_t)luaL_checkinteger(L, 5);
+  ret = (widget_t*)list_item_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/list_item_t/widget_t", "awtk.list_item_t");
+}
+
+static int wrap_list_item_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)list_item_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/list_item_t/widget_t", "awtk.list_item_t");
+}
+
 
 static const struct luaL_Reg list_item_t_member_funcs[] = {
   {NULL, NULL}
@@ -2579,6 +2692,8 @@ static int wrap_list_item_t_get_prop(lua_State* L) {
 
 static void list_item_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
+    {"create", wrap_list_item_create},
+    {"cast", wrap_list_item_cast},
     {NULL, NULL}
   };
 
@@ -2630,6 +2745,14 @@ static int wrap_list_view_h_set_spacing(lua_State* L) {
   return 1;
 }
 
+static int wrap_list_view_h_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)list_view_h_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/list_view_h_t/widget_t", "awtk.list_view_h_t");
+}
+
 
 static const struct luaL_Reg list_view_h_t_member_funcs[] = {
   {"set_item_width", wrap_list_view_h_set_item_width},
@@ -2674,6 +2797,7 @@ static int wrap_list_view_h_t_get_prop(lua_State* L) {
 static void list_view_h_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_list_view_h_create},
+    {"cast", wrap_list_view_h_cast},
     {NULL, NULL}
   };
 
@@ -2736,6 +2860,14 @@ static int wrap_list_view_set_auto_hide_scroll_bar(lua_State* L) {
   return 1;
 }
 
+static int wrap_list_view_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)list_view_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/list_view_t/widget_t", "awtk.list_view_t");
+}
+
 
 static const struct luaL_Reg list_view_t_member_funcs[] = {
   {"set_item_height", wrap_list_view_set_item_height},
@@ -2786,6 +2918,7 @@ static int wrap_list_view_t_get_prop(lua_State* L) {
 static void list_view_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_list_view_create},
+    {"cast", wrap_list_view_cast},
     {NULL, NULL}
   };
 
@@ -2811,6 +2944,14 @@ static int wrap_pages_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)pages_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/pages_t/widget_t", "awtk.pages_t");
+}
+
+static int wrap_pages_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)pages_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/pages_t/widget_t", "awtk.pages_t");
 }
@@ -2876,6 +3017,7 @@ static int wrap_pages_t_get_prop(lua_State* L) {
 static void pages_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_pages_create},
+    {"cast", wrap_pages_cast},
     {NULL, NULL}
   };
 
@@ -2901,6 +3043,14 @@ static int wrap_popup_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)popup_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/popup_t/widget_t", "awtk.popup_t");
+}
+
+static int wrap_popup_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)popup_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/popup_t/widget_t", "awtk.popup_t");
 }
@@ -2957,6 +3107,7 @@ static int wrap_popup_t_get_prop(lua_State* L) {
 static void popup_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_popup_create},
+    {"cast", wrap_popup_cast},
     {NULL, NULL}
   };
 
@@ -2982,6 +3133,14 @@ static int wrap_progress_bar_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)progress_bar_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/progress_bar_t/widget_t", "awtk.progress_bar_t");
+}
+
+static int wrap_progress_bar_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)progress_bar_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/progress_bar_t/widget_t", "awtk.progress_bar_t");
 }
@@ -3069,6 +3228,7 @@ static int wrap_progress_bar_t_get_prop(lua_State* L) {
 static void progress_bar_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_progress_bar_create},
+    {"cast", wrap_progress_bar_cast},
     {NULL, NULL}
   };
 
@@ -3383,6 +3543,14 @@ static int wrap_scroll_bar_create(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/scroll_bar_t/widget_t", "awtk.scroll_bar_t");
 }
 
+static int wrap_scroll_bar_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)scroll_bar_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/scroll_bar_t/widget_t", "awtk.scroll_bar_t");
+}
+
 static int wrap_scroll_bar_create_mobile(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* parent = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -3544,6 +3712,7 @@ static int wrap_scroll_bar_t_get_prop(lua_State* L) {
 static void scroll_bar_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_scroll_bar_create},
+    {"cast", wrap_scroll_bar_cast},
     {"create_mobile", wrap_scroll_bar_create_mobile},
     {"create_desktop", wrap_scroll_bar_create_desktop},
     {NULL, NULL}
@@ -3571,6 +3740,14 @@ static int wrap_scroll_view_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)scroll_view_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/scroll_view_t/widget_t", "awtk.scroll_view_t");
+}
+
+static int wrap_scroll_view_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)scroll_view_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/scroll_view_t/widget_t", "awtk.scroll_view_t");
 }
@@ -3712,6 +3889,7 @@ static int wrap_scroll_view_t_get_prop(lua_State* L) {
 static void scroll_view_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_scroll_view_create},
+    {"cast", wrap_scroll_view_cast},
     {NULL, NULL}
   };
 
@@ -3737,6 +3915,14 @@ static int wrap_slide_view_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)slide_view_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/slide_view_t/widget_t", "awtk.slide_view_t");
+}
+
+static int wrap_slide_view_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)slide_view_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/slide_view_t/widget_t", "awtk.slide_view_t");
 }
@@ -3819,6 +4005,7 @@ static int wrap_slide_view_t_get_prop(lua_State* L) {
 static void slide_view_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_slide_view_create},
+    {"cast", wrap_slide_view_cast},
     {NULL, NULL}
   };
 
@@ -3844,6 +4031,14 @@ static int wrap_slider_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)slider_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/slider_t/widget_t", "awtk.slider_t");
+}
+
+static int wrap_slider_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)slider_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/slider_t/widget_t", "awtk.slider_t");
 }
@@ -3965,6 +4160,7 @@ static int wrap_slider_t_get_prop(lua_State* L) {
 static void slider_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_slider_create},
+    {"cast", wrap_slider_cast},
     {NULL, NULL}
   };
 
@@ -3990,6 +4186,14 @@ static int wrap_spin_box_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)spin_box_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/spin_box_t/edit_t/widget_t", "awtk.spin_box_t");
+}
+
+static int wrap_spin_box_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)spin_box_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/spin_box_t/edit_t/widget_t", "awtk.spin_box_t");
 }
@@ -4026,6 +4230,7 @@ static int wrap_spin_box_t_get_prop(lua_State* L) {
 static void spin_box_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_spin_box_create},
+    {"cast", wrap_spin_box_cast},
     {NULL, NULL}
   };
 
@@ -4051,6 +4256,14 @@ static int wrap_tab_button_group_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)tab_button_group_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/tab_button_group_t/widget_t", "awtk.tab_button_group_t");
+}
+
+static int wrap_tab_button_group_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)tab_button_group_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/tab_button_group_t/widget_t", "awtk.tab_button_group_t");
 }
@@ -4092,6 +4305,7 @@ static int wrap_tab_button_group_t_get_prop(lua_State* L) {
 static void tab_button_group_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_tab_button_group_create},
+    {"cast", wrap_tab_button_group_cast},
     {NULL, NULL}
   };
 
@@ -4117,6 +4331,14 @@ static int wrap_tab_button_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)tab_button_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/tab_button_t/widget_t", "awtk.tab_button_t");
+}
+
+static int wrap_tab_button_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)tab_button_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/tab_button_t/widget_t", "awtk.tab_button_t");
 }
@@ -4204,6 +4426,7 @@ static int wrap_tab_button_t_get_prop(lua_State* L) {
 static void tab_button_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_tab_button_create},
+    {"cast", wrap_tab_button_cast},
     {NULL, NULL}
   };
 
@@ -4229,6 +4452,14 @@ static int wrap_tab_control_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)tab_control_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/tab_control_t/widget_t", "awtk.tab_control_t");
+}
+
+static int wrap_tab_control_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)tab_control_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/tab_control_t/widget_t", "awtk.tab_control_t");
 }
@@ -4265,6 +4496,7 @@ static int wrap_tab_control_t_get_prop(lua_State* L) {
 static void tab_control_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_tab_control_create},
+    {"cast", wrap_tab_control_cast},
     {NULL, NULL}
   };
 
@@ -4290,6 +4522,91 @@ static void timer_t_init(lua_State* L) {
   };
 
   luaL_openlib(L, "Timer", static_funcs, 0);
+  lua_settop(L, 0);
+}
+static int wrap_tklocale(lua_State* L) {
+  tklocale_t* ret = NULL;
+  ret = (tklocale_t*)tklocale();
+
+  return tk_newuserdata(L, (void*)ret, "/tklocale_t", "awtk.tklocale_t");
+}
+
+static int wrap_tklocale_tr(lua_State* L) {
+  char* ret = NULL;
+  tklocale_t* tklocale = (tklocale_t*)tk_checkudata(L, 1, "tklocale_t");
+  char* text = (char*)luaL_checkstring(L, 2);
+  ret = (char*)tklocale_tr(tklocale, text);
+
+  lua_pushstring(L,(char*)(ret));
+
+  return 1;
+}
+
+static int wrap_tklocale_change(lua_State* L) {
+  ret_t ret = 0;
+  tklocale_t* tklocale = (tklocale_t*)tk_checkudata(L, 1, "tklocale_t");
+  char* language = (char*)luaL_checkstring(L, 2);
+  char* country = (char*)luaL_checkstring(L, 3);
+  ret = (ret_t)tklocale_change(tklocale, language, country);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+
+static const struct luaL_Reg tklocale_t_member_funcs[] = {
+  {"tr", wrap_tklocale_tr},
+  {"change", wrap_tklocale_change},
+  {"on", wrap_tklocale_on},
+  {"off", wrap_tklocale_off},
+  {NULL, NULL}
+};
+
+static int wrap_tklocale_t_set_prop(lua_State* L) {
+  tklocale_t* obj = (tklocale_t*)tk_checkudata(L, 1, "tklocale_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  (void)obj;
+  (void)name;
+  log_debug("%s: not supported %s\n", __FUNCTION__, name);
+  return 0;
+}
+
+static int wrap_tklocale_t_get_prop(lua_State* L) {
+  tklocale_t* obj = (tklocale_t*)tk_checkudata(L, 1, "tklocale_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  const luaL_Reg* ret = find_member(tklocale_t_member_funcs, name);
+
+  (void)obj;
+  (void)name;
+  if(ret) {
+    lua_pushcfunction(L, ret->func);
+    return 1;
+  }
+  else {
+    log_debug("%s: not supported %s\n", __FUNCTION__, name);
+    return 0;
+  }
+}
+
+static void tklocale_t_init(lua_State* L) {
+  static const struct luaL_Reg static_funcs[] = {
+    {"instance", wrap_tklocale},
+    {NULL, NULL}
+  };
+
+  static const struct luaL_Reg index_funcs[] = {
+    {"__index", wrap_tklocale_t_get_prop},
+    {"__newindex", wrap_tklocale_t_set_prop},
+    {NULL, NULL}
+  };
+
+  luaL_newmetatable(L, "awtk.tklocale_t");
+  lua_pushstring(L, "__index");
+  lua_pushvalue(L, -2);
+  lua_settable(L, -3);
+  luaL_openlib(L, NULL, index_funcs, 0);
+  luaL_openlib(L, "Tklocale", static_funcs, 0);
   lua_settop(L, 0);
 }
 static void ret_t_init(lua_State* L) {
@@ -4820,6 +5137,14 @@ static int wrap_view_create(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/view_t/widget_t", "awtk.view_t");
 }
 
+static int wrap_view_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)view_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/view_t/widget_t", "awtk.view_t");
+}
+
 
 static const struct luaL_Reg view_t_member_funcs[] = {
   {NULL, NULL}
@@ -4852,6 +5177,7 @@ static int wrap_view_t_get_prop(lua_State* L) {
 static void view_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_view_create},
+    {"cast", wrap_view_cast},
     {NULL, NULL}
   };
 
@@ -5844,6 +6170,14 @@ static int wrap_window_manager(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/window_manager_t/widget_t", "awtk.window_manager_t");
 }
 
+static int wrap_window_manager_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)window_manager_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/window_manager_t/widget_t", "awtk.window_manager_t");
+}
+
 static int wrap_window_manager_set_show_fps(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -5893,6 +6227,7 @@ static int wrap_window_manager_t_get_prop(lua_State* L) {
 static void window_manager_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"instance", wrap_window_manager},
+    {"cast", wrap_window_manager_cast},
     {NULL, NULL}
   };
 
@@ -5918,6 +6253,14 @@ static int wrap_window_create(lua_State* L) {
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
   ret = (widget_t*)window_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/window_t/widget_t", "awtk.window_t");
+}
+
+static int wrap_window_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)window_cast(widget);
 
   return tk_newuserdata(L, (void*)ret, "/window_t/widget_t", "awtk.window_t");
 }
@@ -5992,6 +6335,7 @@ static int wrap_window_t_get_prop(lua_State* L) {
 static void window_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_window_create},
+    {"cast", wrap_window_cast},
     {"open", wrap_window_open},
     {"open_and_close", wrap_window_open_and_close},
     {NULL, NULL}
@@ -6140,6 +6484,7 @@ void luaL_openawtk(lua_State* L) {
   tab_button_t_init(L);
   tab_control_t_init(L);
   timer_t_init(L);
+  tklocale_t_init(L);
   ret_t_init(L);
   align_v_t_init(L);
   align_h_t_init(L);

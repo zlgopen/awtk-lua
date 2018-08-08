@@ -68,7 +68,7 @@ static ret_t call_on_event(void* ctx, event_t* e) {
 
   lua_settop(L, 0);
   lua_rawgeti(L, LUA_REGISTRYINDEX, func_id);
-  tk_newuserdata(L, e, "event_t", NULL);
+  tk_newuserdata(L, e, "/event_t", "awtk.event_t");
 
   lua_pcall(L, 1, 1, 0);
 
@@ -254,6 +254,41 @@ static int wrap_idle_remove(lua_State* L) {
     uint32_t func_id = (char*)(idle->ctx) - (char*)NULL;
     luaL_unref(L, LUA_REGISTRYINDEX, func_id);
     ret = (ret_t)idle_remove(id);
+  }
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_tklocale_on(lua_State* L) {
+  ret_t ret = 0;
+  tklocale_t* tklocale = (tklocale_t*)tk_checkudata(L, 1, "tklocale_t");
+  event_type_t type = (event_type_t)luaL_checkinteger(L, 2);
+
+  if (lua_isfunction(L, 3)) {
+    int func_id = 0;
+    lua_pushvalue(L, 3);
+    func_id = luaL_ref(L, LUA_REGISTRYINDEX);
+    ret = (ret_t)tklocale_on(tklocale, type, call_on_event, (char*)NULL + func_id);
+    lua_pushnumber(L, (lua_Number)ret);
+
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+static int wrap_tklocale_off(lua_State* L) {
+  ret_t ret = 0;
+  tklocale_t* tklocale = (tklocale_t*)tk_checkudata(L, 1, "tklocale_t");
+  uint32_t id = (uint32_t)luaL_checkinteger(L, 2);
+  emitter_item_t* item = emitter_find(tklocale->emitter, id);
+
+  if (item) {
+    uint32_t func_id = (char*)(item->ctx) - (char*)NULL;
+    luaL_unref(L, LUA_REGISTRYINDEX, func_id);
+    ret = (ret_t)tklocale_off(tklocale, id);
   }
 
   lua_pushnumber(L, (lua_Number)(ret));

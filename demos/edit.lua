@@ -1,4 +1,13 @@
 
+function on_changed(evt) 
+  local target = evt.target;
+  local edit = Edit.cast(target);
+
+  print(edit.name .. ' *on_changed*');
+
+  return Ret.OK;
+end
+
 function create_edit(win, type, name, text, x, y, w, h)
   local edit = Edit.create(win, x, y, w, h);
 
@@ -11,6 +20,8 @@ function create_edit(win, type, name, text, x, y, w, h)
     print(edit.name .. ' changing');
     return Ret.OK;
   end);
+  
+  edit:on(EventType.VALUE_CHANGED, on_changed);
 
   edit:set_name(name);
   edit:set_text_utf8(text);

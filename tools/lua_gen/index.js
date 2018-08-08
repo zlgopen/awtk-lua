@@ -28,6 +28,10 @@ function isConstructor(obj) {
   return obj.annotation && obj.annotation.constructor === true;
 }
 
+function isCast(obj) {
+  return obj.annotation && obj.annotation.cast
+}
+
 function isEnumString(obj) {
   return obj.annotation && obj.annotation.string === true;
 }
@@ -174,7 +178,7 @@ class LuaGenerator {
     if (ret_type == 'void') {
       str += '  return 0;\n';
     } else {
-      if (isConstructor(m)) {
+      if (isConstructor(m) || isCast(m)) {
         str += this.genReturnData(`${cls.name}*`, 'ret');
       } else {
         str += this.genReturnData(ret_type, 'ret');
@@ -323,7 +327,7 @@ class LuaGenerator {
     str += '  static const struct luaL_Reg static_funcs[] = {\n'
     cls.methods.forEach(m => {
       const name = this.methodToShortName(cls.name, m);
-      if (isConstructor(m) || isStatic(m)) {
+      if (isConstructor(m) || isStatic(m) || isCast(m)) {
         str += `    {"${name}", wrap_${m.name}},\n`;
       }
     });
@@ -368,7 +372,7 @@ class LuaGenerator {
       str += `\nstatic const struct luaL_Reg ${cls.name}_member_funcs[] = {\n`
       cls.methods.forEach(m => {
         const name = this.methodToShortName(cls.name, m);
-        if (!isConstructor(m) && !isStatic(m)) {
+        if (!isConstructor(m) && !isStatic(m) && !isCast(m)) {
           str += `  {"${name}", wrap_${m.name}},\n`;
         }
       });

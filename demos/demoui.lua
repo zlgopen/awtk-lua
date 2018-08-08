@@ -34,6 +34,16 @@ function install_one(iter)
       iter:get_window():quit(0);
     end)
     print('quit dialog:' .. widget_name);
+  elseif(str_contains(widget_name, 'chinese'))
+  then
+    iter:on(EventType.CLICK, function(evt)
+      Tklocale.instance():change('zh', 'CN');
+    end)
+  elseif(str_contains(widget_name, 'english'))
+  then
+    iter:on(EventType.CLICK, function(evt)
+      Tklocale.instance():change('en', 'US');
+    end)
   elseif(str_contains(widget_name, 'show_fps'))
   then
     iter:on(EventType.CLICK, function(evt)
