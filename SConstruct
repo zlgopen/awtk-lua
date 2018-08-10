@@ -56,16 +56,6 @@ CPPPATH=[TK_ROOT,
   TK_3RD_ROOT, 
   TK_LUA_3RD_ROOT,
   os.path.join(TK_SRC, 'ext_widgets'), 
-  os.path.join(TK_3RD_ROOT, 'nanovg/src'), 
-  os.path.join(TK_3RD_ROOT, 'agg/include'), 
-  os.path.join(TK_3RD_ROOT, 'gpinyin/include'), 
-  os.path.join(TK_3RD_ROOT, 'picasso/src'), 
-  os.path.join(TK_3RD_ROOT, 'picasso/build'), 
-  os.path.join(TK_3RD_ROOT, 'picasso/include'), 
-  os.path.join(TK_3RD_ROOT, 'picasso/src/gfx'), 
-  os.path.join(TK_3RD_ROOT, 'picasso/src/include'), 
-  os.path.join(TK_3RD_ROOT, 'freetype2/include'), 
-  os.path.join(TK_3RD_ROOT, 'libunibreak/src'), 
   TK_TOOLS_ROOT] + OS_CPPPATH
 
 LIBPATH = [TK_LIB_DIR, TK_LUA_LIB_DIR]

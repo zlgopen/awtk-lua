@@ -188,10 +188,10 @@ static void bitmap_format_t_init(lua_State* L) {
 
 }
 
-static void _bitmap_format_t_init(lua_State* L) {
+static void bitmap_flag_t_init(lua_State* L) {
   lua_newtable(L);
-  lua_setglobal(L, "BitmapFormat");
-  lua_getglobal(L, "BitmapFormat");
+  lua_setglobal(L, "BitmapFlag");
+  lua_getglobal(L, "BitmapFlag");
 
   lua_pushstring(L, "NONE");
   lua_pushinteger(L, BITMAP_FLAG_NONE);
@@ -1666,8 +1666,8 @@ static void event_type_t_init(lua_State* L) {
   lua_pushinteger(L, EVT_MOVE_RESIZE);
   lua_settable(L, -3); 
 
-  lua_pushstring(L, "PROP_CHANGED");
-  lua_pushinteger(L, EVT_PROP_CHANGED);
+  lua_pushstring(L, "PROP_WILL_CHANGE");
+  lua_pushinteger(L, EVT_PROP_WILL_CHANGE);
   lua_settable(L, -3); 
 
   lua_pushstring(L, "PROP_CHANGED");
@@ -5296,8 +5296,8 @@ static void widget_prop_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_PROP_VISIBLE);
   lua_settable(L, -3); 
 
-  lua_pushstring(L, "VISIBLE");
-  lua_pushstring(L, WIDGET_PROP_VISIBLE);
+  lua_pushstring(L, "ANIM_HINT");
+  lua_pushstring(L, WIDGET_PROP_ANIM_HINT);
   lua_settable(L, -3); 
 
   lua_pushstring(L, "OPEN_ANIM_HINT");
@@ -5310,10 +5310,6 @@ static void widget_prop_t_init(lua_State* L) {
 
   lua_pushstring(L, "MIN");
   lua_pushstring(L, WIDGET_PROP_MIN);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "MAX");
-  lua_pushstring(L, WIDGET_PROP_MAX);
   lua_settable(L, -3); 
 
   lua_pushstring(L, "TIPS");
@@ -5714,8 +5710,8 @@ static void widget_state_t_init(lua_State* L) {
   lua_pushinteger(L, WIDGET_STATE_ERROR);
   lua_settable(L, -3); 
 
-  lua_pushstring(L, "STATE_ERROR");
-  lua_pushinteger(L, WIDGET_STATE_ERROR);
+  lua_pushstring(L, "STATE_SELECTED");
+  lua_pushinteger(L, WIDGET_STATE_SELECTED);
   lua_settable(L, -3); 
 
 }
@@ -6074,8 +6070,15 @@ static int wrap_widget_t_set_prop(lua_State* L) {
   const char* name = (const char*)luaL_checkstring(L, 2);
   (void)obj;
   (void)name;
-  log_debug("%s: not supported %s\n", __FUNCTION__, name);
-  return 0;
+  if(strcmp(name, "visible") == 0) {
+    bool_t visible = (bool_t)lua_toboolean(L, 3);
+    obj->visible = visible;
+    return 0;
+  }
+  else {
+    log_debug("%s: not supported %s\n", __FUNCTION__, name);
+    return 0;
+  }
 }
 
 static int wrap_widget_t_get_prop(lua_State* L) {
@@ -6437,7 +6440,7 @@ static void rich_text_t_init(lua_State* L) {
 void luaL_openawtk(lua_State* L) {
   globals_init(L);
   bitmap_format_t_init(L);
-  _bitmap_format_t_init(L);
+  bitmap_flag_t_init(L);
   bitmap_t_init(L);
   image_draw_type_t_init(L);
   button_group_t_init(L);

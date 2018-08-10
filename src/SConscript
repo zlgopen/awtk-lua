@@ -7,7 +7,7 @@ BIN_DIR=os.environ['BIN_DIR'];
 print(env['LIBPATH'])
 
 env['LIBS'] = ['resource', 'lua'] + env['LIBS']
-env.Program(os.path.join(BIN_DIR, 'runLua'), ["run_lua.c", 'tk_lua.c'])
+env.Program(os.path.join(BIN_DIR, 'runScript'), ["run_lua.c", 'tk_lua.c'])
 
 
 

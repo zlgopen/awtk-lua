@@ -12,8 +12,12 @@ function isStatic(obj) {
   return obj.annotation && obj.annotation.static;
 }
 
-function isReadOnly(obj) {
-  return obj.annotation && !obj.annotation.writable;
+function isWritable(obj) {
+  return obj.annotation && obj.annotation.writable;
+}
+
+function isReadable(obj) {
+  return obj.annotation && obj.annotation.readable;
 }
 
 function isPrivate(obj) {
@@ -198,9 +202,9 @@ class LuaGenerator {
     return str;
   }
 
-  genSetProperty(index, cls, p) {
+  genSetProperty(isFirst, cls, p) {
     let str = '';
-    if (index === 0) {
+    if (isFirst) {
       str += `  if(strcmp(name, "${p.name}") == 0) {\n`;
     } else {
       str += `  else if(strcmp(name, "${p.name}") == 0) {\n`;
@@ -211,16 +215,16 @@ class LuaGenerator {
     } else {
       str += '  ' + this.genDecl(2, p.type, p.name);
       str += `    obj->${p.name} = ${p.name};\n`;
-      str += `    return 1;\n`;
+      str += `    return 0;\n`;
     }
     str += '  }\n';
 
     return str;
   }
 
-  genGetProperty(index, cls, p) {
+  genGetProperty(isFirst, cls, p) {
     let str = '';
-    if (index === 0) {
+    if (isFirst) {
       str += `  if(strcmp(name, "${p.name}") == 0) {\n`;
     } else {
       str += `  else if(strcmp(name, "${p.name}") == 0) {\n`;
@@ -249,9 +253,9 @@ class LuaGenerator {
     str += '  (void)name;\n';
 
     let hasSetProps = false;
-    cls.properties.forEach((p, index) => {
-      if (!isReadOnly(p) && !isFake(p)) {
-        str += this.genSetProperty(index, cls, p);
+    cls.properties.forEach((p) => {
+      if (isWritable(p) && !isFake(p)) {
+        str += this.genSetProperty(!hasSetProps, cls, p);
         hasSetProps = true;
       }
     });
@@ -293,9 +297,11 @@ class LuaGenerator {
     str += '    return 1;\n';
     str += '  }\n';
 
+    let hasGetProps = false;
     cls.properties.forEach((p, index) => {
-      if (!isFake(p)) {
-        str += this.genGetProperty(index, cls, p);
+      if (!isFake(p) && isReadable(p)) {
+        str += this.genGetProperty(!hasGetProps, cls, p);
+        hasGetProps = true;
       }
     });
 
