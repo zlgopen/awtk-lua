@@ -350,24 +350,24 @@ static void image_draw_type_t_init(lua_State* L) {
   lua_pushinteger(L, IMAGE_DRAW_REPEAT_Y);
   lua_settable(L, -3); 
 
-  lua_pushstring(L, "9PATCH");
-  lua_pushinteger(L, IMAGE_DRAW_9PATCH);
+  lua_pushstring(L, "PATCH9");
+  lua_pushinteger(L, IMAGE_DRAW_PATCH9);
   lua_settable(L, -3); 
 
-  lua_pushstring(L, "3PATCH_X");
-  lua_pushinteger(L, IMAGE_DRAW_3PATCH_X);
+  lua_pushstring(L, "PATCH3_X");
+  lua_pushinteger(L, IMAGE_DRAW_PATCH3_X);
   lua_settable(L, -3); 
 
-  lua_pushstring(L, "3PATCH_Y");
-  lua_pushinteger(L, IMAGE_DRAW_3PATCH_Y);
+  lua_pushstring(L, "PATCH3_Y");
+  lua_pushinteger(L, IMAGE_DRAW_PATCH3_Y);
   lua_settable(L, -3); 
 
-  lua_pushstring(L, "3PATCH_X_SCALE_Y");
-  lua_pushinteger(L, IMAGE_DRAW_3PATCH_X_SCALE_Y);
+  lua_pushstring(L, "PATCH3_X_SCALE_Y");
+  lua_pushinteger(L, IMAGE_DRAW_PATCH3_X_SCALE_Y);
   lua_settable(L, -3); 
 
-  lua_pushstring(L, "3PATCH_Y_SCALE_X");
-  lua_pushinteger(L, IMAGE_DRAW_3PATCH_Y_SCALE_X);
+  lua_pushstring(L, "PATCH3_Y_SCALE_X");
+  lua_pushinteger(L, IMAGE_DRAW_PATCH3_Y_SCALE_X);
   lua_settable(L, -3); 
 
 }
