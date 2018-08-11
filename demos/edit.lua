@@ -24,7 +24,7 @@ function create_edit(win, type, name, text, x, y, w, h)
   edit:on(EventType.VALUE_CHANGED, on_changed);
 
   edit:set_name(name);
-  edit:set_text_utf8(text);
+  edit:set_text(text);
   edit:set_input_tips(name);
   edit:set_input_type(type);
 

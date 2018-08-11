@@ -15,7 +15,7 @@ function create_check_button(win, radio, text, x, y, w, h)
   end);
 
   btn:set_name(text);
-  btn:set_text_utf8(text);
+  btn:set_text(text);
 
   return btn;
 end

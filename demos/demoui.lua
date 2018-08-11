@@ -52,10 +52,10 @@ function install_one(iter)
       if(wm.show_fps)
       then
         wm:set_show_fps(false);
-        iter:set_text_utf8("Show FPS");
+        iter:set_text("Show FPS");
       else
         wm:set_show_fps(true);
-        iter:set_text_utf8("Hide FPS");
+        iter:set_text("Hide FPS");
       end
     end)
     print('close window:' .. widget_name);
@@ -98,7 +98,7 @@ function show_preload_res_window()
   local finish = 0;
   local bitmap = Bitmap.create();
 
-  status:set_text_utf8('ready');
+  status:set_text('ready');
   bar:set_value(10);
 
   Timer.add(function(info) 
@@ -123,7 +123,7 @@ function show_preload_res_window()
       local text = 'Load: ' .. name .. '(' .. tostring(finish) .. '/' .. tostring(total) .. ')';
       
       bar:set_value(value);
-      status:set_text_utf8(text);
+      status:set_text(text);
 
       return Ret.REPEAT;
     end

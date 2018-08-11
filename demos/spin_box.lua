@@ -13,7 +13,7 @@ function create_spin_box(win, type, name, text, x, y, w, h)
   end);
 
   spin_box:set_name(name);
-  spin_box:set_text_utf8(text);
+  spin_box:set_text(text);
   spin_box:set_input_tips(name);
   spin_box:set_input_type(type);
 

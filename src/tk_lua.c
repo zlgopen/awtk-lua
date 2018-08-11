@@ -5794,17 +5794,6 @@ static int wrap_widget_set_value(lua_State* L) {
   return 1;
 }
 
-static int wrap_widget_set_text(lua_State* L) {
-  ret_t ret = 0;
-  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  wchar_t* text = (wchar_t*)lua_touserdata(L, 2);
-  ret = (ret_t)widget_set_text(widget, text);
-
-  lua_pushnumber(L,(lua_Number)(ret));
-
-  return 1;
-}
-
 static int wrap_widget_use_style(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -6037,9 +6026,8 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
   {"resize", wrap_widget_resize},
   {"move_resize", wrap_widget_move_resize},
   {"set_value", wrap_widget_set_value},
-  {"set_text", wrap_widget_set_text},
   {"use_style", wrap_widget_use_style},
-  {"set_text_utf8", wrap_widget_set_text_utf8},
+  {"set_text", wrap_widget_set_text_utf8},
   {"set_tr_text", wrap_widget_set_tr_text},
   {"get_value", wrap_widget_get_value},
   {"get_text", wrap_widget_get_text},

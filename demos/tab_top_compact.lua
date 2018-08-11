@@ -1,6 +1,6 @@
 function create_tab_button(tab_button_group, text)
   local tab_button = TabButton.create(tab_button_group, 0, 0, 0, 0);
-  tab_button:set_text_utf8(text);
+  tab_button:set_text(text);
 
   return tab_button;
 end
@@ -11,7 +11,7 @@ function create_page(pages, text)
 
   local label = Label.create(view, 0, 0, 0, 0);
   label:set_self_layout_params('0', 'middle', '100%', '30');
-  label:set_text_utf8(text);
+  label:set_text(text);
 
   return view;
 end
