@@ -133,7 +133,7 @@ static int wrap_widget_foreach(lua_State* L) {
     func_id = luaL_ref(L, LUA_REGISTRYINDEX);
 
     ret = (ret_t)widget_foreach(widget, call_on_each, (char*)NULL + func_id);
-    
+
     luaL_unref(L, LUA_REGISTRYINDEX, func_id);
 
     lua_pushnumber(L, (lua_Number)ret);
