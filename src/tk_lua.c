@@ -1655,6 +1655,14 @@ static void event_type_t_init(lua_State* L) {
   lua_settable(L, -3);
 }
 
+static int wrap_event_cast(lua_State* L) {
+  event_t* ret = NULL;
+  event_t* event = (event_t*)tk_checkudata(L, 1, "event_t");
+  ret = (event_t*)event_cast(event);
+
+  return tk_newuserdata(L, (void*)ret, "/event_t", "awtk.event_t");
+}
+
 static const struct luaL_Reg event_t_member_funcs[] = {{NULL, NULL}};
 
 static int wrap_event_t_set_prop(lua_State* L) {
@@ -1694,7 +1702,7 @@ static int wrap_event_t_get_prop(lua_State* L) {
 }
 
 static void event_t_init(lua_State* L) {
-  static const struct luaL_Reg static_funcs[] = {{NULL, NULL}};
+  static const struct luaL_Reg static_funcs[] = {{"cast", wrap_event_cast}, {NULL, NULL}};
 
   static const struct luaL_Reg index_funcs[] = {
       {"__index", wrap_event_t_get_prop}, {"__newindex", wrap_event_t_set_prop}, {NULL, NULL}};
@@ -5560,6 +5568,14 @@ static int wrap_widget_layout(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)widget_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/widget_t", "awtk.widget_t");
+}
+
 static int wrap_widget_destroy(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -5677,7 +5693,7 @@ static int wrap_widget_t_get_prop(lua_State* L) {
 }
 
 static void widget_t_init(lua_State* L) {
-  static const struct luaL_Reg static_funcs[] = {{NULL, NULL}};
+  static const struct luaL_Reg static_funcs[] = {{"cast", wrap_widget_cast}, {NULL, NULL}};
 
   static const struct luaL_Reg index_funcs[] = {
       {"__index", wrap_widget_t_get_prop}, {"__newindex", wrap_widget_t_set_prop}, {NULL, NULL}};
