@@ -1,5 +1,5 @@
 function application_init()
-  local win = Window.create(NULL, 0, 0, 0, 0);
+  local win = Window.create(nil, 0, 0, 0, 0);
   local label = Label.create(win, 0, 0, 0, 0);
 
   label:use_style('big_green');

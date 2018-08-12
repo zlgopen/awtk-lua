@@ -21,7 +21,7 @@ function create_spin_box(win, type, name, text, x, y, w, h)
 end
 
 function application_init()
-  local win = Window.create(NULL, 0, 0, 0, 0);
+  local win = Window.create(nil, 0, 0, 0, 0);
 
   local spin_box1 = create_spin_box(win, InputType.INT, 'int', '', 10, 10, 228, 30);
   spin_box1:set_int_limit(1, 100, 1);

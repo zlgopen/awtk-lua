@@ -17,7 +17,7 @@ function create_page(pages, text)
 end
 
 function application_init()
-  local win = Window.create(NULL, 0, 0, 0, 0);
+  local win = Window.create(nil, 0, 0, 0, 0);
   local tab_button_group = TabButtonGroup.create(win, 0, 0, 0, 0);
 
   win:set_prop_str(WidgetProp.THEME, 'tab_top_compact');

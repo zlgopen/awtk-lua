@@ -21,7 +21,7 @@ function create_check_button(win, radio, text, x, y, w, h)
 end
 
 function application_init()
-  local win = Window.create(NULL, 0, 0, 0, 0);
+  local win = Window.create(nil, 0, 0, 0, 0);
 
   local btn1 = create_check_button(win, false, 'Zzzzzz', 10, 10, 128, 30);
   local btn2 = create_check_button(win, false, 'Lzzzzz', 10, 50, 128, 30);

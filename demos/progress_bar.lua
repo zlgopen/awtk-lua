@@ -23,7 +23,7 @@ function create_progress_bar(win, vertical, name)
 end
 
 function application_init()
-  local win = Window.create(NULL, 0, 0, 0, 0);
+  local win = Window.create(nil, 0, 0, 0, 0);
   local bar1 = create_progress_bar(win, false, 'bar1');
   local bar2 = create_progress_bar(win, true, 'bar2');
 

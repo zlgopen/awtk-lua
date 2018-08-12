@@ -3,7 +3,7 @@ function on_click(ctx, evt)
 end
 
 function application_init()
-  local win = Window.create(NULL, 0, 0, 0, 0);
+  local win = Window.create(nil, 0, 0, 0, 0);
   local label = Label.create(win, 0, 0, 0, 0);
 
   label:set_text("hello awtk!");

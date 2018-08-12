@@ -15,7 +15,7 @@ function create_combo_box(win, name, options, index, x, y, w, h)
 end
 
 function application_init()
-  local win = Window.create(NULL, 0, 0, 0, 0);
+  local win = Window.create(nil, 0, 0, 0, 0);
 
   local box1 = create_combo_box(win, 'color', 'Red;Green;Blue', 0, 10, 10, 168, 30);
   local box2 = create_combo_box(win, 'zlg', '0:Zzzzzzzz;1:Lzzzzzzz;2:Gzzzzzzz', 1, 10, 50, 168, 30);

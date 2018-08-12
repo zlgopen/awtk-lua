@@ -27,7 +27,7 @@ function on_click(evt)
 end
 
 function application_init()
-  local win = Window.create(NULL, 0, 0, 0, 0);
+  local win = Window.create(nil, 0, 0, 0, 0);
   local ok = Button.create(win, 0, 0, 0, 0);
 
   ok:set_text("Show Dialog");

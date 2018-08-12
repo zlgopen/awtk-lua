@@ -3,7 +3,7 @@ function on_click(ctx, evt)
 end
 
 function application_init()
-  local win = Window.create(NULL, 0, 0, 0, 0);
+  local win = Window.create(nil, 0, 0, 0, 0);
   ok = Button.create(win, 10, 5, 80, 30);
   ok:set_text(to_wstr("ok"));
 

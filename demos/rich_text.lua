@@ -1,5 +1,5 @@
 function application_init()
-  local win = Window.create(NULL, 0, 0, 0, 0);
+  local win = Window.create(nil, 0, 0, 0, 0);
   local rich_text = RichText.create(win, 0, 0, 0, 0);
 
   rich_text:set_self_layout_params("center", "middle", "100%", "100%");
