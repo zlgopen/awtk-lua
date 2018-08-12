@@ -1048,6 +1048,22 @@ static int wrap_dialog_cast(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/dialog_t/widget_t", "awtk.dialog_t");
 }
 
+static int wrap_dialog_get_title(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)dialog_get_title(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/widget_t", "awtk.widget_t");
+}
+
+static int wrap_dialog_get_client(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)dialog_get_client(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/widget_t", "awtk.widget_t");
+}
+
 static int wrap_dialog_open(lua_State* L) {
   widget_t* ret = NULL;
   char* name = (char*)luaL_checkstring(L, 1);
@@ -1059,7 +1075,7 @@ static int wrap_dialog_open(lua_State* L) {
 static int wrap_dialog_set_title(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  wchar_t* title = (wchar_t*)lua_touserdata(L, 2);
+  char* title = (char*)luaL_checkstring(L, 2);
   ret = (ret_t)dialog_set_title(widget, title);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -1088,10 +1104,10 @@ static int wrap_dialog_quit(lua_State* L) {
   return 1;
 }
 
-static const struct luaL_Reg dialog_t_member_funcs[] = {{"set_title", wrap_dialog_set_title},
-                                                        {"modal", wrap_dialog_modal},
-                                                        {"quit", wrap_dialog_quit},
-                                                        {NULL, NULL}};
+static const struct luaL_Reg dialog_t_member_funcs[] = {
+    {"get_title", wrap_dialog_get_title}, {"get_client", wrap_dialog_get_client},
+    {"set_title", wrap_dialog_set_title}, {"modal", wrap_dialog_modal},
+    {"quit", wrap_dialog_quit},           {NULL, NULL}};
 
 static int wrap_dialog_t_set_prop(lua_State* L) {
   dialog_t* obj = (dialog_t*)tk_checkudata(L, 1, "dialog_t");

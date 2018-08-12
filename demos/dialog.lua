@@ -1,15 +1,15 @@
 function on_click(evt) 
   local dlg = Dialog.create_simple(nil, 0, 0, 240, 160);
 
-  dlg.title:set_text('Dialog');
+  dlg:set_title('Dialog');
 
-  local ok = Button.create(dlg.client, 20, 80, 80, 30);
+  local ok = Button.create(dlg:get_client(), 20, 80, 80, 30);
   ok:set_text('Go');
 
-  local cancel = Button.create(dlg.client, 140, 80, 80, 30);
+  local cancel = Button.create(dlg:get_client(), 140, 80, 80, 30);
   cancel:set_text('Cancel');
 
-  local label = Label.create(dlg.client, 10, 30, 200, 30);
+  local label = Label.create(dlg:get_client(), 10, 30, 200, 30);
   label:set_text('AWTK is cool!');
 
   ok:on(EventType.CLICK, function(evt) 
