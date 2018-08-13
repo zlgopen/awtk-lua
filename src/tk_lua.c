@@ -2098,6 +2098,16 @@ static void group_box_t_init(lua_State* L) {
   luaL_openlib(L, "GroupBox", static_funcs, 0);
   lua_settop(L, 0);
 }
+static int wrap_idle_remove(lua_State* L) {
+  ret_t ret = 0;
+  uint32_t idle_id = (uint32_t)luaL_checkinteger(L, 1);
+  ret = (ret_t)idle_remove(idle_id);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static void idle_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
       {"add", wrap_idle_add}, {"remove", wrap_idle_remove}, {NULL, NULL}};
@@ -4114,6 +4124,16 @@ static void tab_control_t_init(lua_State* L) {
   luaL_openlib(L, "TabControl", static_funcs, 0);
   lua_settop(L, 0);
 }
+static int wrap_timer_remove(lua_State* L) {
+  ret_t ret = 0;
+  uint32_t timer_id = (uint32_t)luaL_checkinteger(L, 1);
+  ret = (ret_t)timer_remove(timer_id);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static void timer_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
       {"add", wrap_timer_add}, {"remove", wrap_timer_remove}, {NULL, NULL}};
@@ -4145,6 +4165,17 @@ static int wrap_tklocale_change(lua_State* L) {
   char* language = (char*)luaL_checkstring(L, 2);
   char* country = (char*)luaL_checkstring(L, 3);
   ret = (ret_t)tklocale_change(tklocale, language, country);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_tklocale_off(lua_State* L) {
+  ret_t ret = 0;
+  tklocale_t* tklocale = (tklocale_t*)tk_checkudata(L, 1, "tklocale_t");
+  uint32_t id = (uint32_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)tklocale_off(tklocale, id);
 
   lua_pushnumber(L, (lua_Number)(ret));
 
@@ -5467,6 +5498,17 @@ static int wrap_widget_set_visible(lua_State* L) {
   bool_t visible = (bool_t)lua_toboolean(L, 2);
   bool_t recursive = (bool_t)lua_toboolean(L, 3);
   ret = (ret_t)widget_set_visible(widget, visible, recursive);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_widget_off(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  int32_t id = (int32_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)widget_off(widget, id);
 
   lua_pushnumber(L, (lua_Number)(ret));
 

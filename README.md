@@ -32,3 +32,6 @@ scons
 ./bin/runScript demos/xxxx.lua
 ```
 
+## 文档
+
+[lua绑定原理与示例](docs/binding_lua.md)
