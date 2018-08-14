@@ -8,8 +8,6 @@ function application_init()
   win:layout();
 end
 
-tk_ext_widgets_init()
-
 application_init()
 
 

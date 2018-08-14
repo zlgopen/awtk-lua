@@ -20,5 +20,3 @@ print(ValueType.FLOAT);
 
 v:destroy();
 
-tk_quit();
-

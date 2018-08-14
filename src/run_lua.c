@@ -24,6 +24,7 @@
 
 #include "awtk.h"
 #include "demos/resource.h"
+#include "ext_widgets/ext_widgets.h"
 
 extern void luaL_openawtk(lua_State* L);
 
@@ -35,6 +36,7 @@ int main(int argc, char* argv[]) {
   luaL_openawtk(L);
 
   tk_init(320, 480);
+  tk_ext_widgets_init();
   resource_init();
 
   if (luaL_dofile(L, lua_file)) {
