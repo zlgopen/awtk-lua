@@ -210,38 +210,34 @@ static int wrap_widget_on(lua_State* L) {
 }
 ```
 
+### 七、自动代码产生器
+
+所有代码均由自动代码产生器根据awtk的IDL生成，具体请参考：tools/lua\_gen
 
 ## lua示例
 
-本例中创建了两个按钮和一个进度条，可以通过按钮来控制进度条的值。
-
 ```
 function application_init()
-  local win = Window.create(nil, 0, 0, 0, 0)
-  local inc = Button.create(win, 10, 5, 80, 30) 
-  inc:set_text(to_wstr('Inc'));
- 
-  local dec = Button.create(win, 100, 5, 80, 30);
-  dec:set_text(to_wstr('Dec'));
-  
-  local progress_bar = ProgressBar.create(win, 10, 80, 168, 30);
-  progress_bar:set_value(40);
-  
-  inc:on(EventType.EVT_CLICK, function(evt) 
+  local win = Window.create(nil, 0, 0, 0, 0);
+  local ok = Button.create(win, 0, 0, 0, 0);
+
+  ok:set_text("ok");
+  ok:set_self_layout_params("center", "middle", "50%", "30");
+  ok:on(EventType.CLICK, function(evt) 
     local e = PointerEvent.cast(evt);
-    progress_bar:set_value(progress_bar.value + 10);
-    print('on inc click:(' .. tostring(e.x) .. ' ' .. tostring(e.y) .. ')')
+    print("on click:" .. tostring(e.x) .. " " .. tostring(e.y))
+
+    return Ret.OK;
   end);
-  
-  dec:on(EventType.EVT_CLICK, function(evt) 
-    local e = PointerEvent.cast(evt);
-    progress_bar:set_value(progress_bar.value - 10);
-    print('on dec click:(' .. tostring(e.x) .. ' ' .. tostring(e.y) .. ')')
-  end);
+
+  win:layout();
 end
 
 application_init()
+
 ```
+
+更多示例请参考: demos
 
 ## 参考资料
 
