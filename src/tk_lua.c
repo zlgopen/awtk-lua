@@ -3,6 +3,7 @@
 #include "lua/lualib.h"
 #include "lua/lauxlib.h"
 #include "base/utf8.h"
+#include "src/awtk.h"
 #include "base/bitmap.h"
 #include "base/button_group.h"
 #include "base/button.h"
@@ -147,6 +148,15 @@ static int wrap_window_t_set_prop(lua_State* L);
 static int wrap_rich_text_t_get_prop(lua_State* L);
 static int wrap_rich_text_t_set_prop(lua_State* L);
 
+static int wrap_tk_quit(lua_State* L) {
+  ret_t ret = 0;
+  ret = (ret_t)tk_quit();
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_tk_ext_widgets_init(lua_State* L) {
   ret_t ret = 0;
   ret = (ret_t)tk_ext_widgets_init();
@@ -157,6 +167,8 @@ static int wrap_tk_ext_widgets_init(lua_State* L) {
 }
 
 static void globals_init(lua_State* L) {
+  lua_pushcfunction(L, wrap_tk_quit);
+  lua_setglobal(L, "tk_quit");
   lua_pushcfunction(L, wrap_tk_ext_widgets_init);
   lua_setglobal(L, "tk_ext_widgets_init");
   lua_pushcfunction(L, to_str);
@@ -5386,6 +5398,17 @@ static int wrap_widget_set_value(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_add_value(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  int32_t delta = (int32_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)widget_add_value(widget, delta);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_widget_use_style(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -5470,6 +5493,15 @@ static int wrap_widget_set_focused(lua_State* L) {
   lua_pushnumber(L, (lua_Number)(ret));
 
   return 1;
+}
+
+static int wrap_widget_child(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  char* path = (char*)luaL_checkstring(L, 2);
+  ret = (widget_t*)widget_child(widget, path);
+
+  return tk_newuserdata(L, (void*)ret, "/widget_t", "awtk.widget_t");
 }
 
 static int wrap_widget_lookup(lua_State* L) {
@@ -5636,6 +5668,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
     {"resize", wrap_widget_resize},
     {"move_resize", wrap_widget_move_resize},
     {"set_value", wrap_widget_set_value},
+    {"add_value", wrap_widget_add_value},
     {"use_style", wrap_widget_use_style},
     {"set_text", wrap_widget_set_text_utf8},
     {"set_tr_text", wrap_widget_set_tr_text},
@@ -5644,6 +5677,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
     {"set_name", wrap_widget_set_name},
     {"set_enable", wrap_widget_set_enable},
     {"set_focused", wrap_widget_set_focused},
+    {"child", wrap_widget_child},
     {"lookup", wrap_widget_lookup},
     {"lookup_by_type", wrap_widget_lookup_by_type},
     {"set_visible", wrap_widget_set_visible},
