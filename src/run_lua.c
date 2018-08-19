@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
   luaL_openlibs(L);
   luaL_openawtk(L);
 
-  tk_init(320, 480);
+  tk_init(320, 480, APP_SIMULATOR, NULL, RES_ROOT);
   tk_ext_widgets_init();
   resource_init();
 
