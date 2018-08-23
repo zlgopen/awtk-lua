@@ -23,7 +23,7 @@
 #include <lua/lualib.h>
 
 #include "awtk.h"
-#include "demos/resource.h"
+#include "demos/assets.h"
 #include "ext_widgets/ext_widgets.h"
 
 extern void luaL_openawtk(lua_State* L);
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
 
   tk_init(320, 480, APP_SIMULATOR, NULL, RES_ROOT);
   tk_ext_widgets_init();
-  resource_init();
+  assets_init();
 
   if (luaL_dofile(L, lua_file)) {
     fprintf(stderr, "%s\n", lua_tostring(L, -1));

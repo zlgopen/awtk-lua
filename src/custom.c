@@ -244,17 +244,17 @@ static int wrap_idle_add(lua_State* L) {
   }
 }
 
-static int wrap_tklocale_on(lua_State* L) {
+static int wrap_locale_info_on(lua_State* L) {
   ret_t ret = 0;
-  tklocale_t* tklocale = (tklocale_t*)tk_checkudata(L, 1, "tklocale_t");
+  locale_info_t* locale_info = (locale_info_t*)tk_checkudata(L, 1, "locale_info_t");
   event_type_t type = (event_type_t)luaL_checkinteger(L, 2);
 
   if (lua_isfunction(L, 3)) {
     int func = 0;
     lua_pushvalue(L, 3);
     func = luaL_ref(L, LUA_REGISTRYINDEX);
-    ret = (ret_t)tklocale_on(tklocale, type, call_on_event, (char*)NULL + func);
-    emitter_set_on_destroy(tklocale->emitter, ret, emitter_item_on_destroy, L);
+    ret = (ret_t)locale_info_on(locale_info, type, call_on_event, (char*)NULL + func);
+    emitter_set_on_destroy(locale_info->emitter, ret, emitter_item_on_destroy, L);
     lua_pushnumber(L, (lua_Number)ret);
 
     return 1;
