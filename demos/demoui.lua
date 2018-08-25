@@ -1,10 +1,10 @@
 
 s_preload_res = {
-  {type = ResourceType.IMAGE, name = "bg800x480"},
-  {type = ResourceType.IMAGE, name = "earth"},
-  {type = ResourceType.IMAGE, name = "dialog_title"},
-  {type = ResourceType.IMAGE, name = "rgb"},
-  {type = ResourceType.IMAGE, name = "rgba"}
+  {type = AssetType.IMAGE, name = "bg800x480"},
+  {type = AssetType.IMAGE, name = "earth"},
+  {type = AssetType.IMAGE, name = "dialog_title"},
+  {type = AssetType.IMAGE, name = "rgb"},
+  {type = AssetType.IMAGE, name = "rgba"}
 }
 
 function str_contains(str, substr) 
@@ -113,7 +113,7 @@ function show_preload_res_window()
       local type = s_preload_res[finish+1].type;
       local name = s_preload_res[finish+1].name;
 
-      if(type == ResourceType.IMAGE)
+      if(type == AssetType.IMAGE)
       then
         ImageManager.instance():load(name, bitmap);
       end
