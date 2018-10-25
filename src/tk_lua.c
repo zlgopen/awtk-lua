@@ -564,8 +564,9 @@ static int wrap_bitmap_create_ex(lua_State* L) {
   bitmap_t* ret = NULL;
   uint32_t w = (uint32_t)luaL_checkinteger(L, 1);
   uint32_t h = (uint32_t)luaL_checkinteger(L, 2);
-  bitmap_format_t format = (bitmap_format_t)luaL_checkinteger(L, 3);
-  ret = (bitmap_t*)bitmap_create_ex(w, h, format);
+  uint32_t line_length = (uint32_t)luaL_checkinteger(L, 3);
+  bitmap_format_t format = (bitmap_format_t)luaL_checkinteger(L, 4);
+  ret = (bitmap_t*)bitmap_create_ex(w, h, line_length, format);
 
   return tk_newuserdata(L, (void*)ret, "/bitmap_t", "awtk.bitmap_t");
 }
@@ -624,6 +625,11 @@ static int wrap_bitmap_t_get_prop(lua_State* L) {
   }
   else if(strcmp(name, "h") == 0) {
     lua_pushnumber(L,(lua_Number)(obj->h));
+
+  return 1;
+  }
+  else if(strcmp(name, "line_length") == 0) {
+    lua_pushinteger(L,(lua_Integer)(obj->line_length));
 
   return 1;
   }
