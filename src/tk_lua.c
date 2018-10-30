@@ -5364,8 +5364,24 @@ static void widget_prop_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_PROP_STAGE);
   lua_settable(L, -3); 
 
-  lua_pushstring(L, "THEME_DATA");
-  lua_pushstring(L, WIDGET_PROP_THEME_DATA);
+  lua_pushstring(L, "IMAGE_MANAGER");
+  lua_pushstring(L, WIDGET_PROP_IMAGE_MANAGER);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "ASSETS_MANAGER");
+  lua_pushstring(L, WIDGET_PROP_ASSETS_MANAGER);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "FONT_MANAGER");
+  lua_pushstring(L, WIDGET_PROP_FONT_MANAGER);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "THEME_OBJ");
+  lua_pushstring(L, WIDGET_PROP_THEME_OBJ);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "DEFAULT_THEME_OBJ");
+  lua_pushstring(L, WIDGET_PROP_DEFAULT_THEME_OBJ);
   lua_settable(L, -3); 
 
   lua_pushstring(L, "SCRIPT");
@@ -5777,8 +5793,8 @@ static void window_stage_t_init(lua_State* L) {
   lua_setglobal(L, "WindowStage");
   lua_getglobal(L, "WindowStage");
 
-  lua_pushstring(L, "CREATED");
-  lua_pushinteger(L, WINDOW_STAGE_CREATED);
+  lua_pushstring(L, "NONE");
+  lua_pushinteger(L, WINDOW_STAGE_NONE);
   lua_settable(L, -3); 
 
   lua_pushstring(L, "CREATED");
@@ -6211,6 +6227,18 @@ static int wrap_widget_destroy(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_load_image(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  bitmap_t* bitmap = (bitmap_t*)tk_checkudata(L, 3, "bitmap_t");
+  ret = (ret_t)widget_load_image(widget, name, bitmap);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 
 static const struct luaL_Reg widget_t_member_funcs[] = {
   {"count_children", wrap_widget_count_children},
@@ -6253,6 +6281,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
   {"set_children_layout_params", wrap_widget_set_children_layout_params},
   {"layout", wrap_widget_layout},
   {"destroy", wrap_widget_destroy},
+  {"load_image", wrap_widget_load_image},
   {NULL, NULL}
 };
 
