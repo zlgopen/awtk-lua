@@ -103,13 +103,13 @@ static int wrap_widget_on(lua_State* L) {
   }
 }
 
-static ret_t call_on_each(void* ctx, void* widget) {
+static ret_t call_on_each(void* ctx, const void* widget) {
   lua_State* L = (lua_State*)s_current_L;
   int func = (char*)ctx - (char*)NULL;
 
   lua_settop(L, 0);
   lua_rawgeti(L, LUA_REGISTRYINDEX, func);
-  tk_newuserdata(L, widget, "/widget_t", "awtk.widget_t");
+  tk_newuserdata(L, WIDGET(widget), "/widget_t", "awtk.widget_t");
 
   lua_pcall(L, 1, 1, 0);
 
