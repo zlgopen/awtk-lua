@@ -3,7 +3,7 @@
 #include "lua/lualib.h"
 #include "lua/lauxlib.h"
 #include "tkc/utf8.h"
-#include "src/awtk_main.h"
+#include "src/awtk_global.h"
 #include "base/assets_manager.h"
 #include "base/bitmap.h"
 #include "base/canvas.h"
@@ -16,6 +16,7 @@
 #include "base/locale_info.h"
 #include "base/style.h"
 #include "base/timer.h"
+#include "base/types_def.h"
 #include "base/widget_consts.h"
 #include "base/widget.h"
 #include "base/window_base.h"
@@ -2132,6 +2133,52 @@ static void timer_t_init(lua_State* L) {
   luaL_openlib(L, "Timer", static_funcs, 0);
   lua_settop(L, 0);
 }
+static void align_v_t_init(lua_State* L) {
+  lua_newtable(L);
+  lua_setglobal(L, "AlignV");
+  lua_getglobal(L, "AlignV");
+
+  lua_pushstring(L, "NONE");
+  lua_pushinteger(L, ALIGN_V_NONE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "MIDDLE");
+  lua_pushinteger(L, ALIGN_V_MIDDLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "TOP");
+  lua_pushinteger(L, ALIGN_V_TOP);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "BOTTOM");
+  lua_pushinteger(L, ALIGN_V_BOTTOM);
+  lua_settable(L, -3); 
+
+}
+
+static void align_h_t_init(lua_State* L) {
+  lua_newtable(L);
+  lua_setglobal(L, "AlignH");
+  lua_getglobal(L, "AlignH");
+
+  lua_pushstring(L, "NONE");
+  lua_pushinteger(L, ALIGN_H_NONE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "CENTER");
+  lua_pushinteger(L, ALIGN_H_CENTER);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "LEFT");
+  lua_pushinteger(L, ALIGN_H_LEFT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "RIGHT");
+  lua_pushinteger(L, ALIGN_H_RIGHT);
+  lua_settable(L, -3); 
+
+}
+
 static void widget_prop_t_init(lua_State* L) {
   lua_newtable(L);
   lua_setglobal(L, "WidgetProp");
@@ -6622,52 +6669,6 @@ static void ret_t_init(lua_State* L) {
 
 }
 
-static void align_v_t_init(lua_State* L) {
-  lua_newtable(L);
-  lua_setglobal(L, "AlignV");
-  lua_getglobal(L, "AlignV");
-
-  lua_pushstring(L, "NONE");
-  lua_pushinteger(L, ALIGN_V_NONE);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "MIDDLE");
-  lua_pushinteger(L, ALIGN_V_MIDDLE);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "TOP");
-  lua_pushinteger(L, ALIGN_V_TOP);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "BOTTOM");
-  lua_pushinteger(L, ALIGN_V_BOTTOM);
-  lua_settable(L, -3); 
-
-}
-
-static void align_h_t_init(lua_State* L) {
-  lua_newtable(L);
-  lua_setglobal(L, "AlignH");
-  lua_getglobal(L, "AlignH");
-
-  lua_pushstring(L, "NONE");
-  lua_pushinteger(L, ALIGN_H_NONE);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "CENTER");
-  lua_pushinteger(L, ALIGN_H_CENTER);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "LEFT");
-  lua_pushinteger(L, ALIGN_H_LEFT);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "RIGHT");
-  lua_pushinteger(L, ALIGN_H_RIGHT);
-  lua_settable(L, -3); 
-
-}
-
 static void value_type_t_init(lua_State* L) {
   lua_newtable(L);
   lua_setglobal(L, "ValueType");
@@ -10030,6 +10031,8 @@ void luaL_openawtk(lua_State* L) {
   locale_info_t_init(L);
   style_t_init(L);
   timer_t_init(L);
+  align_v_t_init(L);
+  align_h_t_init(L);
   widget_prop_t_init(L);
   widget_type_t_init(L);
   widget_state_t_init(L);
@@ -10065,8 +10068,6 @@ void luaL_openawtk(lua_State* L) {
   rect_t_init(L);
   time_now_t_init(L);
   ret_t_init(L);
-  align_v_t_init(L);
-  align_h_t_init(L);
   value_type_t_init(L);
   value_t_init(L);
   app_bar_t_init(L);
