@@ -444,7 +444,7 @@ class LuaGenerator {
     result += '#include "lua/lua.h"\n';
     result += '#include "lua/lualib.h"\n';
     result += '#include "lua/lauxlib.h"\n';
-    result += '#include "base/utf8.h"\n';
+    result += '#include "tkc/utf8.h"\n';
     json.forEach(iter => {
       if (result.indexOf(iter.header) <= 0) {
         result += `#include "${iter.header}"\n`;
