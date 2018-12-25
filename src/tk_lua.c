@@ -1366,6 +1366,113 @@ static void locale_info_t_init(lua_State* L) {
   luaL_openlib(L, "LocaleInfo", static_funcs, 0);
   lua_settop(L, 0);
 }
+static void style_id_t_init(lua_State* L) {
+  lua_newtable(L);
+  lua_setglobal(L, "StyleId");
+  lua_getglobal(L, "StyleId");
+
+  lua_pushstring(L, "_ID_BG_COLOR");
+  lua_pushstring(L, STYLE_ID_BG_COLOR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_FG_COLOR");
+  lua_pushstring(L, STYLE_ID_FG_COLOR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_FONT_NAME");
+  lua_pushstring(L, STYLE_ID_FONT_NAME);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_FONT_SIZE");
+  lua_pushstring(L, STYLE_ID_FONT_SIZE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_FONT_STYLE");
+  lua_pushstring(L, STYLE_ID_FONT_STYLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_TEXT_COLOR");
+  lua_pushstring(L, STYLE_ID_TEXT_COLOR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_TIPS_TEXT_COLOR");
+  lua_pushstring(L, STYLE_ID_TIPS_TEXT_COLOR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_TEXT_ALIGN_H");
+  lua_pushstring(L, STYLE_ID_TEXT_ALIGN_H);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_TEXT_ALIGN_V");
+  lua_pushstring(L, STYLE_ID_TEXT_ALIGN_V);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_BORDER_COLOR");
+  lua_pushstring(L, STYLE_ID_BORDER_COLOR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_BORDER");
+  lua_pushstring(L, STYLE_ID_BORDER);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_BG_IMAGE");
+  lua_pushstring(L, STYLE_ID_BG_IMAGE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_BG_IMAGE_DRAW_TYPE");
+  lua_pushstring(L, STYLE_ID_BG_IMAGE_DRAW_TYPE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_ICON");
+  lua_pushstring(L, STYLE_ID_ICON);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_FG_IMAGE");
+  lua_pushstring(L, STYLE_ID_FG_IMAGE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_FG_IMAGE_DRAW_TYPE");
+  lua_pushstring(L, STYLE_ID_FG_IMAGE_DRAW_TYPE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_MARGIN");
+  lua_pushstring(L, STYLE_ID_MARGIN);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_ICON_AT");
+  lua_pushstring(L, STYLE_ID_ICON_AT);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_ACTIVE_ICON");
+  lua_pushstring(L, STYLE_ID_ACTIVE_ICON);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_X_OFFSET");
+  lua_pushstring(L, STYLE_ID_X_OFFSET);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_Y_OFFSET");
+  lua_pushstring(L, STYLE_ID_Y_OFFSET);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_SELECTED_BG_COLOR");
+  lua_pushstring(L, STYLE_ID_SELECTED_BG_COLOR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_SELECTED_FG_COLOR");
+  lua_pushstring(L, STYLE_ID_SELECTED_FG_COLOR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_SELECTED_TEXT_COLOR");
+  lua_pushstring(L, STYLE_ID_SELECTED_TEXT_COLOR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "_ID_ROUND_RADIUS");
+  lua_pushstring(L, STYLE_ID_ROUND_RADIUS);
+  lua_settable(L, -3); 
+
+}
+
 static int wrap_style_notify_widget_state_changed(lua_State* L) {
   ret_t ret = 0;
   style_t* s = (style_t*)tk_checkudata(L, 1, "style_t");
@@ -1390,9 +1497,9 @@ static int wrap_style_is_valid(lua_State* L) {
 static int wrap_style_get_int(lua_State* L) {
   int32_t ret = 0;
   style_t* s = (style_t*)tk_checkudata(L, 1, "style_t");
-  style_id_t id = (style_id_t)luaL_checkinteger(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   int32_t defval = (int32_t)luaL_checkinteger(L, 3);
-  ret = (int32_t)style_get_int(s, id, defval);
+  ret = (int32_t)style_get_int(s, name, defval);
 
   lua_pushinteger(L,(lua_Integer)(ret));
 
@@ -1402,9 +1509,9 @@ static int wrap_style_get_int(lua_State* L) {
 static int wrap_style_get_str(lua_State* L) {
   const char* ret = NULL;
   style_t* s = (style_t*)tk_checkudata(L, 1, "style_t");
-  style_id_t id = (style_id_t)luaL_checkinteger(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   const char* defval = (const char*)luaL_checkstring(L, 3);
-  ret = (const char*)style_get_str(s, id, defval);
+  ret = (const char*)style_get_str(s, name, defval);
 
   lua_pushstring(L,(char*)(ret));
 
@@ -6497,9 +6604,9 @@ static int wrap_style_mutable_set_int(lua_State* L) {
   ret_t ret = 0;
   style_t* s = (style_t*)tk_checkudata(L, 1, "style_t");
   const char* state = (const char*)luaL_checkstring(L, 2);
-  style_id_t id = (style_id_t)luaL_checkinteger(L, 3);
+  const char* name = (const char*)luaL_checkstring(L, 3);
   int32_t val = (int32_t)luaL_checkinteger(L, 4);
-  ret = (ret_t)style_mutable_set_int(s, state, id, val);
+  ret = (ret_t)style_mutable_set_int(s, state, name, val);
 
   lua_pushnumber(L,(lua_Number)(ret));
 
@@ -10117,6 +10224,7 @@ void luaL_openawtk(lua_State* L) {
   image_manager_t_init(L);
   input_type_t_init(L);
   locale_info_t_init(L);
+  style_id_t_init(L);
   style_t_init(L);
   align_v_t_init(L);
   align_h_t_init(L);
