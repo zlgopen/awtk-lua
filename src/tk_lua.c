@@ -2117,81 +2117,6 @@ static void widget_type_t_init(lua_State* L) {
 
 }
 
-static void widget_state_t_init(lua_State* L) {
-  lua_newtable(L);
-  lua_setglobal(L, "WidgetState");
-  lua_getglobal(L, "WidgetState");
-
-  lua_pushstring(L, "STATE_NONE");
-  lua_pushinteger(L, WIDGET_STATE_NONE);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_NORMAL");
-  lua_pushinteger(L, WIDGET_STATE_NORMAL);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_PRESSED");
-  lua_pushinteger(L, WIDGET_STATE_PRESSED);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_OVER");
-  lua_pushinteger(L, WIDGET_STATE_OVER);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_DISABLE");
-  lua_pushinteger(L, WIDGET_STATE_DISABLE);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_FOCUSED");
-  lua_pushinteger(L, WIDGET_STATE_FOCUSED);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_CHECKED");
-  lua_pushinteger(L, WIDGET_STATE_CHECKED);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_UNCHECKED");
-  lua_pushinteger(L, WIDGET_STATE_UNCHECKED);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_EMPTY");
-  lua_pushinteger(L, WIDGET_STATE_EMPTY);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_ERROR");
-  lua_pushinteger(L, WIDGET_STATE_ERROR);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_SELECTED");
-  lua_pushinteger(L, WIDGET_STATE_SELECTED);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_NORMAL_OF_CHECKED");
-  lua_pushinteger(L, WIDGET_STATE_NORMAL_OF_CHECKED);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_PRESSED_OF_CHECKED");
-  lua_pushinteger(L, WIDGET_STATE_PRESSED_OF_CHECKED);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_OVER_OF_CHECKED");
-  lua_pushinteger(L, WIDGET_STATE_OVER_OF_CHECKED);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_NORMAL_OF_ACTIVE");
-  lua_pushinteger(L, WIDGET_STATE_NORMAL_OF_ACTIVE);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_PRESSED_OF_ACTIVE");
-  lua_pushinteger(L, WIDGET_STATE_PRESSED_OF_ACTIVE);
-  lua_settable(L, -3); 
-
-  lua_pushstring(L, "STATE_OVER_OF_ACTIVE");
-  lua_pushinteger(L, WIDGET_STATE_OVER_OF_ACTIVE);
-  lua_settable(L, -3); 
-
-}
-
 static void window_stage_t_init(lua_State* L) {
   lua_newtable(L);
   lua_setglobal(L, "WindowStage");
@@ -2230,6 +2155,81 @@ static void window_closable_t_init(lua_State* L) {
 
   lua_pushstring(L, "CONFIRM");
   lua_pushinteger(L, WINDOW_CLOSABLE_CONFIRM);
+  lua_settable(L, -3); 
+
+}
+
+static void widget_state_t_init(lua_State* L) {
+  lua_newtable(L);
+  lua_setglobal(L, "WidgetState");
+  lua_getglobal(L, "WidgetState");
+
+  lua_pushstring(L, "STATE_NONE");
+  lua_pushstring(L, WIDGET_STATE_NONE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_NORMAL");
+  lua_pushstring(L, WIDGET_STATE_NORMAL);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_PRESSED");
+  lua_pushstring(L, WIDGET_STATE_PRESSED);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_OVER");
+  lua_pushstring(L, WIDGET_STATE_OVER);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_DISABLE");
+  lua_pushstring(L, WIDGET_STATE_DISABLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_FOCUSED");
+  lua_pushstring(L, WIDGET_STATE_FOCUSED);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_CHECKED");
+  lua_pushstring(L, WIDGET_STATE_CHECKED);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_UNCHECKED");
+  lua_pushstring(L, WIDGET_STATE_UNCHECKED);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_EMPTY");
+  lua_pushstring(L, WIDGET_STATE_EMPTY);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_ERROR");
+  lua_pushstring(L, WIDGET_STATE_ERROR);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_SELECTED");
+  lua_pushstring(L, WIDGET_STATE_SELECTED);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_NORMAL_OF_CHECKED");
+  lua_pushstring(L, WIDGET_STATE_NORMAL_OF_CHECKED);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_PRESSED_OF_CHECKED");
+  lua_pushstring(L, WIDGET_STATE_PRESSED_OF_CHECKED);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_OVER_OF_CHECKED");
+  lua_pushstring(L, WIDGET_STATE_OVER_OF_CHECKED);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_NORMAL_OF_ACTIVE");
+  lua_pushstring(L, WIDGET_STATE_NORMAL_OF_ACTIVE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_PRESSED_OF_ACTIVE");
+  lua_pushstring(L, WIDGET_STATE_PRESSED_OF_ACTIVE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "STATE_OVER_OF_ACTIVE");
+  lua_pushstring(L, WIDGET_STATE_OVER_OF_ACTIVE);
   lua_settable(L, -3); 
 
 }
@@ -6496,7 +6496,7 @@ static int wrap_style_mutable_set_name(lua_State* L) {
 static int wrap_style_mutable_set_int(lua_State* L) {
   ret_t ret = 0;
   style_t* s = (style_t*)tk_checkudata(L, 1, "style_t");
-  widget_state_t state = (widget_state_t)luaL_checkinteger(L, 2);
+  const char* state = (const char*)luaL_checkstring(L, 2);
   style_id_t id = (style_id_t)luaL_checkinteger(L, 3);
   int32_t val = (int32_t)luaL_checkinteger(L, 4);
   ret = (ret_t)style_mutable_set_int(s, state, id, val);
@@ -10122,9 +10122,9 @@ void luaL_openawtk(lua_State* L) {
   align_h_t_init(L);
   widget_prop_t_init(L);
   widget_type_t_init(L);
-  widget_state_t_init(L);
   window_stage_t_init(L);
   window_closable_t_init(L);
+  widget_state_t_init(L);
   widget_t_init(L);
   asset_type_t_init(L);
   date_time_t_init(L);
