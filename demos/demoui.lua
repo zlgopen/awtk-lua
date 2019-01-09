@@ -120,7 +120,7 @@ function show_preload_res_window()
 
       if(type == AssetType.IMAGE)
       then
-        ImageManager.instance():load(name, bitmap);
+        ImageManager.instance():get_bitmap(name, bitmap);
       end
 
       finish = finish + 1;
