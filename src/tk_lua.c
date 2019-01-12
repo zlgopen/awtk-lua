@@ -3751,16 +3751,16 @@ static void event_t_init(lua_State* L) {
   lua_settop(L, 0);
 }
 static int wrap_named_value_create(lua_State* L) {
-  ret_t ret = 0;
-  ret = (ret_t)named_value_create();
+  named_value_t* ret = NULL;
+  ret = (named_value_t*)named_value_create();
 
   return tk_newuserdata(L, (void*)ret, "/named_value_t", "awtk.named_value_t");
 }
 
 static int wrap_named_value_cast(lua_State* L) {
-  ret_t ret = 0;
+  named_value_t* ret = NULL;
   named_value_t* nv = (named_value_t*)tk_checkudata(L, 1, "named_value_t");
-  ret = (ret_t)named_value_cast(nv);
+  ret = (named_value_t*)named_value_cast(nv);
 
   return tk_newuserdata(L, (void*)ret, "/named_value_t", "awtk.named_value_t");
 }
@@ -7294,9 +7294,9 @@ static int wrap_object_unref(lua_State* L) {
 }
 
 static int wrap_object_ref(lua_State* L) {
-  ret_t ret = 0;
+  object_t* ret = NULL;
   object_t* obj = (object_t*)tk_checkudata(L, 1, "object_t");
-  ret = (ret_t)object_ref(obj);
+  ret = (object_t*)object_ref(obj);
 
   return tk_newuserdata(L, (void*)ret, "/object_t/emitter_t", "awtk.object_t");
 }
@@ -10846,9 +10846,9 @@ static void image_t_init(lua_State* L) {
   lua_settop(L, 0);
 }
 static int wrap_object_default_create(lua_State* L) {
-  ret_t ret = 0;
+  object_t* ret = NULL;
   uint32_t init_capacity = (uint32_t)luaL_checkinteger(L, 1);
-  ret = (ret_t)object_default_create(init_capacity);
+  ret = (object_t*)object_default_create(init_capacity);
 
   return tk_newuserdata(L, (void*)ret, "/object_default_t/object_t/emitter_t", "awtk.object_default_t");
 }
