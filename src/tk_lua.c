@@ -3538,6 +3538,13 @@ static void date_time_t_init(lua_State* L) {
   luaL_openlib(L, "DateTime", static_funcs, 0);
   lua_settop(L, 0);
 }
+static int wrap_emitter_create(lua_State* L) {
+  emitter_t* ret = NULL;
+  ret = (emitter_t*)emitter_create();
+
+  return tk_newuserdata(L, (void*)ret, "/emitter_t", "awtk.emitter_t");
+}
+
 static int wrap_emitter_dispatch(lua_State* L) {
   ret_t ret = 0;
   emitter_t* emitter = (emitter_t*)tk_checkudata(L, 1, "emitter_t");
@@ -3545,19 +3552,6 @@ static int wrap_emitter_dispatch(lua_State* L) {
   ret = (ret_t)emitter_dispatch(emitter, e);
 
   lua_pushnumber(L,(lua_Number)(ret));
-
-  return 1;
-}
-
-static int wrap_emitter_on(lua_State* L) {
-  uint32_t ret = 0;
-  emitter_t* emitter = (emitter_t*)tk_checkudata(L, 1, "emitter_t");
-  uint32_t type = (uint32_t)luaL_checkinteger(L, 2);
-  event_func_t on_event = (event_func_t)lua_tocfunction(L, 3);
-  void* ctx =  NULL;
-  ret = (uint32_t)emitter_on(emitter, type, on_event, ctx);
-
-  lua_pushinteger(L,(lua_Integer)(ret));
 
   return 1;
 }
@@ -3603,6 +3597,24 @@ static int wrap_emitter_size(lua_State* L) {
   return 1;
 }
 
+static int wrap_emitter_destroy(lua_State* L) {
+  ret_t ret = 0;
+  emitter_t* emitter = (emitter_t*)tk_checkudata(L, 1, "emitter_t");
+  ret = (ret_t)emitter_destroy(emitter);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_emitter_cast(lua_State* L) {
+  emitter_t* ret = NULL;
+  emitter_t* emitter = (emitter_t*)tk_checkudata(L, 1, "emitter_t");
+  ret = (emitter_t*)emitter_cast(emitter);
+
+  return tk_newuserdata(L, (void*)ret, "/emitter_t", "awtk.emitter_t");
+}
+
 
 static const struct luaL_Reg emitter_t_member_funcs[] = {
   {"dispatch", wrap_emitter_dispatch},
@@ -3611,6 +3623,7 @@ static const struct luaL_Reg emitter_t_member_funcs[] = {
   {"enable", wrap_emitter_enable},
   {"disable", wrap_emitter_disable},
   {"size", wrap_emitter_size},
+  {"destroy", wrap_emitter_destroy},
   {NULL, NULL}
 };
 
@@ -3642,6 +3655,8 @@ static int wrap_emitter_t_get_prop(lua_State* L) {
 
 static void emitter_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
+    {"create", wrap_emitter_create},
+    {"cast", wrap_emitter_cast},
     {NULL, NULL}
   };
 
@@ -3686,8 +3701,28 @@ static int wrap_event_cast(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/event_t", "awtk.event_t");
 }
 
+static int wrap_event_create(lua_State* L) {
+  event_t* ret = NULL;
+  uint32_t type = (uint32_t)luaL_checkinteger(L, 1);
+  void* target = (void*)lua_touserdata(L, 2);
+  ret = (event_t*)event_create(type, target);
+
+  return tk_newuserdata(L, (void*)ret, "/event_t", "awtk.event_t");
+}
+
+static int wrap_event_destroy(lua_State* L) {
+  ret_t ret = 0;
+  event_t* event = (event_t*)tk_checkudata(L, 1, "event_t");
+  ret = (ret_t)event_destroy(event);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 
 static const struct luaL_Reg event_t_member_funcs[] = {
+  {"destroy", wrap_event_destroy},
   {NULL, NULL}
 };
 
@@ -3733,6 +3768,7 @@ static int wrap_event_t_get_prop(lua_State* L) {
 static void event_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"cast", wrap_event_cast},
+    {"create", wrap_event_create},
     {NULL, NULL}
   };
 
@@ -10847,8 +10883,7 @@ static void image_t_init(lua_State* L) {
 }
 static int wrap_object_default_create(lua_State* L) {
   object_t* ret = NULL;
-  uint32_t init_capacity = (uint32_t)luaL_checkinteger(L, 1);
-  ret = (object_t*)object_default_create(init_capacity);
+  ret = (object_t*)object_default_create();
 
   return tk_newuserdata(L, (void*)ret, "/object_default_t/object_t/emitter_t", "awtk.object_default_t");
 }

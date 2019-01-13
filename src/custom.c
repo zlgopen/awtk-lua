@@ -103,6 +103,24 @@ static int wrap_widget_on(lua_State* L) {
   }
 }
 
+static int wrap_emitter_on(lua_State* L) {
+  ret_t ret = 0;
+  emitter_t* emitter = (emitter_t*)tk_checkudata(L, 1, "emitter_t");
+  event_type_t type = (event_type_t)luaL_checkinteger(L, 2);
+
+  if (lua_isfunction(L, 3)) {
+    int func = 0;
+    lua_pushvalue(L, 3);
+    func = luaL_ref(L, LUA_REGISTRYINDEX);
+    ret = (ret_t)emitter_on(emitter, type, call_on_event, (char*)NULL + func);
+    emitter_set_on_destroy(emitter, ret, emitter_item_on_destroy, L);
+    lua_pushnumber(L, (lua_Number)ret);
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
 static ret_t call_on_each(void* ctx, const void* widget) {
   lua_State* L = (lua_State*)s_current_L;
   int func = (char*)ctx - (char*)NULL;
