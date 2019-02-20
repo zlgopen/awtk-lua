@@ -32,6 +32,10 @@ function isConstructor(obj) {
   return obj.annotation && obj.annotation.constructor === true;
 }
 
+function isGcDeconstructor(obj) {
+  return obj.annotation && (obj.annotation.deconstructor === true && obj.annotation.gc);
+}
+
 function isCast(obj) {
   return obj.annotation && obj.annotation.cast
 }
@@ -346,6 +350,9 @@ class LuaGenerator {
       str += '  static const struct luaL_Reg index_funcs[] = {\n'
       str += `    {"__index", wrap_${clsName}_get_prop},\n`;
       str += `    {"__newindex", wrap_${clsName}_set_prop},\n`;
+      if(this.getGcDeconstructor(cls)) {
+        str += `    {"__gc", wrap_${clsName}_gc},\n`;
+      }
       str += `    {NULL, NULL}\n`;
       str += '  };\n\n'
 
@@ -364,6 +371,40 @@ class LuaGenerator {
     return str;
   }
 
+  getGcDeconstructor(cls) {
+    let gcDeconstructor = null;
+
+    cls.methods.forEach(m => {
+      if(isGcDeconstructor(m)) {
+        gcDeconstructor = m;
+      }
+    });
+
+    return gcDeconstructor;
+  }
+
+  genGcMethod(cls) {
+    const clsName = cls.name.replace(/_t$/, '');
+    let gcDeconstructor = this.getGcDeconstructor(cls);
+
+    if(gcDeconstructor) {
+      return `
+static int wrap_${clsName}_t_gc(lua_State* L) {
+  userdata_info_t* udata = (userdata_info_t*)lua_touserdata(L, 1);
+  if(udata->data != NULL) {
+    ${gcDeconstructor.name}((${clsName}_t*)udata->data);
+    udata->data = NULL;
+    log_debug("call ${gcDeconstructor.name}\\n");
+  }
+
+  return 0;
+ }
+`
+    } else {
+      return '';
+    }
+  }
+
   genMethods(cls) {
     let str = '';
     const clsName = cls.name;
@@ -373,7 +414,8 @@ class LuaGenerator {
         str += this.genMethod(cls, m);
       }
     });
-
+    str += this.genGcMethod(cls);
+    
     if (!cls.annotation.fake) {
       str += `\nstatic const struct luaL_Reg ${cls.name}_member_funcs[] = {\n`
       cls.methods.forEach(m => {
