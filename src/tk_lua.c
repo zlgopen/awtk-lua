@@ -564,17 +564,6 @@ static int wrap_bitmap_destroy(lua_State* L) {
 }
 
 
-static int wrap_bitmap_t_gc(lua_State* L) {
-  userdata_info_t* udata = (userdata_info_t*)lua_touserdata(L, 1);
-  if(udata->data != NULL) {
-    bitmap_destroy((bitmap_t*)udata->data);
-    udata->data = NULL;
-    log_debug("call bitmap_destroy\n");
-  }
-
-  return 0;
- }
-
 static const struct luaL_Reg bitmap_t_member_funcs[] = {
   {"get_bpp", wrap_bitmap_get_bpp},
   {"destroy", wrap_bitmap_destroy},
@@ -647,7 +636,6 @@ static void bitmap_t_init(lua_State* L) {
   static const struct luaL_Reg index_funcs[] = {
     {"__index", wrap_bitmap_t_get_prop},
     {"__newindex", wrap_bitmap_t_set_prop},
-    {"__gc", wrap_bitmap_t_gc},
     {NULL, NULL}
   };
 
@@ -919,10 +907,10 @@ static int wrap_canvas_set_font(lua_State* L) {
 }
 
 static int wrap_canvas_measure_utf8(lua_State* L) {
-  ret_t ret = 0;
+  float_t ret = 0;
   canvas_t* c = (canvas_t*)tk_checkudata(L, 1, "canvas_t");
   const char* str = (const char*)luaL_checkstring(L, 2);
-  ret = (ret_t)canvas_measure_utf8(c, str);
+  ret = (float_t)canvas_measure_utf8(c, str);
 
   lua_pushnumber(L,(lua_Number)(ret));
 
@@ -4132,17 +4120,6 @@ static int wrap_color_destroy(lua_State* L) {
 }
 
 
-static int wrap_color_t_gc(lua_State* L) {
-  userdata_info_t* udata = (userdata_info_t*)lua_touserdata(L, 1);
-  if(udata->data != NULL) {
-    color_destroy((color_t*)udata->data);
-    udata->data = NULL;
-    log_debug("call color_destroy\n");
-  }
-
-  return 0;
- }
-
 static const struct luaL_Reg color_t_member_funcs[] = {
   {"from_str", wrap_color_from_str},
   {"r", wrap_color_r},
@@ -4201,7 +4178,6 @@ static void color_t_init(lua_State* L) {
   static const struct luaL_Reg index_funcs[] = {
     {"__index", wrap_color_t_get_prop},
     {"__newindex", wrap_color_t_set_prop},
-    {"__gc", wrap_color_t_gc},
     {NULL, NULL}
   };
 
@@ -4230,17 +4206,6 @@ static int wrap_date_time_destroy(lua_State* L) {
   return 1;
 }
 
-
-static int wrap_date_time_t_gc(lua_State* L) {
-  userdata_info_t* udata = (userdata_info_t*)lua_touserdata(L, 1);
-  if(udata->data != NULL) {
-    date_time_destroy((date_time_t*)udata->data);
-    udata->data = NULL;
-    log_debug("call date_time_destroy\n");
-  }
-
-  return 0;
- }
 
 static const struct luaL_Reg date_time_t_member_funcs[] = {
   {"destroy", wrap_date_time_destroy},
@@ -4312,7 +4277,6 @@ static void date_time_t_init(lua_State* L) {
   static const struct luaL_Reg index_funcs[] = {
     {"__index", wrap_date_time_t_get_prop},
     {"__newindex", wrap_date_time_t_set_prop},
-    {"__gc", wrap_date_time_t_gc},
     {NULL, NULL}
   };
 
@@ -4402,17 +4366,6 @@ static int wrap_emitter_cast(lua_State* L) {
 }
 
 
-static int wrap_emitter_t_gc(lua_State* L) {
-  userdata_info_t* udata = (userdata_info_t*)lua_touserdata(L, 1);
-  if(udata->data != NULL) {
-    emitter_destroy((emitter_t*)udata->data);
-    udata->data = NULL;
-    log_debug("call emitter_destroy\n");
-  }
-
-  return 0;
- }
-
 static const struct luaL_Reg emitter_t_member_funcs[] = {
   {"dispatch", wrap_emitter_dispatch},
   {"on", wrap_emitter_on},
@@ -4460,7 +4413,6 @@ static void emitter_t_init(lua_State* L) {
   static const struct luaL_Reg index_funcs[] = {
     {"__index", wrap_emitter_t_get_prop},
     {"__newindex", wrap_emitter_t_set_prop},
-    {"__gc", wrap_emitter_t_gc},
     {NULL, NULL}
   };
 
@@ -4523,17 +4475,6 @@ static int wrap_event_destroy(lua_State* L) {
 }
 
 
-static int wrap_event_t_gc(lua_State* L) {
-  userdata_info_t* udata = (userdata_info_t*)lua_touserdata(L, 1);
-  if(udata->data != NULL) {
-    event_destroy((event_t*)udata->data);
-    udata->data = NULL;
-    log_debug("call event_destroy\n");
-  }
-
-  return 0;
- }
-
 static const struct luaL_Reg event_t_member_funcs[] = {
   {"destroy", wrap_event_destroy},
   {NULL, NULL}
@@ -4588,7 +4529,6 @@ static void event_t_init(lua_State* L) {
   static const struct luaL_Reg index_funcs[] = {
     {"__index", wrap_event_t_get_prop},
     {"__newindex", wrap_event_t_set_prop},
-    {"__gc", wrap_event_t_gc},
     {NULL, NULL}
   };
 
@@ -4656,17 +4596,6 @@ static int wrap_named_value_destroy(lua_State* L) {
 }
 
 
-static int wrap_named_value_t_gc(lua_State* L) {
-  userdata_info_t* udata = (userdata_info_t*)lua_touserdata(L, 1);
-  if(udata->data != NULL) {
-    named_value_destroy((named_value_t*)udata->data);
-    udata->data = NULL;
-    log_debug("call named_value_destroy\n");
-  }
-
-  return 0;
- }
-
 static const struct luaL_Reg named_value_t_member_funcs[] = {
   {"set_name", wrap_named_value_set_name},
   {"set_value", wrap_named_value_set_value},
@@ -4716,7 +4645,6 @@ static void named_value_t_init(lua_State* L) {
   static const struct luaL_Reg index_funcs[] = {
     {"__index", wrap_named_value_t_get_prop},
     {"__newindex", wrap_named_value_t_set_prop},
-    {"__gc", wrap_named_value_t_gc},
     {NULL, NULL}
   };
 
@@ -4820,17 +4748,6 @@ static int wrap_rect_destroy(lua_State* L) {
 }
 
 
-static int wrap_rect_t_gc(lua_State* L) {
-  userdata_info_t* udata = (userdata_info_t*)lua_touserdata(L, 1);
-  if(udata->data != NULL) {
-    rect_destroy((rect_t*)udata->data);
-    udata->data = NULL;
-    log_debug("call rect_destroy\n");
-  }
-
-  return 0;
- }
-
 static const struct luaL_Reg rect_t_member_funcs[] = {
   {"set", wrap_rect_set},
   {"destroy", wrap_rect_destroy},
@@ -4893,7 +4810,6 @@ static void rect_t_init(lua_State* L) {
   static const struct luaL_Reg index_funcs[] = {
     {"__index", wrap_rect_t_get_prop},
     {"__newindex", wrap_rect_t_set_prop},
-    {"__gc", wrap_rect_t_gc},
     {NULL, NULL}
   };
 
@@ -5404,17 +5320,6 @@ static int wrap_value_cast(lua_State* L) {
 }
 
 
-static int wrap_value_t_gc(lua_State* L) {
-  userdata_info_t* udata = (userdata_info_t*)lua_touserdata(L, 1);
-  if(udata->data != NULL) {
-    value_destroy((value_t*)udata->data);
-    udata->data = NULL;
-    log_debug("call value_destroy\n");
-  }
-
-  return 0;
- }
-
 static const struct luaL_Reg value_t_member_funcs[] = {
   {"set_bool", wrap_value_set_bool},
   {"bool", wrap_value_bool},
@@ -5488,7 +5393,6 @@ static void value_t_init(lua_State* L) {
   static const struct luaL_Reg index_funcs[] = {
     {"__index", wrap_value_t_get_prop},
     {"__newindex", wrap_value_t_set_prop},
-    {"__gc", wrap_value_t_gc},
     {NULL, NULL}
   };
 
@@ -7758,6 +7662,14 @@ static void prop_change_event_t_init(lua_State* L) {
   luaL_openlib(L, "PropChangeEvent", static_funcs, 0);
   lua_settop(L, 0);
 }
+static int wrap_window_base_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)window_base_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/window_base_t/widget_t", "awtk.window_base_t");
+}
+
 
 static const struct luaL_Reg window_base_t_member_funcs[] = {
   {NULL, NULL}
@@ -7799,6 +7711,7 @@ static int wrap_window_base_t_get_prop(lua_State* L) {
 
 static void window_base_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
+    {"cast", wrap_window_base_cast},
     {NULL, NULL}
   };
 
@@ -7842,6 +7755,17 @@ static int wrap_window_manager_set_show_fps(lua_State* L) {
   return 1;
 }
 
+static int wrap_window_manager_set_screen_saver_time(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  uint32_t screen_saver_time = (uint32_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)window_manager_set_screen_saver_time(widget, screen_saver_time);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_window_manager_set_cursor(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -7856,6 +7780,7 @@ static int wrap_window_manager_set_cursor(lua_State* L) {
 
 static const struct luaL_Reg window_manager_t_member_funcs[] = {
   {"set_show_fps", wrap_window_manager_set_show_fps},
+  {"set_screen_saver_time", wrap_window_manager_set_screen_saver_time},
   {"set_cursor", wrap_window_manager_set_cursor},
   {NULL, NULL}
 };
@@ -8352,6 +8277,18 @@ static int wrap_object_set_prop_float(lua_State* L) {
   return 1;
 }
 
+static int wrap_object_copy_prop(lua_State* L) {
+  ret_t ret = 0;
+  object_t* obj = (object_t*)tk_checkudata(L, 1, "object_t");
+  object_t* src = (object_t*)tk_checkudata(L, 2, "object_t");
+  const char* name = (const char*)luaL_checkstring(L, 3);
+  ret = (ret_t)object_copy_prop(obj, src, name);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_object_foreach_prop(lua_State* L) {
   ret_t ret = 0;
   object_t* obj = (object_t*)tk_checkudata(L, 1, "object_t");
@@ -8422,17 +8359,6 @@ static int wrap_object_notify_changed(lua_State* L) {
 }
 
 
-static int wrap_object_t_gc(lua_State* L) {
-  userdata_info_t* udata = (userdata_info_t*)lua_touserdata(L, 1);
-  if(udata->data != NULL) {
-    object_unref((object_t*)udata->data);
-    udata->data = NULL;
-    log_debug("call object_unref\n");
-  }
-
-  return 0;
- }
-
 static const struct luaL_Reg object_t_member_funcs[] = {
   {"unref", wrap_object_unref},
   {"set_name", wrap_object_set_name},
@@ -8450,6 +8376,7 @@ static const struct luaL_Reg object_t_member_funcs[] = {
   {"set_prop_object", wrap_object_set_prop_object},
   {"set_prop_int", wrap_object_set_prop_int},
   {"set_prop_float", wrap_object_set_prop_float},
+  {"copy_prop", wrap_object_copy_prop},
   {"foreach_prop", wrap_object_foreach_prop},
   {"has_prop", wrap_object_has_prop},
   {"eval", wrap_object_eval},
@@ -8502,7 +8429,6 @@ static void object_t_init(lua_State* L) {
   static const struct luaL_Reg index_funcs[] = {
     {"__index", wrap_object_t_get_prop},
     {"__newindex", wrap_object_t_set_prop},
-    {"__gc", wrap_object_t_gc},
     {NULL, NULL}
   };
 
@@ -9190,6 +9116,28 @@ static int wrap_image_animation_pause(lua_State* L) {
   return 1;
 }
 
+static int wrap_image_animation_set_format(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  const char* format = (const char*)luaL_checkstring(L, 2);
+  ret = (ret_t)image_animation_set_format(widget, format);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_image_animation_set_unload_after_paint(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t unload_after_paint = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)image_animation_set_unload_after_paint(widget, unload_after_paint);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_image_animation_cast(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -9210,6 +9158,8 @@ static const struct luaL_Reg image_animation_t_member_funcs[] = {
   {"play", wrap_image_animation_play},
   {"stop", wrap_image_animation_stop},
   {"pause", wrap_image_animation_pause},
+  {"set_format", wrap_image_animation_set_format},
+  {"set_unload_after_paint", wrap_image_animation_set_unload_after_paint},
   {NULL, NULL}
 };
 
@@ -9259,6 +9209,16 @@ static int wrap_image_animation_t_get_prop(lua_State* L) {
   }
   else if(strcmp(name, "auto_play") == 0) {
     lua_pushboolean(L,(lua_Integer)(obj->auto_play));
+
+  return 1;
+  }
+  else if(strcmp(name, "unload_after_paint") == 0) {
+    lua_pushboolean(L,(lua_Integer)(obj->unload_after_paint));
+
+  return 1;
+  }
+  else if(strcmp(name, "format") == 0) {
+    lua_pushstring(L,(char*)(obj->format));
 
   return 1;
   }
@@ -9502,6 +9462,14 @@ static int wrap_rich_text_set_text(lua_State* L) {
   return 1;
 }
 
+static int wrap_rich_text_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)rich_text_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/rich_text_t/widget_t", "awtk.rich_text_t");
+}
+
 
 static const struct luaL_Reg rich_text_t_member_funcs[] = {
   {"set_text", wrap_rich_text_set_text},
@@ -9540,6 +9508,7 @@ static int wrap_rich_text_t_get_prop(lua_State* L) {
 static void rich_text_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_rich_text_create},
+    {"cast", wrap_rich_text_cast},
     {NULL, NULL}
   };
 
@@ -11380,6 +11349,14 @@ static int wrap_label_set_length(lua_State* L) {
   return 1;
 }
 
+static int wrap_label_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)label_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/label_t/widget_t", "awtk.label_t");
+}
+
 
 static const struct luaL_Reg label_t_member_funcs[] = {
   {"set_length", wrap_label_set_length},
@@ -11418,6 +11395,7 @@ static int wrap_label_t_get_prop(lua_State* L) {
 static void label_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"create", wrap_label_create},
+    {"cast", wrap_label_cast},
     {NULL, NULL}
   };
 
@@ -12053,17 +12031,6 @@ static int wrap_object_default_unref(lua_State* L) {
 }
 
 
-static int wrap_object_default_t_gc(lua_State* L) {
-  userdata_info_t* udata = (userdata_info_t*)lua_touserdata(L, 1);
-  if(udata->data != NULL) {
-    object_default_unref((object_default_t*)udata->data);
-    udata->data = NULL;
-    log_debug("call object_default_unref\n");
-  }
-
-  return 0;
- }
-
 static const struct luaL_Reg object_default_t_member_funcs[] = {
   {"unref", wrap_object_default_unref},
   {NULL, NULL}
@@ -12107,7 +12074,6 @@ static void object_default_t_init(lua_State* L) {
   static const struct luaL_Reg index_funcs[] = {
     {"__index", wrap_object_default_t_get_prop},
     {"__newindex", wrap_object_default_t_set_prop},
-    {"__gc", wrap_object_default_t_gc},
     {NULL, NULL}
   };
 

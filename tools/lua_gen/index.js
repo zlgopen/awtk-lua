@@ -380,7 +380,9 @@ class LuaGenerator {
       }
     });
 
-    return gcDeconstructor;
+    return null;
+    /*XXX: not work yet*/
+    /*return gcDeconstructor;*/
   }
 
   genGcMethod(cls) {
