@@ -9,12 +9,14 @@
 #include "base/canvas.h"
 #include "base/clip_board.h"
 #include "base/events.h"
+#include "base/font_manager.h"
 #include "base/idle.h"
 #include "base/image_manager.h"
 #include "base/input_method.h"
 #include "base/keys.h"
 #include "base/locale_info.h"
 #include "base/style.h"
+#include "base/theme.h"
 #include "base/timer.h"
 #include "base/types_def.h"
 #include "base/vgcanvas.h"
@@ -102,6 +104,8 @@ static int wrap_canvas_t_get_prop(lua_State* L);
 static int wrap_canvas_t_set_prop(lua_State* L);
 static int wrap_clip_board_t_get_prop(lua_State* L);
 static int wrap_clip_board_t_set_prop(lua_State* L);
+static int wrap_font_manager_t_get_prop(lua_State* L);
+static int wrap_font_manager_t_set_prop(lua_State* L);
 static int wrap_image_manager_t_get_prop(lua_State* L);
 static int wrap_image_manager_t_set_prop(lua_State* L);
 static int wrap_input_method_t_get_prop(lua_State* L);
@@ -110,6 +114,8 @@ static int wrap_locale_info_t_get_prop(lua_State* L);
 static int wrap_locale_info_t_set_prop(lua_State* L);
 static int wrap_style_t_get_prop(lua_State* L);
 static int wrap_style_t_set_prop(lua_State* L);
+static int wrap_theme_t_get_prop(lua_State* L);
+static int wrap_theme_t_set_prop(lua_State* L);
 static int wrap_vgcanvas_t_get_prop(lua_State* L);
 static int wrap_vgcanvas_t_set_prop(lua_State* L);
 static int wrap_widget_t_get_prop(lua_State* L);
@@ -1363,6 +1369,69 @@ static void event_type_t_init(lua_State* L) {
 
 }
 
+static int wrap_font_manager_unload_font(lua_State* L) {
+  ret_t ret = 0;
+  font_manager_t* fm = (font_manager_t*)tk_checkudata(L, 1, "font_manager_t");
+  char* name = (char*)luaL_checkstring(L, 2);
+  font_size_t size = (font_size_t)luaL_checkinteger(L, 3);
+  ret = (ret_t)font_manager_unload_font(fm, name, size);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+
+static const struct luaL_Reg font_manager_t_member_funcs[] = {
+  {"unload_font", wrap_font_manager_unload_font},
+  {NULL, NULL}
+};
+
+static int wrap_font_manager_t_set_prop(lua_State* L) {
+  font_manager_t* obj = (font_manager_t*)tk_checkudata(L, 1, "font_manager_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  (void)obj;
+  (void)name;
+  log_debug("%s: not supported %s\n", __FUNCTION__, name);
+  return 0;
+}
+
+static int wrap_font_manager_t_get_prop(lua_State* L) {
+  font_manager_t* obj = (font_manager_t*)tk_checkudata(L, 1, "font_manager_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  const luaL_Reg* ret = find_member(font_manager_t_member_funcs, name);
+
+  (void)obj;
+  (void)name;
+  if(ret) {
+    lua_pushcfunction(L, ret->func);
+    return 1;
+  }
+  else {
+    log_debug("%s: not supported %s\n", __FUNCTION__, name);
+    return 0;
+  }
+}
+
+static void font_manager_t_init(lua_State* L) {
+  static const struct luaL_Reg static_funcs[] = {
+    {NULL, NULL}
+  };
+
+  static const struct luaL_Reg index_funcs[] = {
+    {"__index", wrap_font_manager_t_get_prop},
+    {"__newindex", wrap_font_manager_t_set_prop},
+    {NULL, NULL}
+  };
+
+  luaL_newmetatable(L, "awtk.font_manager_t");
+  lua_pushstring(L, "__index");
+  lua_pushvalue(L, -2);
+  lua_settable(L, -3);
+  luaL_openlib(L, NULL, index_funcs, 0);
+  luaL_openlib(L, "FontManager", static_funcs, 0);
+  lua_settop(L, 0);
+}
 static int wrap_idle_remove(lua_State* L) {
   ret_t ret = 0;
   uint32_t idle_id = (uint32_t)luaL_checkinteger(L, 1);
@@ -2290,6 +2359,64 @@ static void style_t_init(lua_State* L) {
   lua_settable(L, -3);
   luaL_openlib(L, NULL, index_funcs, 0);
   luaL_openlib(L, "Style", static_funcs, 0);
+  lua_settop(L, 0);
+}
+static int wrap_theme(lua_State* L) {
+  theme_t* ret = NULL;
+  ret = (theme_t*)theme();
+
+  return tk_newuserdata(L, (void*)ret, "/theme_t", "awtk.theme_t");
+}
+
+
+static const struct luaL_Reg theme_t_member_funcs[] = {
+  {NULL, NULL}
+};
+
+static int wrap_theme_t_set_prop(lua_State* L) {
+  theme_t* obj = (theme_t*)tk_checkudata(L, 1, "theme_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  (void)obj;
+  (void)name;
+  log_debug("%s: not supported %s\n", __FUNCTION__, name);
+  return 0;
+}
+
+static int wrap_theme_t_get_prop(lua_State* L) {
+  theme_t* obj = (theme_t*)tk_checkudata(L, 1, "theme_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  const luaL_Reg* ret = find_member(theme_t_member_funcs, name);
+
+  (void)obj;
+  (void)name;
+  if(ret) {
+    lua_pushcfunction(L, ret->func);
+    return 1;
+  }
+  else {
+    log_debug("%s: not supported %s\n", __FUNCTION__, name);
+    return 0;
+  }
+}
+
+static void theme_t_init(lua_State* L) {
+  static const struct luaL_Reg static_funcs[] = {
+    {"instance", wrap_theme},
+    {NULL, NULL}
+  };
+
+  static const struct luaL_Reg index_funcs[] = {
+    {"__index", wrap_theme_t_get_prop},
+    {"__newindex", wrap_theme_t_set_prop},
+    {NULL, NULL}
+  };
+
+  luaL_newmetatable(L, "awtk.theme_t");
+  lua_pushstring(L, "__index");
+  lua_pushvalue(L, -2);
+  lua_settable(L, -3);
+  luaL_openlib(L, NULL, index_funcs, 0);
+  luaL_openlib(L, "Theme", static_funcs, 0);
   lua_settop(L, 0);
 }
 static int wrap_timer_remove(lua_State* L) {
@@ -8065,79 +8192,79 @@ static void tab_button_t_init(lua_State* L) {
   luaL_openlib(L, "TabButton", static_funcs, 0);
   lua_settop(L, 0);
 }
-static int wrap_image_set_image(lua_State* L) {
+static int wrap_image_base_set_image(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   char* name = (char*)luaL_checkstring(L, 2);
-  ret = (ret_t)image_set_image(widget, name);
+  ret = (ret_t)image_base_set_image(widget, name);
 
   lua_pushnumber(L,(lua_Number)(ret));
 
   return 1;
 }
 
-static int wrap_image_set_rotation(lua_State* L) {
+static int wrap_image_base_set_rotation(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   float_t rotation = (float_t)luaL_checknumber(L, 2);
-  ret = (ret_t)image_set_rotation(widget, rotation);
+  ret = (ret_t)image_base_set_rotation(widget, rotation);
 
   lua_pushnumber(L,(lua_Number)(ret));
 
   return 1;
 }
 
-static int wrap_image_set_scale(lua_State* L) {
+static int wrap_image_base_set_scale(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   float_t scale_x = (float_t)luaL_checknumber(L, 2);
   float_t scale_y = (float_t)luaL_checknumber(L, 3);
-  ret = (ret_t)image_set_scale(widget, scale_x, scale_y);
+  ret = (ret_t)image_base_set_scale(widget, scale_x, scale_y);
 
   lua_pushnumber(L,(lua_Number)(ret));
 
   return 1;
 }
 
-static int wrap_image_set_anchor(lua_State* L) {
+static int wrap_image_base_set_anchor(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   float_t anchor_x = (float_t)luaL_checknumber(L, 2);
   float_t anchor_y = (float_t)luaL_checknumber(L, 3);
-  ret = (ret_t)image_set_anchor(widget, anchor_x, anchor_y);
+  ret = (ret_t)image_base_set_anchor(widget, anchor_x, anchor_y);
 
   lua_pushnumber(L,(lua_Number)(ret));
 
   return 1;
 }
 
-static int wrap_image_set_selected(lua_State* L) {
+static int wrap_image_base_set_selected(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   bool_t selected = (bool_t)lua_toboolean(L, 2);
-  ret = (ret_t)image_set_selected(widget, selected);
+  ret = (ret_t)image_base_set_selected(widget, selected);
 
   lua_pushnumber(L,(lua_Number)(ret));
 
   return 1;
 }
 
-static int wrap_image_set_selectable(lua_State* L) {
+static int wrap_image_base_set_selectable(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   bool_t selectable = (bool_t)lua_toboolean(L, 2);
-  ret = (ret_t)image_set_selectable(widget, selectable);
+  ret = (ret_t)image_base_set_selectable(widget, selectable);
 
   lua_pushnumber(L,(lua_Number)(ret));
 
   return 1;
 }
 
-static int wrap_image_set_clickable(lua_State* L) {
+static int wrap_image_base_set_clickable(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   bool_t clickable = (bool_t)lua_toboolean(L, 2);
-  ret = (ret_t)image_set_clickable(widget, clickable);
+  ret = (ret_t)image_base_set_clickable(widget, clickable);
 
   lua_pushnumber(L,(lua_Number)(ret));
 
@@ -8154,13 +8281,13 @@ static int wrap_image_base_cast(lua_State* L) {
 
 
 static const struct luaL_Reg image_base_t_member_funcs[] = {
-  {"image_set_image", wrap_image_set_image},
-  {"image_set_rotation", wrap_image_set_rotation},
-  {"image_set_scale", wrap_image_set_scale},
-  {"image_set_anchor", wrap_image_set_anchor},
-  {"image_set_selected", wrap_image_set_selected},
-  {"image_set_selectable", wrap_image_set_selectable},
-  {"image_set_clickable", wrap_image_set_clickable},
+  {"set_image", wrap_image_base_set_image},
+  {"set_rotation", wrap_image_base_set_rotation},
+  {"set_scale", wrap_image_base_set_scale},
+  {"set_anchor", wrap_image_base_set_anchor},
+  {"set_selected", wrap_image_base_set_selected},
+  {"set_selectable", wrap_image_base_set_selectable},
+  {"set_clickable", wrap_image_base_set_clickable},
   {NULL, NULL}
 };
 
@@ -8730,7 +8857,7 @@ static int wrap_prop_change_event_t_get_prop(lua_State* L) {
   return 1;
   }
   else if(strcmp(name, "value") == 0) {
-    return tk_newuserdata(L, (void*)obj->value, "/value_t", "awtk.value_t");
+    return tk_newuserdata(L, (void*)obj->value, "", "awtk.const value_t");
   }
   else {
     return wrap_event_t_get_prop(L);
@@ -13367,6 +13494,7 @@ void luaL_openawtk(lua_State* L) {
   clip_board_data_type_t_init(L);
   clip_board_t_init(L);
   event_type_t_init(L);
+  font_manager_t_init(L);
   idle_t_init(L);
   image_manager_t_init(L);
   input_type_t_init(L);
@@ -13375,6 +13503,7 @@ void luaL_openawtk(lua_State* L) {
   locale_info_t_init(L);
   style_id_t_init(L);
   style_t_init(L);
+  theme_t_init(L);
   timer_t_init(L);
   align_v_t_init(L);
   align_h_t_init(L);

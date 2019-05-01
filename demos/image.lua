@@ -7,7 +7,7 @@ function create_image(win, image_name, draw_type)
 
   image:use_style('border');
   image:set_draw_type(draw_type);
-  image:set_image_name(image_name);
+  image:set_image(image_name);
 
   return image;
 end
@@ -31,7 +31,7 @@ function application_init()
   image = create_image(win, 'bricks', ImageDrawType.REPEAT_X);
   image = create_image(win, 'bricks', ImageDrawType.REPEAT_Y);
   
-  win.set_children_layout_params(win, "rows:3 cols:3 margin:2 spacing:2");
+  win.set_children_layout(win, "rows:3 cols:3 margin:2 spacing:2");
   win:layout();
 end
 
