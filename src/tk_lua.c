@@ -294,13 +294,13 @@ static int wrap_tk_quit(lua_State* L) {
   return 1;
 }
 
-static void tk_t_init(lua_State* L) {
+static void global_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
-    {"quit", wrap_tk_quit},
+    {"tk_quit", wrap_tk_quit},
     {NULL, NULL}
   };
 
-  luaL_openlib(L, "Tk", static_funcs, 0);
+  luaL_openlib(L, "Global", static_funcs, 0);
   lua_settop(L, 0);
 }
 
@@ -13483,7 +13483,7 @@ static void system_bar_t_init(lua_State* L) {
 
 void luaL_openawtk(lua_State* L) {
   globals_init(L);
-  tk_t_init(L);
+  global_t_init(L);
   asset_info_t_init(L);
   assets_manager_t_init(L);
   bitmap_format_t_init(L);
