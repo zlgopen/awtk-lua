@@ -296,7 +296,7 @@ static int wrap_tk_quit(lua_State* L) {
 
 static void global_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
-    {"tk_quit", wrap_tk_quit},
+    {"quit", wrap_tk_quit},
     {NULL, NULL}
   };
 

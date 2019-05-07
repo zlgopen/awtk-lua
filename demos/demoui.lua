@@ -37,7 +37,7 @@ function install_one(iter)
   elseif(str_contains(widget_name, 'exit'))
   then
     iter:on(EventType.CLICK, function(evt)
-      Tk.quit(); 
+      Global.quit(); 
     end)
   elseif(str_contains(widget_name, 'chinese'))
   then
