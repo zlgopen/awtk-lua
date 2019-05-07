@@ -3879,6 +3879,10 @@ static void widget_state_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_STATE_EMPTY);
   lua_settable(L, -3); 
 
+  lua_pushstring(L, "STATE_EMPTY_FOCUS");
+  lua_pushstring(L, WIDGET_STATE_EMPTY_FOCUS);
+  lua_settable(L, -3); 
+
   lua_pushstring(L, "STATE_ERROR");
   lua_pushstring(L, WIDGET_STATE_ERROR);
   lua_settable(L, -3); 
