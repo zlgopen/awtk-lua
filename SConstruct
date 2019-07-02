@@ -2,7 +2,12 @@ import os
 import sys
 import platform
 
+#for pc
 sys.path.insert(0, '../awtk/')
+
+#for linux-fb
+#sys.path.insert(0, '../awtk-linux-fb/')
+
 import awtk_config as awtk
 
 APP_ROOT    = os.path.normpath(os.getcwd())
@@ -28,6 +33,14 @@ DefaultEnvironment(
   CCFLAGS   = APP_CCFLAGS + awtk.CCFLAGS, 
   OS_SUBSYSTEM_CONSOLE=awtk.OS_SUBSYSTEM_CONSOLE,
   OS_SUBSYSTEM_WINDOWS=awtk.OS_SUBSYSTEM_WINDOWS)
+
+if awtk.OS_NAME != 'Windows':
+  DefaultEnvironment(CC=awtk.TOOLS_PREFIX+'gcc',
+    CXX=awtk.TOOLS_PREFIX+'g++',
+    LD=awtk.TOOLS_PREFIX+'g++',
+    AR=awtk.TOOLS_PREFIX+'ar',
+    STRIP=awtk.TOOLS_PREFIX+'strip')
+
 
 SConscript(['3rd/lua/SConscript', 'src/SConscript']);
 
