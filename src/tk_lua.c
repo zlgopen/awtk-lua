@@ -309,9 +309,39 @@ static int wrap_tk_quit(lua_State* L) {
   return 1;
 }
 
+static int wrap_tk_get_pointer_x(lua_State* L) {
+  int32_t ret = 0;
+  ret = (int32_t)tk_get_pointer_x();
+
+  lua_pushinteger(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_tk_get_pointer_y(lua_State* L) {
+  int32_t ret = 0;
+  ret = (int32_t)tk_get_pointer_y();
+
+  lua_pushinteger(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_tk_is_pointer_pressed(lua_State* L) {
+  bool_t ret = 0;
+  ret = (bool_t)tk_is_pointer_pressed();
+
+  lua_pushboolean(L,(lua_Integer)(ret));
+
+  return 1;
+}
+
 static void global_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
     {"quit", wrap_tk_quit},
+    {"get_pointer_x", wrap_tk_get_pointer_x},
+    {"get_pointer_y", wrap_tk_get_pointer_y},
+    {"is_pointer_pressed", wrap_tk_is_pointer_pressed},
     {NULL, NULL}
   };
 
