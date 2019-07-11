@@ -34,6 +34,7 @@
 #include "tkc/value.h"
 #include "progress_circle/progress_circle.h"
 #include "rich_text/rich_text.h"
+#include "scroll_label/hscroll_label.h"
 #include "scroll_view/list_item.h"
 #include "scroll_view/list_view_h.h"
 #include "scroll_view/list_view.h"
@@ -144,6 +145,8 @@ static int wrap_progress_circle_t_get_prop(lua_State* L);
 static int wrap_progress_circle_t_set_prop(lua_State* L);
 static int wrap_rich_text_t_get_prop(lua_State* L);
 static int wrap_rich_text_t_set_prop(lua_State* L);
+static int wrap_hscroll_label_t_get_prop(lua_State* L);
+static int wrap_hscroll_label_t_set_prop(lua_State* L);
 static int wrap_list_item_t_get_prop(lua_State* L);
 static int wrap_list_item_t_set_prop(lua_State* L);
 static int wrap_list_view_h_t_get_prop(lua_State* L);
@@ -3647,6 +3650,10 @@ static void widget_prop_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_PROP_COMPACT);
   lua_settable(L, -3); 
 
+  lua_pushstring(L, "SCROLLABLE");
+  lua_pushstring(L, WIDGET_PROP_SCROLLABLE);
+  lua_settable(L, -3); 
+
   lua_pushstring(L, "ICON");
   lua_pushstring(L, WIDGET_PROP_ICON);
   lua_settable(L, -3); 
@@ -4406,6 +4413,17 @@ static int wrap_widget_set_visible(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_set_visible_only(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t visible = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)widget_set_visible_only(widget, visible);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_widget_set_sensitive(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -4730,6 +4748,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
   {"lookup", wrap_widget_lookup},
   {"lookup_by_type", wrap_widget_lookup_by_type},
   {"set_visible", wrap_widget_set_visible},
+  {"set_visible_only", wrap_widget_set_visible_only},
   {"set_sensitive", wrap_widget_set_sensitive},
   {"on", wrap_widget_on},
   {"off", wrap_widget_off},
@@ -6602,6 +6621,222 @@ static void rich_text_t_init(lua_State* L) {
   luaL_openlib(L, "RichText", static_funcs, 0);
   lua_settop(L, 0);
 }
+static int wrap_hscroll_label_create(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* parent = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  xy_t x = (xy_t)luaL_checkinteger(L, 2);
+  xy_t y = (xy_t)luaL_checkinteger(L, 3);
+  wh_t w = (wh_t)luaL_checkinteger(L, 4);
+  wh_t h = (wh_t)luaL_checkinteger(L, 5);
+  ret = (widget_t*)hscroll_label_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/hscroll_label_t/widget_t", "awtk.hscroll_label_t");
+}
+
+static int wrap_hscroll_label_set_lull(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  int32_t lull = (int32_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)hscroll_label_set_lull(widget, lull);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_hscroll_label_set_duration(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  int32_t duration = (int32_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)hscroll_label_set_duration(widget, duration);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_hscroll_label_set_only_focus(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t only_focus = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)hscroll_label_set_only_focus(widget, only_focus);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_hscroll_label_set_loop(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t loop = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)hscroll_label_set_loop(widget, loop);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_hscroll_label_set_yoyo(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t yoyo = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)hscroll_label_set_yoyo(widget, yoyo);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_hscroll_label_set_ellipses(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t ellipses = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)hscroll_label_set_ellipses(widget, ellipses);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_hscroll_label_set_xoffset(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  int32_t xoffset = (int32_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)hscroll_label_set_xoffset(widget, xoffset);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_hscroll_label_start(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)hscroll_label_start(widget);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_hscroll_label_stop(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)hscroll_label_stop(widget);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_hscroll_label_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)hscroll_label_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/hscroll_label_t/widget_t", "awtk.hscroll_label_t");
+}
+
+
+static const struct luaL_Reg hscroll_label_t_member_funcs[] = {
+  {"set_lull", wrap_hscroll_label_set_lull},
+  {"set_duration", wrap_hscroll_label_set_duration},
+  {"set_only_focus", wrap_hscroll_label_set_only_focus},
+  {"set_loop", wrap_hscroll_label_set_loop},
+  {"set_yoyo", wrap_hscroll_label_set_yoyo},
+  {"set_ellipses", wrap_hscroll_label_set_ellipses},
+  {"set_xoffset", wrap_hscroll_label_set_xoffset},
+  {"start", wrap_hscroll_label_start},
+  {"stop", wrap_hscroll_label_stop},
+  {NULL, NULL}
+};
+
+static int wrap_hscroll_label_t_set_prop(lua_State* L) {
+  hscroll_label_t* obj = (hscroll_label_t*)tk_checkudata(L, 1, "hscroll_label_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  (void)obj;
+  (void)name;
+    return wrap_widget_t_set_prop(L);
+}
+
+static int wrap_hscroll_label_t_get_prop(lua_State* L) {
+  hscroll_label_t* obj = (hscroll_label_t*)tk_checkudata(L, 1, "hscroll_label_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  const luaL_Reg* ret = find_member(hscroll_label_t_member_funcs, name);
+
+  (void)obj;
+  (void)name;
+  if(ret) {
+    lua_pushcfunction(L, ret->func);
+    return 1;
+  }
+  if(strcmp(name, "only_focus") == 0) {
+    lua_pushboolean(L,(lua_Integer)(obj->only_focus));
+
+  return 1;
+  }
+  else if(strcmp(name, "loop") == 0) {
+    lua_pushboolean(L,(lua_Integer)(obj->loop));
+
+  return 1;
+  }
+  else if(strcmp(name, "yoyo") == 0) {
+    lua_pushboolean(L,(lua_Integer)(obj->yoyo));
+
+  return 1;
+  }
+  else if(strcmp(name, "ellipses") == 0) {
+    lua_pushboolean(L,(lua_Integer)(obj->ellipses));
+
+  return 1;
+  }
+  else if(strcmp(name, "lull") == 0) {
+    lua_pushinteger(L,(lua_Integer)(obj->lull));
+
+  return 1;
+  }
+  else if(strcmp(name, "duration") == 0) {
+    lua_pushinteger(L,(lua_Integer)(obj->duration));
+
+  return 1;
+  }
+  else if(strcmp(name, "xoffset") == 0) {
+    lua_pushinteger(L,(lua_Integer)(obj->xoffset));
+
+  return 1;
+  }
+  else if(strcmp(name, "text_w") == 0) {
+    lua_pushinteger(L,(lua_Integer)(obj->text_w));
+
+  return 1;
+  }
+  else {
+    return wrap_widget_t_get_prop(L);
+  }
+}
+
+static void hscroll_label_t_init(lua_State* L) {
+  static const struct luaL_Reg static_funcs[] = {
+    {"create", wrap_hscroll_label_create},
+    {"cast", wrap_hscroll_label_cast},
+    {NULL, NULL}
+  };
+
+  static const struct luaL_Reg index_funcs[] = {
+    {"__index", wrap_hscroll_label_t_get_prop},
+    {"__newindex", wrap_hscroll_label_t_set_prop},
+    {NULL, NULL}
+  };
+
+  luaL_newmetatable(L, "awtk.hscroll_label_t");
+  lua_pushstring(L, "__index");
+  lua_pushvalue(L, -2);
+  lua_settable(L, -3);
+  luaL_openlib(L, NULL, index_funcs, 0);
+  luaL_openlib(L, "HscrollLabel", static_funcs, 0);
+  lua_settop(L, 0);
+}
 static int wrap_list_item_create(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* parent = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -7530,7 +7765,7 @@ static int wrap_slide_indicator_set_anchor(lua_State* L) {
 static int wrap_slide_indicator_set_indicated_target(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  const char** indicated_target = (const char**)luaL_checkstring(L, 2);
+  const char* indicated_target = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)slide_indicator_set_indicated_target(widget, indicated_target);
 
   lua_pushnumber(L,(lua_Number)(ret));
@@ -10475,6 +10710,28 @@ static int wrap_tab_button_group_create(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/tab_button_group_t/widget_t", "awtk.tab_button_group_t");
 }
 
+static int wrap_tab_button_group_set_compact(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t compact = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)tab_button_group_set_compact(widget, compact);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_tab_button_group_set_scrollable(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t scrollable = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)tab_button_group_set_scrollable(widget, scrollable);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_tab_button_group_cast(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -10485,6 +10742,8 @@ static int wrap_tab_button_group_cast(lua_State* L) {
 
 
 static const struct luaL_Reg tab_button_group_t_member_funcs[] = {
+  {"set_compact", wrap_tab_button_group_set_compact},
+  {"set_scrollable", wrap_tab_button_group_set_scrollable},
   {NULL, NULL}
 };
 
@@ -10509,6 +10768,11 @@ static int wrap_tab_button_group_t_get_prop(lua_State* L) {
   }
   if(strcmp(name, "compact") == 0) {
     lua_pushboolean(L,(lua_Integer)(obj->compact));
+
+  return 1;
+  }
+  else if(strcmp(name, "scrollable") == 0) {
+    lua_pushboolean(L,(lua_Integer)(obj->scrollable));
 
   return 1;
   }
@@ -14430,6 +14694,7 @@ void luaL_openawtk(lua_State* L) {
   value_t_init(L);
   progress_circle_t_init(L);
   rich_text_t_init(L);
+  hscroll_label_t_init(L);
   list_item_t_init(L);
   list_view_h_t_init(L);
   list_view_t_init(L);
