@@ -3388,6 +3388,10 @@ static void widget_prop_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_PROP_NAME);
   lua_settable(L, -3); 
 
+  lua_pushstring(L, "TYPE");
+  lua_pushstring(L, WIDGET_PROP_TYPE);
+  lua_settable(L, -3); 
+
   lua_pushstring(L, "CLOSABLE");
   lua_pushstring(L, WIDGET_PROP_CLOSABLE);
   lua_settable(L, -3); 
@@ -3746,6 +3750,10 @@ static void widget_prop_t_init(lua_State* L) {
 
   lua_pushstring(L, "FOCUSABLE");
   lua_pushstring(L, WIDGET_PROP_FOCUSABLE);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "WITH_FOCUS_STATE");
+  lua_pushstring(L, WIDGET_PROP_WITH_FOCUS_STATE);
   lua_settable(L, -3); 
 
   lua_pushstring(L, "MOVE_FOCUS_NEXT_KEY");
@@ -4825,6 +4833,16 @@ static int wrap_widget_t_set_prop(lua_State* L) {
     obj->sensitive = sensitive;
     return 0;
   }
+  else if(strcmp(name, "focusable") == 0) {
+    bool_t focusable = (bool_t)lua_toboolean(L, 3);
+    obj->focusable = focusable;
+    return 0;
+  }
+  else if(strcmp(name, "with_focus_state") == 0) {
+    bool_t with_focus_state = (bool_t)lua_toboolean(L, 3);
+    obj->with_focus_state = with_focus_state;
+    return 0;
+  }
   else {
     log_debug("%s: not supported %s\n", __FUNCTION__, name);
     return 0;
@@ -4894,6 +4912,16 @@ static int wrap_widget_t_get_prop(lua_State* L) {
   }
   else if(strcmp(name, "sensitive") == 0) {
     lua_pushboolean(L,(lua_Integer)(obj->sensitive));
+
+  return 1;
+  }
+  else if(strcmp(name, "focusable") == 0) {
+    lua_pushboolean(L,(lua_Integer)(obj->focusable));
+
+  return 1;
+  }
+  else if(strcmp(name, "with_focus_state") == 0) {
+    lua_pushboolean(L,(lua_Integer)(obj->with_focus_state));
 
   return 1;
   }
@@ -8197,11 +8225,6 @@ static int wrap_switch_t_get_prop(lua_State* L) {
   }
   else if(strcmp(name, "max_xoffset_ratio") == 0) {
     lua_pushnumber(L,(lua_Number)(obj->max_xoffset_ratio));
-
-  return 1;
-  }
-  else if(strcmp(name, "round_radius") == 0) {
-    lua_pushinteger(L,(lua_Integer)(obj->round_radius));
 
   return 1;
   }
