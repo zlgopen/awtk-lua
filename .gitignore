@@ -8,8 +8,8 @@
 *.obj
 *.exe
 .sconsign.dblite
-lib
+/lib
 tags
-bin/run*
+/bin
 filter.json
 .vscode
