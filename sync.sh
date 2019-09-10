@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cd tools/lua_gen/;node index.js; cd -
+cp -fv ../awtk-binding/tools/code_gen/lua/output/tk_lua.c src/

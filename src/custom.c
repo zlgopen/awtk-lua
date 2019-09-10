@@ -280,3 +280,8 @@ static int wrap_locale_info_on(lua_State* L) {
     return 0;
   }
 }
+
+static int wrap_object_foreach_prop(lua_State* L) {
+  /*FIXME:*/
+  return 0;
+}
