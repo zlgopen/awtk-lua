@@ -1,4 +1,5 @@
 #include "base/enums.h"
+#include "tkc/emitter.h"
 #include "ui_loader/ui_builder_default.h"
 
 typedef struct _userdata_info_t {
@@ -103,6 +104,25 @@ static int wrap_widget_on(lua_State* L) {
   }
 }
 
+static int wrap_widget_on_with_tag(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  event_type_t type = (event_type_t)luaL_checkinteger(L, 2);
+  uint32_t tag = (uint32_t)luaL_checkinteger(L, 4);
+
+  if (lua_isfunction(L, 3)) {
+    int func = 0;
+    lua_pushvalue(L, 3);
+    func = luaL_ref(L, LUA_REGISTRYINDEX);
+    ret = (ret_t)widget_on_with_tag(widget, type, call_on_event, (char*)NULL + func, tag);
+    emitter_set_on_destroy(widget->emitter, ret, emitter_item_on_destroy, L);
+    lua_pushnumber(L, (lua_Number)ret);
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
 static int wrap_emitter_on(lua_State* L) {
   ret_t ret = 0;
   emitter_t* emitter = (emitter_t*)tk_checkudata(L, 1, "emitter_t");
@@ -120,6 +140,26 @@ static int wrap_emitter_on(lua_State* L) {
     return 0;
   }
 }
+
+static int wrap_emitter_on_with_tag(lua_State* L) {
+  ret_t ret = 0;
+  emitter_t* emitter = (emitter_t*)tk_checkudata(L, 1, "emitter_t");
+  event_type_t type = (event_type_t)luaL_checkinteger(L, 2);
+  uint32_t tag = (uint32_t)luaL_checkinteger(L, 4);
+
+  if (lua_isfunction(L, 3)) {
+    int func = 0;
+    lua_pushvalue(L, 3);
+    func = luaL_ref(L, LUA_REGISTRYINDEX);
+    ret = (ret_t)emitter_on_with_tag(emitter, type, call_on_event, (char*)NULL + func, tag);
+    emitter_set_on_destroy(emitter, ret, emitter_item_on_destroy, L);
+    lua_pushnumber(L, (lua_Number)ret);
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
 
 static ret_t call_on_each(void* ctx, const void* widget) {
   lua_State* L = (lua_State*)s_current_L;
