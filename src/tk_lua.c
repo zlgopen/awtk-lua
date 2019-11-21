@@ -143,6 +143,10 @@ static int wrap_timer_manager_t_get_prop(lua_State* L);
 static int wrap_timer_manager_t_set_prop(lua_State* L);
 static int wrap_rect_t_get_prop(lua_State* L);
 static int wrap_rect_t_set_prop(lua_State* L);
+static int wrap_pointf_t_get_prop(lua_State* L);
+static int wrap_pointf_t_set_prop(lua_State* L);
+static int wrap_point_t_get_prop(lua_State* L);
+static int wrap_point_t_set_prop(lua_State* L);
 static int wrap_named_value_t_get_prop(lua_State* L);
 static int wrap_named_value_t_set_prop(lua_State* L);
 static int wrap_idle_manager_t_get_prop(lua_State* L);
@@ -2717,6 +2721,10 @@ static void key_code_t_init(lua_State* L) {
   lua_pushinteger(L, TK_KEY_BACK);
   lua_settable(L, -3); 
 
+  lua_pushstring(L, "KEY_CANCEL");
+  lua_pushinteger(L, TK_KEY_CANCEL);
+  lua_settable(L, -3); 
+
 }
 
 static int wrap_locale_info(lua_State* L) {
@@ -4214,6 +4222,10 @@ static void widget_prop_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_PROP_AUTO_FIX);
   lua_settable(L, -3); 
 
+  lua_pushstring(L, "SELECT_NONE_WHEN_FOCUSED");
+  lua_pushstring(L, WIDGET_PROP_SELECT_NONE_WHEN_FOCUSED);
+  lua_settable(L, -3); 
+
   lua_pushstring(L, "X_MIN");
   lua_pushstring(L, WIDGET_PROP_X_MIN);
   lua_settable(L, -3); 
@@ -4232,6 +4244,10 @@ static void widget_prop_t_init(lua_State* L) {
 
   lua_pushstring(L, "MAX");
   lua_pushstring(L, WIDGET_PROP_MAX);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "GRAB_KEYS");
+  lua_pushstring(L, WIDGET_PROP_GRAB_KEYS);
   lua_settable(L, -3); 
 
   lua_pushstring(L, "ROW");
@@ -4430,12 +4446,28 @@ static void widget_prop_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_PROP_WITH_FOCUS_STATE);
   lua_settable(L, -3); 
 
+  lua_pushstring(L, "MOVE_FOCUS_PREV_KEY");
+  lua_pushstring(L, WIDGET_PROP_MOVE_FOCUS_PREV_KEY);
+  lua_settable(L, -3); 
+
   lua_pushstring(L, "MOVE_FOCUS_NEXT_KEY");
   lua_pushstring(L, WIDGET_PROP_MOVE_FOCUS_NEXT_KEY);
   lua_settable(L, -3); 
 
-  lua_pushstring(L, "MOVE_FOCUS_PREV_KEY");
-  lua_pushstring(L, WIDGET_PROP_MOVE_FOCUS_PREV_KEY);
+  lua_pushstring(L, "MOVE_FOCUS_UP_KEY");
+  lua_pushstring(L, WIDGET_PROP_MOVE_FOCUS_UP_KEY);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "MOVE_FOCUS_DOWN_KEY");
+  lua_pushstring(L, WIDGET_PROP_MOVE_FOCUS_DOWN_KEY);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "MOVE_FOCUS_LEFT_KEY");
+  lua_pushstring(L, WIDGET_PROP_MOVE_FOCUS_LEFT_KEY);
+  lua_settable(L, -3); 
+
+  lua_pushstring(L, "MOVE_FOCUS_RIGHT_KEY");
+  lua_pushstring(L, WIDGET_PROP_MOVE_FOCUS_RIGHT_KEY);
   lua_settable(L, -3); 
 
 }
@@ -5950,6 +5982,106 @@ static void rect_t_init(lua_State* L) {
   lua_settable(L, -3);
   luaL_openlib(L, NULL, index_funcs, 0);
   luaL_openlib(L, "Rect", static_funcs, 0);
+  lua_settop(L, 0);
+}
+
+static const struct luaL_Reg pointf_t_member_funcs[] = {
+  {NULL, NULL}
+};
+
+static int wrap_pointf_t_set_prop(lua_State* L) {
+  pointf_t* obj = (pointf_t*)tk_checkudata(L, 1, "pointf_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  (void)obj;
+  (void)name;
+  log_debug("%s: not supported %s\n", __FUNCTION__, name);
+  return 0;
+}
+
+static int wrap_pointf_t_get_prop(lua_State* L) {
+  pointf_t* obj = (pointf_t*)tk_checkudata(L, 1, "pointf_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  const luaL_Reg* ret = find_member(pointf_t_member_funcs, name);
+
+  (void)obj;
+  (void)name;
+  if(ret) {
+    lua_pushcfunction(L, ret->func);
+    return 1;
+  }
+  else {
+    log_debug("%s: not supported %s\n", __FUNCTION__, name);
+    return 0;
+  }
+}
+
+static void pointf_t_init(lua_State* L) {
+  static const struct luaL_Reg static_funcs[] = {
+    {NULL, NULL}
+  };
+
+  static const struct luaL_Reg index_funcs[] = {
+    {"__index", wrap_pointf_t_get_prop},
+    {"__newindex", wrap_pointf_t_set_prop},
+    {NULL, NULL}
+  };
+
+  luaL_newmetatable(L, "awtk.pointf_t");
+  lua_pushstring(L, "__index");
+  lua_pushvalue(L, -2);
+  lua_settable(L, -3);
+  luaL_openlib(L, NULL, index_funcs, 0);
+  luaL_openlib(L, "Pointf", static_funcs, 0);
+  lua_settop(L, 0);
+}
+
+static const struct luaL_Reg point_t_member_funcs[] = {
+  {NULL, NULL}
+};
+
+static int wrap_point_t_set_prop(lua_State* L) {
+  point_t* obj = (point_t*)tk_checkudata(L, 1, "point_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  (void)obj;
+  (void)name;
+  log_debug("%s: not supported %s\n", __FUNCTION__, name);
+  return 0;
+}
+
+static int wrap_point_t_get_prop(lua_State* L) {
+  point_t* obj = (point_t*)tk_checkudata(L, 1, "point_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  const luaL_Reg* ret = find_member(point_t_member_funcs, name);
+
+  (void)obj;
+  (void)name;
+  if(ret) {
+    lua_pushcfunction(L, ret->func);
+    return 1;
+  }
+  else {
+    log_debug("%s: not supported %s\n", __FUNCTION__, name);
+    return 0;
+  }
+}
+
+static void point_t_init(lua_State* L) {
+  static const struct luaL_Reg static_funcs[] = {
+    {NULL, NULL}
+  };
+
+  static const struct luaL_Reg index_funcs[] = {
+    {"__index", wrap_point_t_get_prop},
+    {"__newindex", wrap_point_t_set_prop},
+    {NULL, NULL}
+  };
+
+  luaL_newmetatable(L, "awtk.point_t");
+  lua_pushstring(L, "__index");
+  lua_pushvalue(L, -2);
+  lua_settable(L, -3);
+  luaL_openlib(L, NULL, index_funcs, 0);
+  luaL_openlib(L, "Point", static_funcs, 0);
   lua_settop(L, 0);
 }
 static void path_t_init(lua_State* L) {
@@ -15536,6 +15668,17 @@ static int wrap_edit_set_auto_fix(lua_State* L) {
   return 1;
 }
 
+static int wrap_edit_set_select_none_when_focused(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t select_none_when_focused = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)edit_set_select_none_when_focused(widget, select_none_when_focused);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_edit_set_input_type(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -15602,6 +15745,7 @@ static const struct luaL_Reg edit_t_member_funcs[] = {
   {"set_float_limit", wrap_edit_set_float_limit},
   {"set_readonly", wrap_edit_set_readonly},
   {"set_auto_fix", wrap_edit_set_auto_fix},
+  {"set_select_none_when_focused", wrap_edit_set_select_none_when_focused},
   {"set_input_type", wrap_edit_set_input_type},
   {"set_input_tips", wrap_edit_set_input_tips},
   {"set_password_visible", wrap_edit_set_password_visible},
@@ -15641,6 +15785,11 @@ static int wrap_edit_t_get_prop(lua_State* L) {
   }
   else if(strcmp(name, "auto_fix") == 0) {
     lua_pushboolean(L,(lua_Integer)(obj->auto_fix));
+
+  return 1;
+  }
+  else if(strcmp(name, "select_none_when_focused") == 0) {
+    lua_pushboolean(L,(lua_Integer)(obj->select_none_when_focused));
 
   return 1;
   }
@@ -16759,6 +16908,8 @@ void luaL_openawtk(lua_State* L) {
   timer_manager_t_init(L);
   time_now_t_init(L);
   rect_t_init(L);
+  pointf_t_init(L);
+  point_t_init(L);
   path_t_init(L);
   named_value_t_init(L);
   MIME_TYPE_init(L);
