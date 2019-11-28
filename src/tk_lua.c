@@ -837,6 +837,19 @@ static int wrap_canvas_draw_image(lua_State* L) {
   return 1;
 }
 
+static int wrap_canvas_draw_image_ex(lua_State* L) {
+  ret_t ret = 0;
+  canvas_t* c = (canvas_t*)tk_checkudata(L, 1, "canvas_t");
+  bitmap_t* img = (bitmap_t*)tk_checkudata(L, 2, "bitmap_t");
+  image_draw_type_t draw_type = (image_draw_type_t)luaL_checkinteger(L, 3);
+  rect_t* dst = (rect_t*)tk_checkudata(L, 4, "rect_t");
+  ret = (ret_t)canvas_draw_image_ex(c, img, draw_type, dst);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_canvas_get_vgcanvas(lua_State* L) {
   vgcanvas_t* ret = NULL;
   canvas_t* c = (canvas_t*)tk_checkudata(L, 1, "canvas_t");
@@ -886,6 +899,7 @@ static const struct luaL_Reg canvas_t_member_funcs[] = {
   {"draw_text_in_rect", wrap_canvas_draw_utf8_in_rect},
   {"draw_icon", wrap_canvas_draw_icon},
   {"draw_image", wrap_canvas_draw_image},
+  {"draw_image_ex", wrap_canvas_draw_image_ex},
   {"get_vgcanvas", wrap_canvas_get_vgcanvas},
   {"reset", wrap_canvas_reset},
   {NULL, NULL}
@@ -918,6 +932,21 @@ static int wrap_canvas_t_get_prop(lua_State* L) {
   }
   else if(strcmp(name, "oy") == 0) {
     lua_pushnumber(L,(lua_Number)(obj->oy));
+
+  return 1;
+  }
+  else if(strcmp(name, "font_name") == 0) {
+    lua_pushstring(L,(char*)(obj->font_name));
+
+  return 1;
+  }
+  else if(strcmp(name, "font_size") == 0) {
+    lua_pushinteger(L,(lua_Integer)(obj->font_size));
+
+  return 1;
+  }
+  else if(strcmp(name, "global_alpha") == 0) {
+    lua_pushinteger(L,(lua_Integer)(obj->global_alpha));
 
   return 1;
   }
