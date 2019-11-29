@@ -13,12 +13,12 @@ function on_click(evt)
   label:set_text('AWTK is cool!');
 
   ok:on(EventType.CLICK, function(evt) 
-    dlg:quit(1);
+    dlg:quit(DialogQuitCode.OK);
     return Ret.OK;
   end)
 
   cancel:on(EventType.CLICK, function(evt) 
-    dlg:quit(2);
+    dlg:quit(DialogQuitCode.CANCEL);
     return Ret.OK;
   end)
 

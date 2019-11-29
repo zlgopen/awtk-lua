@@ -5133,15 +5133,6 @@ static int wrap_widget_pause_animator(lua_State* L) {
   return 1;
 }
 
-static int wrap_widget_find_animator(lua_State* L) {
-  widget_animator_t* ret = NULL;
-  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* name = (char*)luaL_checkstring(L, 2);
-  ret = (widget_animator_t*)widget_find_animator(widget, name);
-
-  return tk_newuserdata(L, (void*)ret, "", "awtk.widget_animator_t");
-}
-
 static int wrap_widget_stop_animator(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -5469,6 +5460,16 @@ static int wrap_widget_destroy(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_unref(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)widget_unref(widget);
+
+  lua_pushnumber(L,(lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_widget_layout(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -5575,7 +5576,6 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
   {"start_animator", wrap_widget_start_animator},
   {"set_animator_time_scale", wrap_widget_set_animator_time_scale},
   {"pause_animator", wrap_widget_pause_animator},
-  {"find_animator", wrap_widget_find_animator},
   {"stop_animator", wrap_widget_stop_animator},
   {"destroy_animator", wrap_widget_destroy_animator},
   {"set_enable", wrap_widget_set_enable},
@@ -5609,6 +5609,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
   {"clone", wrap_widget_clone},
   {"equal", wrap_widget_equal},
   {"destroy", wrap_widget_destroy},
+  {"unref", wrap_widget_unref},
   {"layout", wrap_widget_layout},
   {"set_self_layout", wrap_widget_set_self_layout},
   {"set_children_layout", wrap_widget_set_children_layout},
