@@ -3,7 +3,7 @@ local v = Value.create()
 local a = 100;
 
 v:set_int8(100);
-print(v:int())
+print(v:int32())
 
 v:set_str("hello");
 print(v:str());

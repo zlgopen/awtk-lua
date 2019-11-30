@@ -1643,25 +1643,6 @@ static int wrap_value_set_float(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
 }
 
-static int wrap_value_float(lua_State* L) {
-  float_t ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  ret = (float_t)value_float(v);
-
-  lua_pushnumber(L,(lua_Number)(ret));
-
-  return 1;
-}
-
-static int wrap_value_set_float32(lua_State* L) {
-  value_t* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  float value = (float)luaL_checknumber(L, 2);
-  ret = (value_t*)value_set_float32(v, value);
-
-  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
-}
-
 static int wrap_value_float32(lua_State* L) {
   float ret = 0;
   value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
@@ -1716,16 +1697,6 @@ static int wrap_value_is_null(lua_State* L) {
   ret = (bool_t)value_is_null(value);
 
   lua_pushboolean(L,(lua_Integer)(ret));
-
-  return 1;
-}
-
-static int wrap_value_int(lua_State* L) {
-  int ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  ret = (int)value_int(v);
-
-  lua_pushinteger(L,(lua_Integer)(ret));
 
   return 1;
 }
@@ -1830,15 +1801,12 @@ static const struct luaL_Reg value_t_member_funcs[] = {
   {"set_uint64", wrap_value_set_uint64},
   {"uint64", wrap_value_uint64},
   {"set_float", wrap_value_set_float},
-  {"float", wrap_value_float},
-  {"set_float32", wrap_value_set_float32},
   {"float32", wrap_value_float32},
-  {"set_double", wrap_value_set_double},
-  {"double", wrap_value_double},
+  {"set_float64", wrap_value_set_double},
+  {"float64", wrap_value_double},
   {"set_str", wrap_value_dup_str},
   {"str", wrap_value_str},
   {"is_null", wrap_value_is_null},
-  {"int", wrap_value_int},
   {"set_int", wrap_value_set_int},
   {"set_object", wrap_value_set_object},
   {"object", wrap_value_object},
@@ -8036,7 +8004,7 @@ static const struct luaL_Reg text_selector_t_member_funcs[] = {
   {"set_range_options", wrap_text_selector_set_range_options},
   {"get_value", wrap_text_selector_get_value},
   {"set_value", wrap_text_selector_set_value},
-  {"get_text", wrap_text_selector_get_text},
+  {"get_text_value", wrap_text_selector_get_text},
   {"set_text", wrap_text_selector_set_text},
   {"set_selected_index", wrap_text_selector_set_selected_index},
   {"set_visible_nr", wrap_text_selector_set_visible_nr},
@@ -13589,16 +13557,6 @@ static void label_t_init(lua_State* L) {
   luaL_openlib(L, "Label", static_funcs, 0);
   lua_settop(L, 0);
 }
-static int wrap_style_mutable_get_name(lua_State* L) {
-  const char* ret = NULL;
-  style_t* s = (style_t*)tk_checkudata(L, 1, "style_t");
-  ret = (const char*)style_mutable_get_name(s);
-
-  lua_pushstring(L,(char*)(ret));
-
-  return 1;
-}
-
 static int wrap_style_mutable_set_name(lua_State* L) {
   ret_t ret = 0;
   style_t* s = (style_t*)tk_checkudata(L, 1, "style_t");
@@ -13642,7 +13600,6 @@ static int wrap_style_mutable_create(lua_State* L) {
 
 
 static const struct luaL_Reg style_mutable_t_member_funcs[] = {
-  {"get_name", wrap_style_mutable_get_name},
   {"set_name", wrap_style_mutable_set_name},
   {"set_int", wrap_style_mutable_set_int},
   {NULL, NULL}
@@ -15199,7 +15156,7 @@ static const struct luaL_Reg combo_box_t_member_funcs[] = {
   {"append_option", wrap_combo_box_append_option},
   {"set_options", wrap_combo_box_set_options},
   {"get_value", wrap_combo_box_get_value},
-  {"get_text", wrap_combo_box_get_text},
+  {"get_text_value", wrap_combo_box_get_text},
   {NULL, NULL}
 };
 
