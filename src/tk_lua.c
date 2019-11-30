@@ -1710,16 +1710,6 @@ static int wrap_value_str(lua_State* L) {
   return 1;
 }
 
-static int wrap_value_wstr(lua_State* L) {
-  const wchar_t* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  ret = (const wchar_t*)value_wstr(v);
-
-  lua_pushlightuserdata(L,(void*)(ret));
-
-  return 1;
-}
-
 static int wrap_value_is_null(lua_State* L) {
   bool_t ret = 0;
   value_t* value = (value_t*)tk_checkudata(L, 1, "value_t");
@@ -1785,60 +1775,6 @@ static int wrap_value_token(lua_State* L) {
   return 1;
 }
 
-static int wrap_value_set_sized_str(lua_State* L) {
-  value_t* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  char* str = (char*)luaL_checkstring(L, 2);
-  uint32_t size = (uint32_t)luaL_checkinteger(L, 3);
-  ret = (value_t*)value_set_sized_str(v, str, size);
-
-  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
-}
-
-static int wrap_value_sized_str(lua_State* L) {
-  sized_str_t* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  ret = (sized_str_t*)value_sized_str(v);
-
-  return tk_newuserdata(L, (void*)ret, "", "awtk.sized_str_t");
-}
-
-static int wrap_value_set_binary_data(lua_State* L) {
-  value_t* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  void* value = (void*)lua_touserdata(L, 2);
-  uint32_t size = (uint32_t)luaL_checkinteger(L, 3);
-  ret = (value_t*)value_set_binary_data(v, value, size);
-
-  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
-}
-
-static int wrap_value_binary_data(lua_State* L) {
-  binary_data_t* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  ret = (binary_data_t*)value_binary_data(v);
-
-  return tk_newuserdata(L, (void*)ret, "", "awtk.binary_data_t");
-}
-
-static int wrap_value_set_ubjson(lua_State* L) {
-  value_t* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  void* value = (void*)lua_touserdata(L, 2);
-  uint32_t size = (uint32_t)luaL_checkinteger(L, 3);
-  ret = (value_t*)value_set_ubjson(v, value, size);
-
-  return tk_newuserdata(L, (void*)ret, "/value_t", "awtk.value_t");
-}
-
-static int wrap_value_ubjson(lua_State* L) {
-  binary_data_t* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  ret = (binary_data_t*)value_ubjson(v);
-
-  return tk_newuserdata(L, (void*)ret, "", "awtk.binary_data_t");
-}
-
 static int wrap_value_create(lua_State* L) {
   value_t* ret = NULL;
   ret = (value_t*)value_create();
@@ -1901,7 +1837,6 @@ static const struct luaL_Reg value_t_member_funcs[] = {
   {"double", wrap_value_double},
   {"set_str", wrap_value_dup_str},
   {"str", wrap_value_str},
-  {"wstr", wrap_value_wstr},
   {"is_null", wrap_value_is_null},
   {"int", wrap_value_int},
   {"set_int", wrap_value_set_int},
@@ -1909,12 +1844,6 @@ static const struct luaL_Reg value_t_member_funcs[] = {
   {"object", wrap_value_object},
   {"set_token", wrap_value_set_token},
   {"token", wrap_value_token},
-  {"set_sized_str", wrap_value_set_sized_str},
-  {"sized_str", wrap_value_sized_str},
-  {"set_binary_data", wrap_value_set_binary_data},
-  {"binary_data", wrap_value_binary_data},
-  {"set_ubjson", wrap_value_set_ubjson},
-  {"ubjson", wrap_value_ubjson},
   {"destroy", wrap_value_destroy},
   {"reset", wrap_value_reset},
   {NULL, NULL}
@@ -5066,11 +4995,11 @@ static int wrap_widget_set_theme(lua_State* L) {
   return 1;
 }
 
-static int wrap_widget_set_cursor(lua_State* L) {
+static int wrap_widget_set_pointer_cursor(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   char* cursor = (char*)luaL_checkstring(L, 2);
-  ret = (ret_t)widget_set_cursor(widget, cursor);
+  ret = (ret_t)widget_set_pointer_cursor(widget, cursor);
 
   lua_pushnumber(L,(lua_Number)(ret));
 
@@ -5570,7 +5499,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
   {"get_text", wrap_widget_get_text},
   {"set_name", wrap_widget_set_name},
   {"set_theme", wrap_widget_set_theme},
-  {"set_cursor", wrap_widget_set_cursor},
+  {"set_pointer_cursor", wrap_widget_set_pointer_cursor},
   {"set_animation", wrap_widget_set_animation},
   {"create_animator", wrap_widget_create_animator},
   {"start_animator", wrap_widget_start_animator},
