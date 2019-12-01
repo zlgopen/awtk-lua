@@ -6683,8 +6683,7 @@ static int wrap_event_cast(lua_State* L) {
 static int wrap_event_create(lua_State* L) {
   event_t* ret = NULL;
   uint32_t type = (uint32_t)luaL_checkinteger(L, 1);
-  void* target = (void*)lua_touserdata(L, 2);
-  ret = (event_t*)event_create(type, target);
+  ret = (event_t*)event_create(type);
 
   return tk_newuserdata(L, (void*)ret, "/event_t", "awtk.event_t");
 }
@@ -11208,18 +11207,6 @@ static int wrap_object_set_prop_str(lua_State* L) {
   return 1;
 }
 
-static int wrap_object_set_prop_pointer(lua_State* L) {
-  ret_t ret = 0;
-  object_t* obj = (object_t*)tk_checkudata(L, 1, "object_t");
-  const char* name = (const char*)luaL_checkstring(L, 2);
-  void* value = (void*)lua_touserdata(L, 3);
-  ret = (ret_t)object_set_prop_pointer(obj, name, value);
-
-  lua_pushnumber(L,(lua_Number)(ret));
-
-  return 1;
-}
-
 static int wrap_object_set_prop_object(lua_State* L) {
   ret_t ret = 0;
   object_t* obj = (object_t*)tk_checkudata(L, 1, "object_t");
@@ -11421,7 +11408,6 @@ static const struct luaL_Reg object_t_member_funcs[] = {
   {"remove_prop", wrap_object_remove_prop},
   {"set_prop", wrap_object_set_prop},
   {"set_prop_str", wrap_object_set_prop_str},
-  {"set_prop_pointer", wrap_object_set_prop_pointer},
   {"set_prop_object", wrap_object_set_prop_object},
   {"set_prop_int", wrap_object_set_prop_int},
   {"set_prop_bool", wrap_object_set_prop_bool},
