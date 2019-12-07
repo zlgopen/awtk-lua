@@ -140,7 +140,6 @@ function application_init()
   show_preload_res_window()
 end
 
-tk_ext_widgets_init()
 application_init()
 
 
