@@ -30,7 +30,7 @@ scons
 ## 运行
 
 ```
-./bin/runScript demos/xxxx.lua
+./bin/awtkRun demos/xxxx.lua
 ```
 > 请把xxxx.lua换成具体的lua文件。
 

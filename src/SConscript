@@ -4,10 +4,7 @@ import sys
 env=DefaultEnvironment().Clone()
 BIN_DIR=os.environ['BIN_DIR'];
 
-print(env['LIBPATH'])
-
-env['LIBS'] = ['assets', 'lua'] + env['LIBS']
-env.Program(os.path.join(BIN_DIR, 'runScript'), ["run_lua.c", 'tk_lua.c'])
+env.Program(os.path.join(BIN_DIR, 'awtkRun'), ['main.c', 'tk_lua.c', 'assets.c'])
 
 
 

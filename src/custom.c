@@ -161,7 +161,7 @@ static int to_wstr(lua_State* L) {
   uint32_t size = (strlen(str) + 1) * sizeof(wchar_t);
   wchar_t* p = (wchar_t*)lua_newuserdata(L, size);
 
-  utf8_to_utf16(str, p, size);
+  tk_utf8_to_utf16(str, p, size);
   lua_pushlightuserdata(L, p);
 
   return 1;
@@ -172,7 +172,7 @@ static int to_str(lua_State* L) {
   uint32_t size = (wcslen(str) + 1) * 3;
   char* p = (char*)lua_newuserdata(L, size);
 
-  utf8_from_utf16(str, p, size);
+  tk_utf8_from_utf16(str, p, size);
   lua_pushstring(L, p);
 
   return 1;
@@ -262,23 +262,3 @@ static int wrap_idle_add(lua_State* L) {
     return 0;
   }
 }
-
-static int wrap_locale_info_on(lua_State* L) {
-  ret_t ret = 0;
-  locale_info_t* locale_info = (locale_info_t*)tk_checkudata(L, 1, "locale_info_t");
-  event_type_t type = (event_type_t)luaL_checkinteger(L, 2);
-
-  if (lua_isfunction(L, 3)) {
-    int func = 0;
-    lua_pushvalue(L, 3);
-    func = luaL_ref(L, LUA_REGISTRYINDEX);
-    ret = (ret_t)locale_info_on(locale_info, type, call_on_event, (char*)NULL + func);
-    emitter_set_on_destroy(locale_info->emitter, ret, emitter_item_on_destroy, L);
-    lua_pushnumber(L, (lua_Number)ret);
-
-    return 1;
-  } else {
-    return 0;
-  }
-}
-

@@ -20,11 +20,11 @@ os.environ['APP_ROOT'] = APP_ROOT;
 os.environ['BIN_DIR'] = APP_BIN_DIR;
 os.environ['LIB_DIR'] = APP_LIB_DIR;
 
-APP_LIBS = ['assets']
+APP_LIBS = ['lua']
+APP_CFLAGS = '-DLUA_COMPAT_MODULE '
+APP_CCFLAGS = APP_CFLAGS
 APP_LIBPATH = [APP_LIB_DIR]
 APP_CPPPATH = [APP_3RD_ROOT]
-APP_CFLAGS = '-DRES_ROOT=\"\\\"'+RES_ROOT+'\\\"\" -DLUA_COMPAT_MODULE '
-APP_CCFLAGS = '-DRES_ROOT=\"\\\"'+RES_ROOT+'\\\"\" -DLUA_COMPAT_MODULE '
 
 if hasattr(awtk, 'CC'):
   DefaultEnvironment(
