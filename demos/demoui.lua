@@ -95,6 +95,7 @@ function open_window(name, to_close)
 end
 
 function show_preload_res_window()
+  Window.open('system_bar');
   local win = Window.open('preload');
   local interval = 500 / #s_preload_res; 
   local bar = win:lookup('bar', TRUE);

@@ -101,6 +101,7 @@
 #include "tkc/object_default.h"
 #include "widgets/image.h"
 #include "combo_box_ex/combo_box_ex.h"
+#include "widgets/calibration_win.h"
 #include "widgets/popup.h"
 #include "svg_image/svg_image.h"
 #include "tkc/timer_info.h"
@@ -301,6 +302,8 @@ static int wrap_image_t_get_prop(lua_State* L);
 static int wrap_image_t_set_prop(lua_State* L);
 static int wrap_combo_box_ex_t_get_prop(lua_State* L);
 static int wrap_combo_box_ex_t_set_prop(lua_State* L);
+static int wrap_calibration_win_t_get_prop(lua_State* L);
+static int wrap_calibration_win_t_set_prop(lua_State* L);
 static int wrap_popup_t_get_prop(lua_State* L);
 static int wrap_popup_t_set_prop(lua_State* L);
 static int wrap_svg_image_t_get_prop(lua_State* L);
@@ -5738,6 +5741,46 @@ static int wrap_widget_unref(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_is_system_bar(lua_State* L) {
+  bool_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (bool_t)widget_is_system_bar(widget);
+
+  lua_pushboolean(L, (lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_widget_is_normal_window(lua_State* L) {
+  bool_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (bool_t)widget_is_normal_window(widget);
+
+  lua_pushboolean(L, (lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_widget_is_dialog(lua_State* L) {
+  bool_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (bool_t)widget_is_dialog(widget);
+
+  lua_pushboolean(L, (lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_widget_is_popup(lua_State* L) {
+  bool_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (bool_t)widget_is_popup(widget);
+
+  lua_pushboolean(L, (lua_Integer)(ret));
+
+  return 1;
+}
+
 static int wrap_widget_layout(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -5884,6 +5927,10 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
     {"equal", wrap_widget_equal},
     {"destroy", wrap_widget_destroy},
     {"unref", wrap_widget_unref},
+    {"is_system_bar", wrap_widget_is_system_bar},
+    {"is_normal_window", wrap_widget_is_normal_window},
+    {"is_dialog", wrap_widget_is_dialog},
+    {"is_popup", wrap_widget_is_popup},
     {"layout", wrap_widget_layout},
     {"set_self_layout", wrap_widget_set_self_layout},
     {"set_children_layout", wrap_widget_set_children_layout},
@@ -15186,6 +15233,55 @@ static void combo_box_ex_t_init(lua_State* L) {
   luaL_openlib(L, "ComboBoxEx", static_funcs, 0);
   lua_settop(L, 0);
 }
+static int wrap_calibration_win_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)calibration_win_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/calibration_win_t/window_base_t/widget_t",
+                        "awtk.calibration_win_t");
+}
+
+static const struct luaL_Reg calibration_win_t_member_funcs[] = {{NULL, NULL}};
+
+static int wrap_calibration_win_t_set_prop(lua_State* L) {
+  calibration_win_t* obj = (calibration_win_t*)tk_checkudata(L, 1, "calibration_win_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  (void)obj;
+  (void)name;
+  return wrap_window_base_t_set_prop(L);
+}
+
+static int wrap_calibration_win_t_get_prop(lua_State* L) {
+  calibration_win_t* obj = (calibration_win_t*)tk_checkudata(L, 1, "calibration_win_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  const luaL_Reg* ret = find_member(calibration_win_t_member_funcs, name);
+
+  (void)obj;
+  (void)name;
+  if (ret) {
+    lua_pushcfunction(L, ret->func);
+    return 1;
+  } else {
+    return wrap_window_base_t_get_prop(L);
+  }
+}
+
+static void calibration_win_t_init(lua_State* L) {
+  static const struct luaL_Reg static_funcs[] = {{"cast", wrap_calibration_win_cast}, {NULL, NULL}};
+
+  static const struct luaL_Reg index_funcs[] = {{"__index", wrap_calibration_win_t_get_prop},
+                                                {"__newindex", wrap_calibration_win_t_set_prop},
+                                                {NULL, NULL}};
+
+  luaL_newmetatable(L, "awtk.calibration_win_t");
+  lua_pushstring(L, "__index");
+  lua_pushvalue(L, -2);
+  lua_settable(L, -3);
+  luaL_openlib(L, NULL, index_funcs, 0);
+  luaL_openlib(L, "CalibrationWin", static_funcs, 0);
+  lua_settop(L, 0);
+}
 static int wrap_popup_create(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* parent = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -15566,7 +15662,7 @@ static int wrap_window_set_fullscreen(lua_State* L) {
 
 static int wrap_window_open(lua_State* L) {
   widget_t* ret = NULL;
-  char* name = (char*)luaL_checkstring(L, 1);
+  const char* name = (const char*)luaL_checkstring(L, 1);
   ret = (widget_t*)window_open(name);
 
   return tk_newuserdata(L, (void*)ret, "/window_t/window_base_t/widget_t", "awtk.window_t");
@@ -15574,7 +15670,7 @@ static int wrap_window_open(lua_State* L) {
 
 static int wrap_window_open_and_close(lua_State* L) {
   widget_t* ret = NULL;
-  char* name = (char*)luaL_checkstring(L, 1);
+  const char* name = (const char*)luaL_checkstring(L, 1);
   widget_t* to_close = (widget_t*)tk_checkudata(L, 2, "widget_t");
   ret = (widget_t*)window_open_and_close(name, to_close);
 
@@ -16055,6 +16151,7 @@ void luaL_openawtk(lua_State* L) {
   object_default_t_init(L);
   image_t_init(L);
   combo_box_ex_t_init(L);
+  calibration_win_t_init(L);
   popup_t_init(L);
   svg_image_t_init(L);
   timer_info_t_init(L);
