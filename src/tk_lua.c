@@ -3747,6 +3747,17 @@ static int wrap_vgcanvas_close_path(lua_State* L) {
   return 1;
 }
 
+static int wrap_vgcanvas_path_winding(lua_State* L) {
+  ret_t ret = 0;
+  vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
+  bool_t dir = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)vgcanvas_path_winding(vg, dir);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_vgcanvas_rotate(lua_State* L) {
   ret_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
@@ -4089,6 +4100,7 @@ static const struct luaL_Reg vgcanvas_t_member_funcs[] = {
     {"rounded_rect", wrap_vgcanvas_rounded_rect},
     {"ellipse", wrap_vgcanvas_ellipse},
     {"close_path", wrap_vgcanvas_close_path},
+    {"path_winding", wrap_vgcanvas_path_winding},
     {"rotate", wrap_vgcanvas_rotate},
     {"scale", wrap_vgcanvas_scale},
     {"translate", wrap_vgcanvas_translate},
@@ -5102,6 +5114,16 @@ static int wrap_widget_index_of(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_close_window(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)widget_close_window(widget);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_widget_move(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -5867,6 +5889,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
     {"count_children", wrap_widget_count_children},
     {"get_child", wrap_widget_get_child},
     {"index_of", wrap_widget_index_of},
+    {"close_window", wrap_widget_close_window},
     {"move", wrap_widget_move},
     {"resize", wrap_widget_resize},
     {"move_resize", wrap_widget_move_resize},
