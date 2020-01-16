@@ -6,7 +6,9 @@ function application_init()
   chooser:set_text("chooser");
   chooser:set_self_layout_params("center", "middle:-50", "50%", "30");
   chooser:on(EventType.CLICK, function(evt) 
-    local file_chooser = FileChooser.create("./", ".txt");
+    local file_chooser = FileChooser.create();
+
+    file_chooser:set_init_dir("./");
 
     file_chooser:on(EventType.DONE, function(evt) 
       print("dir:" .. file_chooser:get_dir());

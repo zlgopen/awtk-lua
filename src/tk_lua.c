@@ -12143,17 +12143,37 @@ static void label_t_init(lua_State* L) {
 }
 static int wrap_file_chooser_create(lua_State* L) {
   file_chooser_t* ret = NULL;
-  const char* init_dir = (const char*)luaL_checkstring(L, 1);
-  const char* filter = (const char*)luaL_checkstring(L, 2);
-  ret = (file_chooser_t*)file_chooser_create(init_dir, filter);
+  ret = (file_chooser_t*)file_chooser_create();
 
   return tk_newuserdata(L, (void*)ret, "/file_chooser_t/emitter_t", "awtk.file_chooser_t");
 }
 
+static int wrap_file_chooser_set_init_dir(lua_State* L) {
+  ret_t ret = 0;
+  file_chooser_t* chooser = (file_chooser_t*)tk_checkudata(L, 1, "file_chooser_t");
+  const char* init_dir = (const char*)luaL_checkstring(L, 2);
+  ret = (ret_t)file_chooser_set_init_dir(chooser, init_dir);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_file_chooser_set_filter(lua_State* L) {
+  ret_t ret = 0;
+  file_chooser_t* chooser = (file_chooser_t*)tk_checkudata(L, 1, "file_chooser_t");
+  const char* filter = (const char*)luaL_checkstring(L, 2);
+  ret = (ret_t)file_chooser_set_filter(chooser, filter);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_file_chooser_cast(lua_State* L) {
   file_chooser_t* ret = NULL;
-  void* data = (void*)lua_touserdata(L, 1);
-  ret = (file_chooser_t*)file_chooser_cast(data);
+  file_chooser_t* chooser = (file_chooser_t*)tk_checkudata(L, 1, "file_chooser_t");
+  ret = (file_chooser_t*)file_chooser_cast(chooser);
 
   return tk_newuserdata(L, (void*)ret, "/file_chooser_t/emitter_t", "awtk.file_chooser_t");
 }
@@ -12219,6 +12239,8 @@ static int wrap_file_chooser_is_aborted(lua_State* L) {
 }
 
 static const struct luaL_Reg file_chooser_t_member_funcs[] = {
+    {"set_init_dir", wrap_file_chooser_set_init_dir},
+    {"set_filter", wrap_file_chooser_set_filter},
     {"choose_file_for_save", wrap_file_chooser_choose_file_for_save},
     {"choose_file_for_open", wrap_file_chooser_choose_file_for_open},
     {"choose_folder", wrap_file_chooser_choose_folder},
