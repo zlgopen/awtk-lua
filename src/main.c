@@ -23,30 +23,38 @@
 #include <lua/lualib.h>
 
 #include "awtk.h"
-#include "demos/assets.h"
-#include "ext_widgets/ext_widgets.h"
 
 extern void luaL_openawtk(lua_State* L);
 
-int main(int argc, char* argv[]) {
-  lua_State* L = luaL_newstate();
-  const char* lua_file = argc == 2 ? argv[1] : "./demos/demoui.lua";
+static lua_State* L = NULL;
+static const char* script_file = NULL;
 
+static ret_t on_cmd_line(int argc, char* argv[]) {
+  script_file = argc == 2 ? argv[1] : "./demos/demoui.lua";
+
+  return RET_OK;
+}
+
+static ret_t application_init() {
+  L = luaL_newstate();
   luaL_openlibs(L);
   luaL_openawtk(L);
 
-  tk_init(320, 480, APP_SIMULATOR, "AWTK-LUA", NULL);
-  tk_ext_widgets_init();
-  assets_init();
-
-  if (luaL_dofile(L, lua_file)) {
+  if (luaL_dofile(L, script_file)) {
     fprintf(stderr, "%s\n", lua_tostring(L, -1));
     lua_pop(L, 1);
-  } else {
-    tk_run();
+    exit(0);
   }
 
+  return RET_OK;
+}
+
+static ret_t application_exit() {
   lua_close(L);
 
-  return 0;
+  return RET_OK;
 }
+
+#define ON_CMD_LINE on_cmd_line
+
+#include "awtk_main.inc"
