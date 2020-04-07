@@ -42,12 +42,12 @@ function install_one(iter)
   elseif(str_contains(widget_name, 'chinese'))
   then
     iter:on(EventType.CLICK, function(evt)
-      Tklocale.instance():change('zh', 'CN');
+      LocaleInfo.instance():change('zh', 'CN');
     end)
   elseif(str_contains(widget_name, 'english'))
   then
     iter:on(EventType.CLICK, function(evt)
-      Tklocale.instance():change('en', 'US');
+      LocaleInfo.instance():change('en', 'US');
     end)
   elseif(str_contains(widget_name, 'show_fps'))
   then
