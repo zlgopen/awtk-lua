@@ -4673,8 +4673,8 @@ static void widget_prop_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_PROP_CLOSABLE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "CURSOR");
-  lua_pushstring(L, WIDGET_PROP_CURSOR);
+  lua_pushstring(L, "POINTER_CURSOR");
+  lua_pushstring(L, WIDGET_PROP_POINTER_CURSOR);
   lua_settable(L, -3);
 
   lua_pushstring(L, "VALUE");
@@ -4771,6 +4771,10 @@ static void widget_prop_t_init(lua_State* L) {
 
   lua_pushstring(L, "MIN");
   lua_pushstring(L, WIDGET_PROP_MIN);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "ACTION_TEXT");
+  lua_pushstring(L, WIDGET_PROP_ACTION_TEXT);
   lua_settable(L, -3);
 
   lua_pushstring(L, "TIPS");
@@ -5433,6 +5437,10 @@ static void widget_state_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_STATE_OVER_OF_CHECKED);
   lua_settable(L, -3);
 
+  lua_pushstring(L, "STATE_DISABLE_OF_CHECKED");
+  lua_pushstring(L, WIDGET_STATE_DISABLE_OF_CHECKED);
+  lua_settable(L, -3);
+
   lua_pushstring(L, "STATE_FOCUSED_OF_CHECKED");
   lua_pushstring(L, WIDGET_STATE_FOCUSED_OF_CHECKED);
   lua_settable(L, -3);
@@ -5449,8 +5457,62 @@ static void widget_state_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_STATE_OVER_OF_ACTIVE);
   lua_settable(L, -3);
 
+  lua_pushstring(L, "STATE_DISABLE_OF_ACTIVE");
+  lua_pushstring(L, WIDGET_STATE_DISABLE_OF_ACTIVE);
+  lua_settable(L, -3);
+
   lua_pushstring(L, "STATE_FOCUSED_OF_ACTIVE");
   lua_pushstring(L, WIDGET_STATE_FOCUSED_OF_ACTIVE);
+  lua_settable(L, -3);
+}
+
+static void widget_cursor_t_init(lua_State* L) {
+  lua_newtable(L);
+  lua_setglobal(L, "WidgetCursor");
+  lua_getglobal(L, "WidgetCursor");
+
+  lua_pushstring(L, "CURSOR_DEFAULT");
+  lua_pushstring(L, WIDGET_CURSOR_DEFAULT);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "CURSOR_EDIT");
+  lua_pushstring(L, WIDGET_CURSOR_EDIT);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "CURSOR_HAND");
+  lua_pushstring(L, WIDGET_CURSOR_HAND);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "CURSOR_WAIT");
+  lua_pushstring(L, WIDGET_CURSOR_WAIT);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "CURSOR_CROSS");
+  lua_pushstring(L, WIDGET_CURSOR_CROSS);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "CURSOR_NO");
+  lua_pushstring(L, WIDGET_CURSOR_NO);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "CURSOR_SIZENWSE");
+  lua_pushstring(L, WIDGET_CURSOR_SIZENWSE);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "CURSOR_SIZENESW");
+  lua_pushstring(L, WIDGET_CURSOR_SIZENESW);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "CURSOR_SIZEWE");
+  lua_pushstring(L, WIDGET_CURSOR_SIZEWE);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "CURSOR_SIZENS");
+  lua_pushstring(L, WIDGET_CURSOR_SIZENS);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "CURSOR_SIZEALL");
+  lua_pushstring(L, WIDGET_CURSOR_SIZEALL);
   lua_settable(L, -3);
 }
 
@@ -6448,6 +6510,10 @@ static int wrap_widget_t_get_prop(lua_State* L) {
     return 1;
   } else if (strcmp(name, "name") == 0) {
     lua_pushstring(L, (char*)(obj->name));
+
+    return 1;
+  } else if (strcmp(name, "pointer_cursor") == 0) {
+    lua_pushstring(L, (char*)(obj->pointer_cursor));
 
     return 1;
   } else if (strcmp(name, "tr_text") == 0) {
@@ -14525,6 +14591,17 @@ static int wrap_edit_set_input_type(lua_State* L) {
   return 1;
 }
 
+static int wrap_edit_set_action_text(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  char* action_text = (char*)luaL_checkstring(L, 2);
+  ret = (ret_t)edit_set_action_text(widget, action_text);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_edit_set_tips(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -14604,6 +14681,7 @@ static const struct luaL_Reg edit_t_member_funcs[] = {
     {"set_select_none_when_focused", wrap_edit_set_select_none_when_focused},
     {"set_open_im_when_focused", wrap_edit_set_open_im_when_focused},
     {"set_input_type", wrap_edit_set_input_type},
+    {"set_action_text", wrap_edit_set_action_text},
     {"set_tips", wrap_edit_set_tips},
     {"set_tr_tips", wrap_edit_set_tr_tips},
     {"set_keyboard", wrap_edit_set_keyboard},
@@ -14673,6 +14751,10 @@ static int wrap_edit_t_get_prop(lua_State* L) {
     return 1;
   } else if (strcmp(name, "tr_tips") == 0) {
     lua_pushstring(L, (char*)(obj->tr_tips));
+
+    return 1;
+  } else if (strcmp(name, "action_text") == 0) {
+    lua_pushstring(L, (char*)(obj->action_text));
 
     return 1;
   } else if (strcmp(name, "keyboard") == 0) {
@@ -15950,6 +16032,18 @@ static int wrap_native_window_set_fullscreen(lua_State* L) {
   return 1;
 }
 
+static int wrap_native_window_set_cursor(lua_State* L) {
+  ret_t ret = 0;
+  native_window_t* win = (native_window_t*)tk_checkudata(L, 1, "native_window_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  bitmap_t* img = (bitmap_t*)tk_checkudata(L, 3, "bitmap_t");
+  ret = (ret_t)native_window_set_cursor(win, name, img);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static const struct luaL_Reg native_window_t_member_funcs[] = {
     {"move", wrap_native_window_move},
     {"resize", wrap_native_window_resize},
@@ -15959,6 +16053,7 @@ static const struct luaL_Reg native_window_t_member_funcs[] = {
     {"center", wrap_native_window_center},
     {"show_border", wrap_native_window_show_border},
     {"set_fullscreen", wrap_native_window_set_fullscreen},
+    {"set_cursor", wrap_native_window_set_cursor},
     {NULL, NULL}};
 
 static int wrap_native_window_t_set_prop(lua_State* L) {
@@ -17495,6 +17590,7 @@ void luaL_openawtk(lua_State* L) {
   window_stage_t_init(L);
   window_closable_t_init(L);
   widget_state_t_init(L);
+  widget_cursor_t_init(L);
   widget_t_init(L);
   ret_t_init(L);
   timer_manager_t_init(L);
