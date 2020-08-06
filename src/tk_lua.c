@@ -710,6 +710,17 @@ static int wrap_emitter_cast(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/emitter_t", "awtk.emitter_t");
 }
 
+static int wrap_emitter_forward(lua_State* L) {
+  ret_t ret = 0;
+  void* ctx = NULL;
+  event_t* e = (event_t*)tk_checkudata(L, 2, "event_t");
+  ret = (ret_t)emitter_forward(ctx, e);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static const struct luaL_Reg emitter_t_member_funcs[] = {
     {"dispatch", wrap_emitter_dispatch},
     {"dispatch_simple_event", wrap_emitter_dispatch_simple_event},
@@ -719,6 +730,7 @@ static const struct luaL_Reg emitter_t_member_funcs[] = {
     {"disable", wrap_emitter_disable},
     {"size", wrap_emitter_size},
     {"destroy", wrap_emitter_destroy},
+    {"forward", wrap_emitter_forward},
     {NULL, NULL}};
 
 static int wrap_emitter_t_set_prop(lua_State* L) {
@@ -2141,6 +2153,10 @@ static void event_type_t_init(lua_State* L) {
 
   lua_pushstring(L, "DRAG_END");
   lua_pushinteger(L, EVT_DRAG_END);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "RESET");
+  lua_pushinteger(L, EVT_RESET);
   lua_settable(L, -3);
 
   lua_pushstring(L, "SCREEN_SAVER");
@@ -4585,6 +4601,10 @@ static void widget_prop_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_PROP_H);
   lua_settable(L, -3);
 
+  lua_pushstring(L, "INPUTING");
+  lua_pushstring(L, WIDGET_PROP_INPUTING);
+  lua_settable(L, -3);
+
   lua_pushstring(L, "CARET_X");
   lua_pushstring(L, WIDGET_PROP_CARET_X);
   lua_settable(L, -3);
@@ -6341,6 +6361,16 @@ static int wrap_widget_destroy(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_destroy_async(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)widget_destroy_async(widget);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_widget_unref(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -6685,6 +6715,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
     {"clone", wrap_widget_clone},
     {"equal", wrap_widget_equal},
     {"destroy", wrap_widget_destroy},
+    {"destroy_async", wrap_widget_destroy_async},
     {"unref", wrap_widget_unref},
     {"is_keyboard", wrap_widget_is_keyboard},
     {"stroke_border_rect", wrap_widget_stroke_border_rect},
