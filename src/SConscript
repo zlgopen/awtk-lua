@@ -4,7 +4,7 @@ import sys
 env=DefaultEnvironment().Clone()
 BIN_DIR=os.environ['BIN_DIR'];
 
-env.Program(os.path.join(BIN_DIR, 'awtkRun'), ['main.c', 'tk_lua.c', Glob('assets*.c')])
+env.Program(os.path.join(BIN_DIR, 'awtkRun'), ['main.c', 'tk_lua.c'])
 
 
 
