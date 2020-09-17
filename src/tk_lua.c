@@ -6210,7 +6210,7 @@ static int wrap_widget_off(lua_State* L) {
 static int wrap_widget_invalidate_force(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  rect_t* r = (rect_t*)tk_checkudata(L, 2, "rect_t");
+  const rect_t* r = (const rect_t*)tk_checkudata(L, 2, "const rect_t");
   ret = (ret_t)widget_invalidate_force(widget, r);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -6500,7 +6500,7 @@ static int wrap_widget_stroke_border_rect(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   canvas_t* c = (canvas_t*)tk_checkudata(L, 2, "canvas_t");
-  rect_t* r = (rect_t*)tk_checkudata(L, 3, "rect_t");
+  const rect_t* r = (const rect_t*)tk_checkudata(L, 3, "const rect_t");
   ret = (ret_t)widget_stroke_border_rect(widget, c, r);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -6512,7 +6512,7 @@ static int wrap_widget_fill_bg_rect(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   canvas_t* c = (canvas_t*)tk_checkudata(L, 2, "canvas_t");
-  rect_t* r = (rect_t*)tk_checkudata(L, 3, "rect_t");
+  const rect_t* r = (const rect_t*)tk_checkudata(L, 3, "const rect_t");
   image_draw_type_t draw_type = (image_draw_type_t)luaL_checkinteger(L, 4);
   ret = (ret_t)widget_fill_bg_rect(widget, c, r, draw_type);
 
@@ -6525,7 +6525,7 @@ static int wrap_widget_fill_fg_rect(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   canvas_t* c = (canvas_t*)tk_checkudata(L, 2, "canvas_t");
-  rect_t* r = (rect_t*)tk_checkudata(L, 3, "rect_t");
+  const rect_t* r = (const rect_t*)tk_checkudata(L, 3, "const rect_t");
   image_draw_type_t draw_type = (image_draw_type_t)luaL_checkinteger(L, 4);
   ret = (ret_t)widget_fill_fg_rect(widget, c, r, draw_type);
 
