@@ -3477,167 +3477,167 @@ static void style_id_t_init(lua_State* L) {
   lua_setglobal(L, "StyleId");
   lua_getglobal(L, "StyleId");
 
-  lua_pushstring(L, "_ID_BG_COLOR");
+  lua_pushstring(L, "BG_COLOR");
   lua_pushstring(L, STYLE_ID_BG_COLOR);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_FG_COLOR");
+  lua_pushstring(L, "FG_COLOR");
   lua_pushstring(L, STYLE_ID_FG_COLOR);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_MASK_COLOR");
+  lua_pushstring(L, "MASK_COLOR");
   lua_pushstring(L, STYLE_ID_MASK_COLOR);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_FONT_NAME");
+  lua_pushstring(L, "FONT_NAME");
   lua_pushstring(L, STYLE_ID_FONT_NAME);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_FONT_SIZE");
+  lua_pushstring(L, "FONT_SIZE");
   lua_pushstring(L, STYLE_ID_FONT_SIZE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_FONT_STYLE");
+  lua_pushstring(L, "FONT_STYLE");
   lua_pushstring(L, STYLE_ID_FONT_STYLE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_TEXT_COLOR");
+  lua_pushstring(L, "TEXT_COLOR");
   lua_pushstring(L, STYLE_ID_TEXT_COLOR);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_HIGHLIGHT_FONT_NAME");
+  lua_pushstring(L, "HIGHLIGHT_FONT_NAME");
   lua_pushstring(L, STYLE_ID_HIGHLIGHT_FONT_NAME);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_HIGHLIGHT_FONT_SIZE");
+  lua_pushstring(L, "HIGHLIGHT_FONT_SIZE");
   lua_pushstring(L, STYLE_ID_HIGHLIGHT_FONT_SIZE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_HIGHLIGHT_TEXT_COLOR");
+  lua_pushstring(L, "HIGHLIGHT_TEXT_COLOR");
   lua_pushstring(L, STYLE_ID_HIGHLIGHT_TEXT_COLOR);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_TIPS_TEXT_COLOR");
+  lua_pushstring(L, "TIPS_TEXT_COLOR");
   lua_pushstring(L, STYLE_ID_TIPS_TEXT_COLOR);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_TEXT_ALIGN_H");
+  lua_pushstring(L, "TEXT_ALIGN_H");
   lua_pushstring(L, STYLE_ID_TEXT_ALIGN_H);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_TEXT_ALIGN_V");
+  lua_pushstring(L, "TEXT_ALIGN_V");
   lua_pushstring(L, STYLE_ID_TEXT_ALIGN_V);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_BORDER_COLOR");
+  lua_pushstring(L, "BORDER_COLOR");
   lua_pushstring(L, STYLE_ID_BORDER_COLOR);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_BORDER_WIDTH");
+  lua_pushstring(L, "BORDER_WIDTH");
   lua_pushstring(L, STYLE_ID_BORDER_WIDTH);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_BORDER");
+  lua_pushstring(L, "BORDER");
   lua_pushstring(L, STYLE_ID_BORDER);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_BG_IMAGE");
+  lua_pushstring(L, "BG_IMAGE");
   lua_pushstring(L, STYLE_ID_BG_IMAGE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_BG_IMAGE_DRAW_TYPE");
+  lua_pushstring(L, "BG_IMAGE_DRAW_TYPE");
   lua_pushstring(L, STYLE_ID_BG_IMAGE_DRAW_TYPE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_ICON");
+  lua_pushstring(L, "ICON");
   lua_pushstring(L, STYLE_ID_ICON);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_FG_IMAGE");
+  lua_pushstring(L, "FG_IMAGE");
   lua_pushstring(L, STYLE_ID_FG_IMAGE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_FG_IMAGE_DRAW_TYPE");
+  lua_pushstring(L, "FG_IMAGE_DRAW_TYPE");
   lua_pushstring(L, STYLE_ID_FG_IMAGE_DRAW_TYPE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_SPACER");
+  lua_pushstring(L, "SPACER");
   lua_pushstring(L, STYLE_ID_SPACER);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_MARGIN");
+  lua_pushstring(L, "MARGIN");
   lua_pushstring(L, STYLE_ID_MARGIN);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_MARGIN_LEFT");
+  lua_pushstring(L, "MARGIN_LEFT");
   lua_pushstring(L, STYLE_ID_MARGIN_LEFT);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_MARGIN_RIGHT");
+  lua_pushstring(L, "MARGIN_RIGHT");
   lua_pushstring(L, STYLE_ID_MARGIN_RIGHT);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_MARGIN_TOP");
+  lua_pushstring(L, "MARGIN_TOP");
   lua_pushstring(L, STYLE_ID_MARGIN_TOP);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_MARGIN_BOTTOM");
+  lua_pushstring(L, "MARGIN_BOTTOM");
   lua_pushstring(L, STYLE_ID_MARGIN_BOTTOM);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_ICON_AT");
+  lua_pushstring(L, "ICON_AT");
   lua_pushstring(L, STYLE_ID_ICON_AT);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_ACTIVE_ICON");
+  lua_pushstring(L, "ACTIVE_ICON");
   lua_pushstring(L, STYLE_ID_ACTIVE_ICON);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_X_OFFSET");
+  lua_pushstring(L, "X_OFFSET");
   lua_pushstring(L, STYLE_ID_X_OFFSET);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_Y_OFFSET");
+  lua_pushstring(L, "Y_OFFSET");
   lua_pushstring(L, STYLE_ID_Y_OFFSET);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_SELECTED_BG_COLOR");
+  lua_pushstring(L, "SELECTED_BG_COLOR");
   lua_pushstring(L, STYLE_ID_SELECTED_BG_COLOR);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_SELECTED_FG_COLOR");
+  lua_pushstring(L, "SELECTED_FG_COLOR");
   lua_pushstring(L, STYLE_ID_SELECTED_FG_COLOR);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_SELECTED_TEXT_COLOR");
+  lua_pushstring(L, "SELECTED_TEXT_COLOR");
   lua_pushstring(L, STYLE_ID_SELECTED_TEXT_COLOR);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_ROUND_RADIUS");
+  lua_pushstring(L, "ROUND_RADIUS");
   lua_pushstring(L, STYLE_ID_ROUND_RADIUS);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_ROUND_RADIUS_TOP_LETF");
+  lua_pushstring(L, "ROUND_RADIUS_TOP_LETF");
   lua_pushstring(L, STYLE_ID_ROUND_RADIUS_TOP_LETF);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_ROUND_RADIUS_TOP_RIGHT");
+  lua_pushstring(L, "ROUND_RADIUS_TOP_RIGHT");
   lua_pushstring(L, STYLE_ID_ROUND_RADIUS_TOP_RIGHT);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_ROUND_RADIUS_BOTTOM_LETF");
+  lua_pushstring(L, "ROUND_RADIUS_BOTTOM_LETF");
   lua_pushstring(L, STYLE_ID_ROUND_RADIUS_BOTTOM_LETF);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_ROUND_RADIUS_BOTTOM_RIGHT");
+  lua_pushstring(L, "ROUND_RADIUS_BOTTOM_RIGHT");
   lua_pushstring(L, STYLE_ID_ROUND_RADIUS_BOTTOM_RIGHT);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_CHILDREN_LAYOUT");
+  lua_pushstring(L, "CHILDREN_LAYOUT");
   lua_pushstring(L, STYLE_ID_CHILDREN_LAYOUT);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "_ID_SELF_LAYOUT");
+  lua_pushstring(L, "SELF_LAYOUT");
   lua_pushstring(L, STYLE_ID_SELF_LAYOUT);
   lua_settable(L, -3);
 }
@@ -4771,6 +4771,14 @@ static void widget_prop_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_PROP_MAX_W);
   lua_settable(L, -3);
 
+  lua_pushstring(L, "AUTO_ADJUST_SIZE");
+  lua_pushstring(L, WIDGET_PROP_AUTO_ADJUST_SIZE);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "SINGLE_INSTANCE");
+  lua_pushstring(L, WIDGET_PROP_SINGLE_INSTANCE);
+  lua_settable(L, -3);
+
   lua_pushstring(L, "CHILDREN_LAYOUT");
   lua_pushstring(L, WIDGET_PROP_CHILDREN_LAYOUT);
   lua_settable(L, -3);
@@ -4821,6 +4829,10 @@ static void widget_prop_t_init(lua_State* L) {
 
   lua_pushstring(L, "LENGTH");
   lua_pushstring(L, WIDGET_PROP_LENGTH);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "LINE_WRAP");
+  lua_pushstring(L, WIDGET_PROP_LINE_WRAP);
   lua_settable(L, -3);
 
   lua_pushstring(L, "TEXT");
@@ -5531,95 +5543,95 @@ static void widget_state_t_init(lua_State* L) {
   lua_setglobal(L, "WidgetState");
   lua_getglobal(L, "WidgetState");
 
-  lua_pushstring(L, "STATE_NONE");
+  lua_pushstring(L, "NONE");
   lua_pushstring(L, WIDGET_STATE_NONE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_NORMAL");
+  lua_pushstring(L, "NORMAL");
   lua_pushstring(L, WIDGET_STATE_NORMAL);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_CHANGED");
+  lua_pushstring(L, "CHANGED");
   lua_pushstring(L, WIDGET_STATE_CHANGED);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_PRESSED");
+  lua_pushstring(L, "PRESSED");
   lua_pushstring(L, WIDGET_STATE_PRESSED);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_OVER");
+  lua_pushstring(L, "OVER");
   lua_pushstring(L, WIDGET_STATE_OVER);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_DISABLE");
+  lua_pushstring(L, "DISABLE");
   lua_pushstring(L, WIDGET_STATE_DISABLE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_FOCUSED");
+  lua_pushstring(L, "FOCUSED");
   lua_pushstring(L, WIDGET_STATE_FOCUSED);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_CHECKED");
+  lua_pushstring(L, "CHECKED");
   lua_pushstring(L, WIDGET_STATE_CHECKED);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_UNCHECKED");
+  lua_pushstring(L, "UNCHECKED");
   lua_pushstring(L, WIDGET_STATE_UNCHECKED);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_EMPTY");
+  lua_pushstring(L, "EMPTY");
   lua_pushstring(L, WIDGET_STATE_EMPTY);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_EMPTY_FOCUS");
+  lua_pushstring(L, "EMPTY_FOCUS");
   lua_pushstring(L, WIDGET_STATE_EMPTY_FOCUS);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_ERROR");
+  lua_pushstring(L, "ERROR");
   lua_pushstring(L, WIDGET_STATE_ERROR);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_SELECTED");
+  lua_pushstring(L, "SELECTED");
   lua_pushstring(L, WIDGET_STATE_SELECTED);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_NORMAL_OF_CHECKED");
+  lua_pushstring(L, "NORMAL_OF_CHECKED");
   lua_pushstring(L, WIDGET_STATE_NORMAL_OF_CHECKED);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_PRESSED_OF_CHECKED");
+  lua_pushstring(L, "PRESSED_OF_CHECKED");
   lua_pushstring(L, WIDGET_STATE_PRESSED_OF_CHECKED);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_OVER_OF_CHECKED");
+  lua_pushstring(L, "OVER_OF_CHECKED");
   lua_pushstring(L, WIDGET_STATE_OVER_OF_CHECKED);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_DISABLE_OF_CHECKED");
+  lua_pushstring(L, "DISABLE_OF_CHECKED");
   lua_pushstring(L, WIDGET_STATE_DISABLE_OF_CHECKED);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_FOCUSED_OF_CHECKED");
+  lua_pushstring(L, "FOCUSED_OF_CHECKED");
   lua_pushstring(L, WIDGET_STATE_FOCUSED_OF_CHECKED);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_NORMAL_OF_ACTIVE");
+  lua_pushstring(L, "NORMAL_OF_ACTIVE");
   lua_pushstring(L, WIDGET_STATE_NORMAL_OF_ACTIVE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_PRESSED_OF_ACTIVE");
+  lua_pushstring(L, "PRESSED_OF_ACTIVE");
   lua_pushstring(L, WIDGET_STATE_PRESSED_OF_ACTIVE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_OVER_OF_ACTIVE");
+  lua_pushstring(L, "OVER_OF_ACTIVE");
   lua_pushstring(L, WIDGET_STATE_OVER_OF_ACTIVE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_DISABLE_OF_ACTIVE");
+  lua_pushstring(L, "DISABLE_OF_ACTIVE");
   lua_pushstring(L, WIDGET_STATE_DISABLE_OF_ACTIVE);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "STATE_FOCUSED_OF_ACTIVE");
+  lua_pushstring(L, "FOCUSED_OF_ACTIVE");
   lua_pushstring(L, WIDGET_STATE_FOCUSED_OF_ACTIVE);
   lua_settable(L, -3);
 }
@@ -6018,6 +6030,17 @@ static int wrap_widget_set_feedback(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_set_auto_adjust_size(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t auto_adjust_size = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)widget_set_auto_adjust_size(widget, auto_adjust_size);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_widget_set_floating(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -6172,8 +6195,7 @@ static int wrap_widget_set_visible(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   bool_t visible = (bool_t)lua_toboolean(L, 2);
-  bool_t recursive = (bool_t)lua_toboolean(L, 3);
-  ret = (ret_t)widget_set_visible(widget, visible, recursive);
+  ret = (ret_t)widget_set_visible(widget, visible);
 
   lua_pushnumber(L, (lua_Number)(ret));
 
@@ -6246,6 +6268,27 @@ static int wrap_widget_get_prop_str(lua_State* L) {
   lua_pushstring(L, (char*)(ret));
 
   return 1;
+}
+
+static int wrap_widget_set_prop_pointer(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  void* v = (void*)lua_touserdata(L, 3);
+  ret = (ret_t)widget_set_prop_pointer(widget, name, v);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_widget_get_prop_pointer(lua_State* L) {
+  void* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  ret = (void*)widget_get_prop_pointer(widget, name);
+
+  return tk_newuserdata(L, (void*)ret, "", "awtk.void");
 }
 
 static int wrap_widget_set_prop_int(lua_State* L) {
@@ -6372,6 +6415,16 @@ static int wrap_widget_is_popup(lua_State* L) {
   bool_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   ret = (bool_t)widget_is_popup(widget);
+
+  lua_pushboolean(L, (lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_widget_is_overlay(lua_State* L) {
+  bool_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (bool_t)widget_is_overlay(widget);
 
   lua_pushboolean(L, (lua_Integer)(ret));
 
@@ -6738,6 +6791,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
     {"destroy_animator", wrap_widget_destroy_animator},
     {"set_enable", wrap_widget_set_enable},
     {"set_feedback", wrap_widget_set_feedback},
+    {"set_auto_adjust_size", wrap_widget_set_auto_adjust_size},
     {"set_floating", wrap_widget_set_floating},
     {"set_focused", wrap_widget_set_focused},
     {"set_focusable", wrap_widget_set_focusable},
@@ -6760,6 +6814,8 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
     {"invalidate_force", wrap_widget_invalidate_force},
     {"set_prop_str", wrap_widget_set_prop_str},
     {"get_prop_str", wrap_widget_get_prop_str},
+    {"set_prop_pointer", wrap_widget_set_prop_pointer},
+    {"get_prop_pointer", wrap_widget_get_prop_pointer},
     {"set_prop_int", wrap_widget_set_prop_int},
     {"get_prop_int", wrap_widget_get_prop_int},
     {"set_prop_bool", wrap_widget_set_prop_bool},
@@ -6772,6 +6828,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
     {"is_normal_window", wrap_widget_is_normal_window},
     {"is_dialog", wrap_widget_is_dialog},
     {"is_popup", wrap_widget_is_popup},
+    {"is_overlay", wrap_widget_is_overlay},
     {"is_opened_popup", wrap_widget_is_opened_popup},
     {"is_keyboard", wrap_widget_is_keyboard},
     {"is_designing_window", wrap_widget_is_designing_window},
@@ -6810,26 +6867,8 @@ static int wrap_widget_t_set_prop(lua_State* L) {
   const char* name = (const char*)luaL_checkstring(L, 2);
   (void)obj;
   (void)name;
-  if (strcmp(name, "visible") == 0) {
-    bool_t visible = (bool_t)lua_toboolean(L, 3);
-    obj->visible = visible;
-    return 0;
-  } else if (strcmp(name, "sensitive") == 0) {
-    bool_t sensitive = (bool_t)lua_toboolean(L, 3);
-    obj->sensitive = sensitive;
-    return 0;
-  } else if (strcmp(name, "focusable") == 0) {
-    bool_t focusable = (bool_t)lua_toboolean(L, 3);
-    obj->focusable = focusable;
-    return 0;
-  } else if (strcmp(name, "with_focus_state") == 0) {
-    bool_t with_focus_state = (bool_t)lua_toboolean(L, 3);
-    obj->with_focus_state = with_focus_state;
-    return 0;
-  } else {
-    log_debug("%s: not supported %s\n", __FUNCTION__, name);
-    return 0;
-  }
+  log_debug("%s: not supported %s\n", __FUNCTION__, name);
+  return 0;
 }
 
 static int wrap_widget_t_get_prop(lua_State* L) {
@@ -6901,6 +6940,10 @@ static int wrap_widget_t_get_prop(lua_State* L) {
     return 1;
   } else if (strcmp(name, "with_focus_state") == 0) {
     lua_pushboolean(L, (lua_Integer)(obj->with_focus_state));
+
+    return 1;
+  } else if (strcmp(name, "auto_adjust_size") == 0) {
+    lua_pushboolean(L, (lua_Integer)(obj->auto_adjust_size));
 
     return 1;
   } else if (strcmp(name, "floating") == 0) {
@@ -8247,6 +8290,20 @@ static int wrap_canvas_fill_rect(lua_State* L) {
   return 1;
 }
 
+static int wrap_canvas_clear_rect(lua_State* L) {
+  ret_t ret = 0;
+  canvas_t* c = (canvas_t*)tk_checkudata(L, 1, "canvas_t");
+  xy_t x = (xy_t)luaL_checkinteger(L, 2);
+  xy_t y = (xy_t)luaL_checkinteger(L, 3);
+  wh_t w = (wh_t)luaL_checkinteger(L, 4);
+  wh_t h = (wh_t)luaL_checkinteger(L, 5);
+  ret = (ret_t)canvas_clear_rect(c, x, y, w, h);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_canvas_stroke_rect(lua_State* L) {
   ret_t ret = 0;
   canvas_t* c = (canvas_t*)tk_checkudata(L, 1, "canvas_t");
@@ -8403,6 +8460,7 @@ static const struct luaL_Reg canvas_t_member_funcs[] = {
     {"draw_vline", wrap_canvas_draw_vline},
     {"draw_hline", wrap_canvas_draw_hline},
     {"fill_rect", wrap_canvas_fill_rect},
+    {"clear_rect", wrap_canvas_clear_rect},
     {"stroke_rect", wrap_canvas_stroke_rect},
     {"set_font", wrap_canvas_set_font},
     {"measure_text", wrap_canvas_measure_utf8},
@@ -10017,6 +10075,17 @@ static int wrap_label_set_length(lua_State* L) {
   return 1;
 }
 
+static int wrap_label_set_line_wrap(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t line_wrap = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)label_set_line_wrap(widget, line_wrap);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_label_resize_to_content(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -10041,6 +10110,7 @@ static int wrap_label_cast(lua_State* L) {
 
 static const struct luaL_Reg label_t_member_funcs[] = {
     {"set_length", wrap_label_set_length},
+    {"set_line_wrap", wrap_label_set_line_wrap},
     {"resize_to_content", wrap_label_resize_to_content},
     {NULL, NULL}};
 
@@ -10065,6 +10135,10 @@ static int wrap_label_t_get_prop(lua_State* L) {
   }
   if (strcmp(name, "length") == 0) {
     lua_pushinteger(L, (lua_Integer)(obj->length));
+
+    return 1;
+  } else if (strcmp(name, "line_wrap") == 0) {
+    lua_pushboolean(L, (lua_Integer)(obj->line_wrap));
 
     return 1;
   } else {
@@ -14435,6 +14509,28 @@ static int wrap_mledit_set_scroll_line(lua_State* L) {
   return 1;
 }
 
+static int wrap_mledit_set_open_im_when_focused(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t open_im_when_focused = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)mledit_set_open_im_when_focused(widget, open_im_when_focused);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_mledit_set_close_im_when_blured(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t close_im_when_blured = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)mledit_set_close_im_when_blured(widget, close_im_when_blured);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_mledit_cast(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -14454,6 +14550,8 @@ static const struct luaL_Reg mledit_t_member_funcs[] = {
     {"set_keyboard", wrap_mledit_set_keyboard},
     {"set_cursor", wrap_mledit_set_cursor},
     {"set_scroll_line", wrap_mledit_set_scroll_line},
+    {"set_open_im_when_focused", wrap_mledit_set_open_im_when_focused},
+    {"set_close_im_when_blured", wrap_mledit_set_close_im_when_blured},
     {NULL, NULL}};
 
 static int wrap_mledit_t_set_prop(lua_State* L) {
@@ -14521,6 +14619,14 @@ static int wrap_mledit_t_get_prop(lua_State* L) {
     return 1;
   } else if (strcmp(name, "cancelable") == 0) {
     lua_pushboolean(L, (lua_Integer)(obj->cancelable));
+
+    return 1;
+  } else if (strcmp(name, "open_im_when_focused") == 0) {
+    lua_pushboolean(L, (lua_Integer)(obj->open_im_when_focused));
+
+    return 1;
+  } else if (strcmp(name, "close_im_when_blured") == 0) {
+    lua_pushboolean(L, (lua_Integer)(obj->close_im_when_blured));
 
     return 1;
   } else {
@@ -16801,6 +16907,10 @@ static int wrap_window_base_t_get_prop(lua_State* L) {
     return 1;
   } else if (strcmp(name, "move_focus_right_key") == 0) {
     lua_pushstring(L, (char*)(obj->move_focus_right_key));
+
+    return 1;
+  } else if (strcmp(name, "single_instance") == 0) {
+    lua_pushboolean(L, (lua_Integer)(obj->single_instance));
 
     return 1;
   } else {
