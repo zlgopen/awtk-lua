@@ -7358,6 +7358,16 @@ static int wrap_widget_is_overlay(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_is_opened_dialog(lua_State* L) {
+  bool_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (bool_t)widget_is_opened_dialog(widget);
+
+  lua_pushboolean(L, (lua_Integer)(ret));
+
+  return 1;
+}
+
 static int wrap_widget_is_opened_popup(lua_State* L) {
   bool_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -7767,6 +7777,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
     {"is_dialog", wrap_widget_is_dialog},
     {"is_popup", wrap_widget_is_popup},
     {"is_overlay", wrap_widget_is_overlay},
+    {"is_opened_dialog", wrap_widget_is_opened_dialog},
     {"is_opened_popup", wrap_widget_is_opened_popup},
     {"is_keyboard", wrap_widget_is_keyboard},
     {"is_designing_window", wrap_widget_is_designing_window},
