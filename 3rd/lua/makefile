@@ -58,7 +58,7 @@ MYCFLAGS= $(LOCAL) -std=c99 -DLUA_USE_LINUX -DLUA_COMPAT_5_2
 MYLIBS= -ldl -lreadline
 
 
-CC= clang
+CC= gcc
 CFLAGS= -Wall -g $(MYCFLAGS)
 AR= ar rcu
 RANLIB= ranlib
