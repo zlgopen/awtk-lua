@@ -3344,9 +3344,21 @@ static int wrap_idle_remove(lua_State* L) {
   return 1;
 }
 
+static int wrap_idle_remove_all_by_ctx(lua_State* L) {
+  ret_t ret = 0;
+  void* ctx = NULL;
+  ret = (ret_t)idle_remove_all_by_ctx(ctx);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static void idle_t_init(lua_State* L) {
-  static const struct luaL_Reg static_funcs[] = {
-      {"add", wrap_idle_add}, {"remove", wrap_idle_remove}, {NULL, NULL}};
+  static const struct luaL_Reg static_funcs[] = {{"add", wrap_idle_add},
+                                                 {"remove", wrap_idle_remove},
+                                                 {"remove_all_by_ctx", wrap_idle_remove_all_by_ctx},
+                                                 {NULL, NULL}};
 
   luaL_openlib(L, "Idle", static_funcs, 0);
   lua_settop(L, 0);
@@ -3489,6 +3501,10 @@ static void input_type_t_init(lua_State* L) {
 
   lua_pushstring(L, "CUSTOM_PASSWORD");
   lua_pushinteger(L, INPUT_CUSTOM_PASSWORD);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "ASCII");
+  lua_pushinteger(L, INPUT_ASCII);
   lua_settable(L, -3);
 }
 
@@ -4162,6 +4178,10 @@ static void key_code_t_init(lua_State* L) {
   lua_pushstring(L, "KEY_CANCEL");
   lua_pushinteger(L, TK_KEY_CANCEL);
   lua_settable(L, -3);
+
+  lua_pushstring(L, "KEY_WHEEL");
+  lua_pushinteger(L, TK_KEY_WHEEL);
+  lua_settable(L, -3);
 }
 
 static int wrap_locale_info(lua_State* L) {
@@ -4657,6 +4677,16 @@ static int wrap_timer_remove(lua_State* L) {
   return 1;
 }
 
+static int wrap_timer_remove_all_by_ctx(lua_State* L) {
+  ret_t ret = 0;
+  void* ctx = NULL;
+  ret = (ret_t)timer_remove_all_by_ctx(ctx);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_timer_reset(lua_State* L) {
   ret_t ret = 0;
   uint32_t timer_id = (uint32_t)luaL_checkinteger(L, 1);
@@ -4699,13 +4729,15 @@ static int wrap_timer_modify(lua_State* L) {
 }
 
 static void timer_t_init(lua_State* L) {
-  static const struct luaL_Reg static_funcs[] = {{"add", wrap_timer_add},
-                                                 {"remove", wrap_timer_remove},
-                                                 {"reset", wrap_timer_reset},
-                                                 {"suspend", wrap_timer_suspend},
-                                                 {"resume", wrap_timer_resume},
-                                                 {"modify", wrap_timer_modify},
-                                                 {NULL, NULL}};
+  static const struct luaL_Reg static_funcs[] = {
+      {"add", wrap_timer_add},
+      {"remove", wrap_timer_remove},
+      {"remove_all_by_ctx", wrap_timer_remove_all_by_ctx},
+      {"reset", wrap_timer_reset},
+      {"suspend", wrap_timer_suspend},
+      {"resume", wrap_timer_resume},
+      {"modify", wrap_timer_modify},
+      {NULL, NULL}};
 
   luaL_openlib(L, "Timer", static_funcs, 0);
   lua_settop(L, 0);
@@ -12912,6 +12944,17 @@ static int wrap_progress_circle_set_max(lua_State* L) {
   return 1;
 }
 
+static int wrap_progress_circle_set_format(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  const char* format = (const char*)luaL_checkstring(L, 2);
+  ret = (ret_t)progress_circle_set_format(widget, format);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_progress_circle_set_line_width(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -12928,17 +12971,6 @@ static int wrap_progress_circle_set_start_angle(lua_State* L) {
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   int32_t start_angle = (int32_t)luaL_checkinteger(L, 2);
   ret = (ret_t)progress_circle_set_start_angle(widget, start_angle);
-
-  lua_pushnumber(L, (lua_Number)(ret));
-
-  return 1;
-}
-
-static int wrap_progress_circle_set_unit(lua_State* L) {
-  ret_t ret = 0;
-  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  const char* unit = (const char*)luaL_checkstring(L, 2);
-  ret = (ret_t)progress_circle_set_unit(widget, unit);
 
   lua_pushnumber(L, (lua_Number)(ret));
 
@@ -12981,9 +13013,9 @@ static int wrap_progress_circle_set_counter_clock_wise(lua_State* L) {
 static const struct luaL_Reg progress_circle_t_member_funcs[] = {
     {"set_value", wrap_progress_circle_set_value},
     {"set_max", wrap_progress_circle_set_max},
+    {"set_format", wrap_progress_circle_set_format},
     {"set_line_width", wrap_progress_circle_set_line_width},
     {"set_start_angle", wrap_progress_circle_set_start_angle},
-    {"set_unit", wrap_progress_circle_set_unit},
     {"set_line_cap", wrap_progress_circle_set_line_cap},
     {"set_show_text", wrap_progress_circle_set_show_text},
     {"set_counter_clock_wise", wrap_progress_circle_set_counter_clock_wise},
@@ -13013,7 +13045,11 @@ static int wrap_progress_circle_t_get_prop(lua_State* L) {
 
     return 1;
   } else if (strcmp(name, "max") == 0) {
-    lua_pushinteger(L, (lua_Integer)(obj->max));
+    lua_pushnumber(L, (lua_Number)(obj->max));
+
+    return 1;
+  } else if (strcmp(name, "format") == 0) {
+    lua_pushstring(L, (char*)(obj->format));
 
     return 1;
   } else if (strcmp(name, "start_angle") == 0) {
@@ -13022,10 +13058,6 @@ static int wrap_progress_circle_t_get_prop(lua_State* L) {
     return 1;
   } else if (strcmp(name, "line_width") == 0) {
     lua_pushinteger(L, (lua_Integer)(obj->line_width));
-
-    return 1;
-  } else if (strcmp(name, "unit") == 0) {
-    lua_pushstring(L, (char*)(obj->unit));
 
     return 1;
   } else if (strcmp(name, "line_cap") == 0) {
@@ -17296,6 +17328,17 @@ static int wrap_progress_bar_set_max(lua_State* L) {
   return 1;
 }
 
+static int wrap_progress_bar_set_format(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  const char* format = (const char*)luaL_checkstring(L, 2);
+  ret = (ret_t)progress_bar_set_format(widget, format);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_progress_bar_set_vertical(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -17342,6 +17385,7 @@ static int wrap_progress_bar_get_percent(lua_State* L) {
 static const struct luaL_Reg progress_bar_t_member_funcs[] = {
     {"set_value", wrap_progress_bar_set_value},
     {"set_max", wrap_progress_bar_set_max},
+    {"set_format", wrap_progress_bar_set_format},
     {"set_vertical", wrap_progress_bar_set_vertical},
     {"set_show_text", wrap_progress_bar_set_show_text},
     {"set_reverse", wrap_progress_bar_set_reverse},
@@ -17373,6 +17417,10 @@ static int wrap_progress_bar_t_get_prop(lua_State* L) {
     return 1;
   } else if (strcmp(name, "max") == 0) {
     lua_pushnumber(L, (lua_Number)(obj->max));
+
+    return 1;
+  } else if (strcmp(name, "format") == 0) {
+    lua_pushstring(L, (char*)(obj->format));
 
     return 1;
   } else if (strcmp(name, "vertical") == 0) {
