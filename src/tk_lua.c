@@ -54,8 +54,8 @@
 #include "features/draggable.h"
 #include "file_browser/file_browser_view.h"
 #include "file_browser/file_chooser.h"
-#include "guage/guage_pointer.h"
-#include "guage/guage.h"
+#include "gauge/gauge_pointer.h"
+#include "gauge/gauge.h"
 #include "image_animation/image_animation.h"
 #include "image_value/image_value.h"
 #include "keyboard/candidates.h"
@@ -212,10 +212,10 @@ static int wrap_file_browser_view_t_get_prop(lua_State* L);
 static int wrap_file_browser_view_t_set_prop(lua_State* L);
 static int wrap_file_chooser_t_get_prop(lua_State* L);
 static int wrap_file_chooser_t_set_prop(lua_State* L);
-static int wrap_guage_pointer_t_get_prop(lua_State* L);
-static int wrap_guage_pointer_t_set_prop(lua_State* L);
-static int wrap_guage_t_get_prop(lua_State* L);
-static int wrap_guage_t_set_prop(lua_State* L);
+static int wrap_gauge_pointer_t_get_prop(lua_State* L);
+static int wrap_gauge_pointer_t_set_prop(lua_State* L);
+static int wrap_gauge_t_get_prop(lua_State* L);
+static int wrap_gauge_t_set_prop(lua_State* L);
 static int wrap_image_animation_t_get_prop(lua_State* L);
 static int wrap_image_animation_t_set_prop(lua_State* L);
 static int wrap_image_value_t_get_prop(lua_State* L);
@@ -11787,78 +11787,78 @@ static void file_chooser_t_init(lua_State* L) {
   luaL_openlib(L, "FileChooser", static_funcs, 0);
   lua_settop(L, 0);
 }
-static int wrap_guage_pointer_create(lua_State* L) {
+static int wrap_gauge_pointer_create(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* parent = (widget_t*)tk_checkudata(L, 1, "widget_t");
   xy_t x = (xy_t)luaL_checkinteger(L, 2);
   xy_t y = (xy_t)luaL_checkinteger(L, 3);
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
-  ret = (widget_t*)guage_pointer_create(parent, x, y, w, h);
+  ret = (widget_t*)gauge_pointer_create(parent, x, y, w, h);
 
-  return tk_newuserdata(L, (void*)ret, "/guage_pointer_t/widget_t", "awtk.guage_pointer_t");
+  return tk_newuserdata(L, (void*)ret, "/gauge_pointer_t/widget_t", "awtk.gauge_pointer_t");
 }
 
-static int wrap_guage_pointer_cast(lua_State* L) {
+static int wrap_gauge_pointer_cast(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  ret = (widget_t*)guage_pointer_cast(widget);
+  ret = (widget_t*)gauge_pointer_cast(widget);
 
-  return tk_newuserdata(L, (void*)ret, "/guage_pointer_t/widget_t", "awtk.guage_pointer_t");
+  return tk_newuserdata(L, (void*)ret, "/gauge_pointer_t/widget_t", "awtk.gauge_pointer_t");
 }
 
-static int wrap_guage_pointer_set_angle(lua_State* L) {
+static int wrap_gauge_pointer_set_angle(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   int32_t angle = (int32_t)luaL_checkinteger(L, 2);
-  ret = (ret_t)guage_pointer_set_angle(widget, angle);
+  ret = (ret_t)gauge_pointer_set_angle(widget, angle);
 
   lua_pushnumber(L, (lua_Number)(ret));
 
   return 1;
 }
 
-static int wrap_guage_pointer_set_image(lua_State* L) {
+static int wrap_gauge_pointer_set_image(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   const char* image = (const char*)luaL_checkstring(L, 2);
-  ret = (ret_t)guage_pointer_set_image(widget, image);
+  ret = (ret_t)gauge_pointer_set_image(widget, image);
 
   lua_pushnumber(L, (lua_Number)(ret));
 
   return 1;
 }
 
-static int wrap_guage_pointer_set_anchor(lua_State* L) {
+static int wrap_gauge_pointer_set_anchor(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   const char* anchor_x = (const char*)luaL_checkstring(L, 2);
   const char* anchor_y = (const char*)luaL_checkstring(L, 3);
-  ret = (ret_t)guage_pointer_set_anchor(widget, anchor_x, anchor_y);
+  ret = (ret_t)gauge_pointer_set_anchor(widget, anchor_x, anchor_y);
 
   lua_pushnumber(L, (lua_Number)(ret));
 
   return 1;
 }
 
-static const struct luaL_Reg guage_pointer_t_member_funcs[] = {
-    {"set_angle", wrap_guage_pointer_set_angle},
-    {"set_image", wrap_guage_pointer_set_image},
-    {"set_anchor", wrap_guage_pointer_set_anchor},
+static const struct luaL_Reg gauge_pointer_t_member_funcs[] = {
+    {"set_angle", wrap_gauge_pointer_set_angle},
+    {"set_image", wrap_gauge_pointer_set_image},
+    {"set_anchor", wrap_gauge_pointer_set_anchor},
     {NULL, NULL}};
 
-static int wrap_guage_pointer_t_set_prop(lua_State* L) {
-  guage_pointer_t* obj = (guage_pointer_t*)tk_checkudata(L, 1, "guage_pointer_t");
+static int wrap_gauge_pointer_t_set_prop(lua_State* L) {
+  gauge_pointer_t* obj = (gauge_pointer_t*)tk_checkudata(L, 1, "gauge_pointer_t");
   const char* name = (const char*)luaL_checkstring(L, 2);
   (void)obj;
   (void)name;
   return wrap_widget_t_set_prop(L);
 }
 
-static int wrap_guage_pointer_t_get_prop(lua_State* L) {
-  guage_pointer_t* obj = (guage_pointer_t*)tk_checkudata(L, 1, "guage_pointer_t");
+static int wrap_gauge_pointer_t_get_prop(lua_State* L) {
+  gauge_pointer_t* obj = (gauge_pointer_t*)tk_checkudata(L, 1, "gauge_pointer_t");
   const char* name = (const char*)luaL_checkstring(L, 2);
-  const luaL_Reg* ret = find_member(guage_pointer_t_member_funcs, name);
+  const luaL_Reg* ret = find_member(gauge_pointer_t_member_funcs, name);
 
   (void)obj;
   (void)name;
@@ -11887,79 +11887,79 @@ static int wrap_guage_pointer_t_get_prop(lua_State* L) {
   }
 }
 
-static void guage_pointer_t_init(lua_State* L) {
+static void gauge_pointer_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
-      {"create", wrap_guage_pointer_create}, {"cast", wrap_guage_pointer_cast}, {NULL, NULL}};
+      {"create", wrap_gauge_pointer_create}, {"cast", wrap_gauge_pointer_cast}, {NULL, NULL}};
 
-  static const struct luaL_Reg index_funcs[] = {{"__index", wrap_guage_pointer_t_get_prop},
-                                                {"__newindex", wrap_guage_pointer_t_set_prop},
+  static const struct luaL_Reg index_funcs[] = {{"__index", wrap_gauge_pointer_t_get_prop},
+                                                {"__newindex", wrap_gauge_pointer_t_set_prop},
                                                 {NULL, NULL}};
 
-  luaL_newmetatable(L, "awtk.guage_pointer_t");
+  luaL_newmetatable(L, "awtk.gauge_pointer_t");
   lua_pushstring(L, "__index");
   lua_pushvalue(L, -2);
   lua_settable(L, -3);
   luaL_openlib(L, NULL, index_funcs, 0);
-  luaL_openlib(L, "GuagePointer", static_funcs, 0);
+  luaL_openlib(L, "GaugePointer", static_funcs, 0);
   lua_settop(L, 0);
 }
-static int wrap_guage_create(lua_State* L) {
+static int wrap_gauge_create(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* parent = (widget_t*)tk_checkudata(L, 1, "widget_t");
   xy_t x = (xy_t)luaL_checkinteger(L, 2);
   xy_t y = (xy_t)luaL_checkinteger(L, 3);
   wh_t w = (wh_t)luaL_checkinteger(L, 4);
   wh_t h = (wh_t)luaL_checkinteger(L, 5);
-  ret = (widget_t*)guage_create(parent, x, y, w, h);
+  ret = (widget_t*)gauge_create(parent, x, y, w, h);
 
-  return tk_newuserdata(L, (void*)ret, "/guage_t/widget_t", "awtk.guage_t");
+  return tk_newuserdata(L, (void*)ret, "/gauge_t/widget_t", "awtk.gauge_t");
 }
 
-static int wrap_guage_cast(lua_State* L) {
+static int wrap_gauge_cast(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  ret = (widget_t*)guage_cast(widget);
+  ret = (widget_t*)gauge_cast(widget);
 
-  return tk_newuserdata(L, (void*)ret, "/guage_t/widget_t", "awtk.guage_t");
+  return tk_newuserdata(L, (void*)ret, "/gauge_t/widget_t", "awtk.gauge_t");
 }
 
-static int wrap_guage_set_image(lua_State* L) {
+static int wrap_gauge_set_image(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   char* name = (char*)luaL_checkstring(L, 2);
-  ret = (ret_t)guage_set_image(widget, name);
+  ret = (ret_t)gauge_set_image(widget, name);
 
   lua_pushnumber(L, (lua_Number)(ret));
 
   return 1;
 }
 
-static int wrap_guage_set_draw_type(lua_State* L) {
+static int wrap_gauge_set_draw_type(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   image_draw_type_t draw_type = (image_draw_type_t)luaL_checkinteger(L, 2);
-  ret = (ret_t)guage_set_draw_type(widget, draw_type);
+  ret = (ret_t)gauge_set_draw_type(widget, draw_type);
 
   lua_pushnumber(L, (lua_Number)(ret));
 
   return 1;
 }
 
-static const struct luaL_Reg guage_t_member_funcs[] = {
-    {"set_image", wrap_guage_set_image}, {"set_draw_type", wrap_guage_set_draw_type}, {NULL, NULL}};
+static const struct luaL_Reg gauge_t_member_funcs[] = {
+    {"set_image", wrap_gauge_set_image}, {"set_draw_type", wrap_gauge_set_draw_type}, {NULL, NULL}};
 
-static int wrap_guage_t_set_prop(lua_State* L) {
-  guage_t* obj = (guage_t*)tk_checkudata(L, 1, "guage_t");
+static int wrap_gauge_t_set_prop(lua_State* L) {
+  gauge_t* obj = (gauge_t*)tk_checkudata(L, 1, "gauge_t");
   const char* name = (const char*)luaL_checkstring(L, 2);
   (void)obj;
   (void)name;
   return wrap_widget_t_set_prop(L);
 }
 
-static int wrap_guage_t_get_prop(lua_State* L) {
-  guage_t* obj = (guage_t*)tk_checkudata(L, 1, "guage_t");
+static int wrap_gauge_t_get_prop(lua_State* L) {
+  gauge_t* obj = (gauge_t*)tk_checkudata(L, 1, "gauge_t");
   const char* name = (const char*)luaL_checkstring(L, 2);
-  const luaL_Reg* ret = find_member(guage_t_member_funcs, name);
+  const luaL_Reg* ret = find_member(gauge_t_member_funcs, name);
 
   (void)obj;
   (void)name;
@@ -11980,19 +11980,19 @@ static int wrap_guage_t_get_prop(lua_State* L) {
   }
 }
 
-static void guage_t_init(lua_State* L) {
+static void gauge_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
-      {"create", wrap_guage_create}, {"cast", wrap_guage_cast}, {NULL, NULL}};
+      {"create", wrap_gauge_create}, {"cast", wrap_gauge_cast}, {NULL, NULL}};
 
   static const struct luaL_Reg index_funcs[] = {
-      {"__index", wrap_guage_t_get_prop}, {"__newindex", wrap_guage_t_set_prop}, {NULL, NULL}};
+      {"__index", wrap_gauge_t_get_prop}, {"__newindex", wrap_gauge_t_set_prop}, {NULL, NULL}};
 
-  luaL_newmetatable(L, "awtk.guage_t");
+  luaL_newmetatable(L, "awtk.gauge_t");
   lua_pushstring(L, "__index");
   lua_pushvalue(L, -2);
   lua_settable(L, -3);
   luaL_openlib(L, NULL, index_funcs, 0);
-  luaL_openlib(L, "Guage", static_funcs, 0);
+  luaL_openlib(L, "Gauge", static_funcs, 0);
   lua_settop(L, 0);
 }
 static int wrap_image_animation_create(lua_State* L) {
@@ -20010,8 +20010,8 @@ void luaL_openawtk(lua_State* L) {
   draggable_t_init(L);
   file_browser_view_t_init(L);
   file_chooser_t_init(L);
-  guage_pointer_t_init(L);
-  guage_t_init(L);
+  gauge_pointer_t_init(L);
+  gauge_t_init(L);
   image_animation_t_init(L);
   image_value_t_init(L);
   candidates_t_init(L);
