@@ -16983,11 +16983,11 @@ static int wrap_edit_set_cursor(lua_State* L) {
 }
 
 static int wrap_edit_get_cursor(lua_State* L) {
-  ret_t ret = 0;
+  uint32_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  ret = (ret_t)edit_get_cursor(widget);
+  ret = (uint32_t)edit_get_cursor(widget);
 
-  lua_pushnumber(L, (lua_Number)(ret));
+  lua_pushinteger(L, (lua_Integer)(ret));
 
   return 1;
 }
