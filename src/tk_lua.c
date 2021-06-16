@@ -32,6 +32,7 @@
 #include "base/widget.h"
 #include "conf_io/app_conf.h"
 #include "slide_view/slide_indicator.h"
+#include "vpage/vpage.h"
 #include "tkc/asset_info.h"
 #include "tkc/color.h"
 #include "tkc/date_time.h"
@@ -258,6 +259,8 @@ static int wrap_text_selector_t_get_prop(lua_State* L);
 static int wrap_text_selector_t_set_prop(lua_State* L);
 static int wrap_time_clock_t_get_prop(lua_State* L);
 static int wrap_time_clock_t_set_prop(lua_State* L);
+static int wrap_vpage_t_get_prop(lua_State* L);
+static int wrap_vpage_t_set_prop(lua_State* L);
 static int wrap_prop_change_event_t_get_prop(lua_State* L);
 static int wrap_prop_change_event_t_set_prop(lua_State* L);
 static int wrap_progress_event_t_get_prop(lua_State* L);
@@ -373,9 +376,9 @@ static int wrap_event_cast(lua_State* L) {
 }
 
 static int wrap_event_get_type(lua_State* L) {
-  int ret = 0;
+  uint32_t ret = 0;
   event_t* event = (event_t*)tk_checkudata(L, 1, "event_t");
-  ret = (int)event_get_type(event);
+  ret = (uint32_t)event_get_type(event);
 
   lua_pushinteger(L, (lua_Integer)(ret));
 
@@ -4446,6 +4449,14 @@ static void style_id_t_init(lua_State* L) {
   lua_pushstring(L, "SELF_LAYOUT");
   lua_pushstring(L, STYLE_ID_SELF_LAYOUT);
   lua_settable(L, -3);
+
+  lua_pushstring(L, "FOCUSABLE");
+  lua_pushstring(L, STYLE_ID_FOCUSABLE);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "FEEDBACK");
+  lua_pushstring(L, STYLE_ID_FEEDBACK);
+  lua_settable(L, -3);
 }
 
 static int wrap_style_notify_widget_state_changed(lua_State* L) {
@@ -5705,6 +5716,10 @@ static void widget_prop_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_PROP_SINGLE_INSTANCE);
   lua_settable(L, -3);
 
+  lua_pushstring(L, "STRONGLY_FOCUS");
+  lua_pushstring(L, WIDGET_PROP_STRONGLY_FOCUS);
+  lua_settable(L, -3);
+
   lua_pushstring(L, "CHILDREN_LAYOUT");
   lua_pushstring(L, WIDGET_PROP_CHILDREN_LAYOUT);
   lua_settable(L, -3);
@@ -6055,6 +6070,10 @@ static void widget_prop_t_init(lua_State* L) {
 
   lua_pushstring(L, "ANIMATABLE");
   lua_pushstring(L, WIDGET_PROP_ANIMATABLE);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "AUTO_HIDE");
+  lua_pushstring(L, WIDGET_PROP_AUTO_HIDE);
   lua_settable(L, -3);
 
   lua_pushstring(L, "AUTO_HIDE_SCROLL_BAR");
@@ -6655,6 +6674,14 @@ static int wrap_widget_get_child(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/widget_t", "awtk.widget_t");
 }
 
+static int wrap_widget_get_focused_widget(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)widget_get_focused_widget(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/widget_t", "awtk.widget_t");
+}
+
 static int wrap_widget_get_native_window(lua_State* L) {
   native_window_t* ret = NULL;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -6678,6 +6705,26 @@ static int wrap_widget_close_window(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   ret = (ret_t)widget_close_window(widget);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_widget_back(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)widget_back(widget);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_widget_back_to_home(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)widget_back_to_home(widget);
 
   lua_pushnumber(L, (lua_Number)(ret));
 
@@ -7834,9 +7881,12 @@ static int wrap_widget_set_style_color(lua_State* L) {
 static const struct luaL_Reg widget_t_member_funcs[] = {
     {"count_children", wrap_widget_count_children},
     {"get_child", wrap_widget_get_child},
+    {"get_focused_widget", wrap_widget_get_focused_widget},
     {"get_native_window", wrap_widget_get_native_window},
     {"index_of", wrap_widget_index_of},
     {"close_window", wrap_widget_close_window},
+    {"back", wrap_widget_back},
+    {"back_to_home", wrap_widget_back_to_home},
     {"move", wrap_widget_move},
     {"resize", wrap_widget_resize},
     {"move_resize", wrap_widget_move_resize},
@@ -8265,6 +8315,24 @@ static void indicator_default_paint_t_init(lua_State* L) {
 
   lua_pushstring(L, "STROKE_RECT");
   lua_pushinteger(L, INDICATOR_DEFAULT_PAINT_STROKE_RECT);
+  lua_settable(L, -3);
+}
+
+static void vpage_event_t_init(lua_State* L) {
+  lua_newtable(L);
+  lua_setglobal(L, "VpageEvent");
+  lua_getglobal(L, "VpageEvent");
+
+  lua_pushstring(L, "VPAGE_WILL_OPEN");
+  lua_pushinteger(L, EVT_VPAGE_WILL_OPEN);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "VPAGE_OPEN");
+  lua_pushinteger(L, EVT_VPAGE_OPEN);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "VPAGE_CLOSE");
+  lua_pushinteger(L, EVT_VPAGE_CLOSE);
   lua_settable(L, -3);
 }
 
@@ -10847,6 +10915,10 @@ static int wrap_window_base_t_get_prop(lua_State* L) {
     lua_pushboolean(L, (lua_Integer)(obj->single_instance));
 
     return 1;
+  } else if (strcmp(name, "strongly_focus") == 0) {
+    lua_pushboolean(L, (lua_Integer)(obj->strongly_focus));
+
+    return 1;
   } else {
     return wrap_widget_t_get_prop(L);
   }
@@ -10957,6 +11029,17 @@ static int wrap_window_manager_set_show_fps(lua_State* L) {
   return 1;
 }
 
+static int wrap_window_manager_set_ignore_input_events(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t ignore_input_events = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)window_manager_set_ignore_input_events(widget, ignore_input_events);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_window_manager_set_screen_saver_time(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -11041,6 +11124,7 @@ static const struct luaL_Reg window_manager_t_member_funcs[] = {
     {"get_pointer_pressed", wrap_window_manager_get_pointer_pressed},
     {"is_animating", wrap_window_manager_is_animating},
     {"set_show_fps", wrap_window_manager_set_show_fps},
+    {"set_ignore_input_events", wrap_window_manager_set_ignore_input_events},
     {"set_screen_saver_time", wrap_window_manager_set_screen_saver_time},
     {"set_cursor", wrap_window_manager_set_cursor},
     {"back", wrap_window_manager_back},
@@ -11857,7 +11941,7 @@ static int wrap_gauge_pointer_cast(lua_State* L) {
 static int wrap_gauge_pointer_set_angle(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  int32_t angle = (int32_t)luaL_checkinteger(L, 2);
+  float_t angle = (float_t)luaL_checknumber(L, 2);
   ret = (ret_t)gauge_pointer_set_angle(widget, angle);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -11914,7 +11998,7 @@ static int wrap_gauge_pointer_t_get_prop(lua_State* L) {
     return 1;
   }
   if (strcmp(name, "angle") == 0) {
-    lua_pushinteger(L, (lua_Integer)(obj->angle));
+    lua_pushnumber(L, (lua_Number)(obj->angle));
 
     return 1;
   } else if (strcmp(name, "image") == 0) {
@@ -12869,6 +12953,17 @@ static int wrap_mledit_set_max_lines(lua_State* L) {
   return 1;
 }
 
+static int wrap_mledit_set_max_chars(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  uint32_t max_chars = (uint32_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)mledit_set_max_chars(widget, max_chars);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_mledit_set_tips(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -13003,6 +13098,7 @@ static const struct luaL_Reg mledit_t_member_funcs[] = {
     {"set_focus", wrap_mledit_set_focus},
     {"set_wrap_word", wrap_mledit_set_wrap_word},
     {"set_max_lines", wrap_mledit_set_max_lines},
+    {"set_max_chars", wrap_mledit_set_max_chars},
     {"set_tips", wrap_mledit_set_tips},
     {"set_tr_tips", wrap_mledit_set_tr_tips},
     {"set_keyboard", wrap_mledit_set_keyboard},
@@ -13049,6 +13145,10 @@ static int wrap_mledit_t_get_prop(lua_State* L) {
     return 1;
   } else if (strcmp(name, "max_lines") == 0) {
     lua_pushinteger(L, (lua_Integer)(obj->max_lines));
+
+    return 1;
+  } else if (strcmp(name, "max_chars") == 0) {
+    lua_pushinteger(L, (lua_Integer)(obj->max_chars));
 
     return 1;
   } else if (strcmp(name, "wrap_word") == 0) {
@@ -14065,6 +14165,17 @@ static int wrap_scroll_bar_set_value_only(lua_State* L) {
   return 1;
 }
 
+static int wrap_scroll_bar_set_auto_hide(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t auto_hide = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)scroll_bar_set_auto_hide(widget, auto_hide);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_scroll_bar_is_mobile(lua_State* L) {
   bool_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -14082,6 +14193,7 @@ static const struct luaL_Reg scroll_bar_t_member_funcs[] = {
     {"add_delta", wrap_scroll_bar_add_delta},
     {"scroll_delta", wrap_scroll_bar_scroll_delta},
     {"set_value_only", wrap_scroll_bar_set_value_only},
+    {"set_auto_hide", wrap_scroll_bar_set_auto_hide},
     {"is_mobile", wrap_scroll_bar_is_mobile},
     {NULL, NULL}};
 
@@ -14118,6 +14230,10 @@ static int wrap_scroll_bar_t_get_prop(lua_State* L) {
     return 1;
   } else if (strcmp(name, "animatable") == 0) {
     lua_pushboolean(L, (lua_Integer)(obj->animatable));
+
+    return 1;
+  } else if (strcmp(name, "auto_hide") == 0) {
+    lua_pushboolean(L, (lua_Integer)(obj->auto_hide));
 
     return 1;
   } else {
@@ -15172,6 +15288,17 @@ static int wrap_text_selector_set_yspeed_scale(lua_State* L) {
   return 1;
 }
 
+static int wrap_text_selector_set_animating_time(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  uint32_t animating_time = (uint32_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)text_selector_set_animating_time(widget, animating_time);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static const struct luaL_Reg text_selector_t_member_funcs[] = {
     {"reset_options", wrap_text_selector_reset_options},
     {"count_options", wrap_text_selector_count_options},
@@ -15188,6 +15315,7 @@ static const struct luaL_Reg text_selector_t_member_funcs[] = {
     {"set_localize_options", wrap_text_selector_set_localize_options},
     {"set_loop_options", wrap_text_selector_set_loop_options},
     {"set_yspeed_scale", wrap_text_selector_set_yspeed_scale},
+    {"set_animating_time", wrap_text_selector_set_animating_time},
     {NULL, NULL}};
 
 static int wrap_text_selector_t_set_prop(lua_State* L) {
@@ -15223,6 +15351,10 @@ static int wrap_text_selector_t_get_prop(lua_State* L) {
     return 1;
   } else if (strcmp(name, "yspeed_scale") == 0) {
     lua_pushnumber(L, (lua_Number)(obj->yspeed_scale));
+
+    return 1;
+  } else if (strcmp(name, "animating_time") == 0) {
+    lua_pushinteger(L, (lua_Integer)(obj->animating_time));
 
     return 1;
   } else if (strcmp(name, "localize_options") == 0) {
@@ -15506,6 +15638,99 @@ static void time_clock_t_init(lua_State* L) {
   lua_settable(L, -3);
   luaL_openlib(L, NULL, index_funcs, 0);
   luaL_openlib(L, "TimeClock", static_funcs, 0);
+  lua_settop(L, 0);
+}
+static int wrap_vpage_create(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* parent = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  xy_t x = (xy_t)luaL_checkinteger(L, 2);
+  xy_t y = (xy_t)luaL_checkinteger(L, 3);
+  wh_t w = (wh_t)luaL_checkinteger(L, 4);
+  wh_t h = (wh_t)luaL_checkinteger(L, 5);
+  ret = (widget_t*)vpage_create(parent, x, y, w, h);
+
+  return tk_newuserdata(L, (void*)ret, "/vpage_t/widget_t", "awtk.vpage_t");
+}
+
+static int wrap_vpage_cast(lua_State* L) {
+  widget_t* ret = NULL;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (widget_t*)vpage_cast(widget);
+
+  return tk_newuserdata(L, (void*)ret, "/vpage_t/widget_t", "awtk.vpage_t");
+}
+
+static int wrap_vpage_set_ui_asset(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  const char* ui_asset = (const char*)luaL_checkstring(L, 2);
+  ret = (ret_t)vpage_set_ui_asset(widget, ui_asset);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_vpage_set_anim_hint(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  const char* anim_hint = (const char*)luaL_checkstring(L, 2);
+  ret = (ret_t)vpage_set_anim_hint(widget, anim_hint);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static const struct luaL_Reg vpage_t_member_funcs[] = {{"set_ui_asset", wrap_vpage_set_ui_asset},
+                                                       {"set_anim_hint", wrap_vpage_set_anim_hint},
+                                                       {NULL, NULL}};
+
+static int wrap_vpage_t_set_prop(lua_State* L) {
+  vpage_t* obj = (vpage_t*)tk_checkudata(L, 1, "vpage_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  (void)obj;
+  (void)name;
+  return wrap_widget_t_set_prop(L);
+}
+
+static int wrap_vpage_t_get_prop(lua_State* L) {
+  vpage_t* obj = (vpage_t*)tk_checkudata(L, 1, "vpage_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  const luaL_Reg* ret = find_member(vpage_t_member_funcs, name);
+
+  (void)obj;
+  (void)name;
+  if (ret) {
+    lua_pushcfunction(L, ret->func);
+    return 1;
+  }
+  if (strcmp(name, "ui_asset") == 0) {
+    lua_pushstring(L, (char*)(obj->ui_asset));
+
+    return 1;
+  } else if (strcmp(name, "anim_hint") == 0) {
+    lua_pushstring(L, (char*)(obj->anim_hint));
+
+    return 1;
+  } else {
+    return wrap_widget_t_get_prop(L);
+  }
+}
+
+static void vpage_t_init(lua_State* L) {
+  static const struct luaL_Reg static_funcs[] = {
+      {"create", wrap_vpage_create}, {"cast", wrap_vpage_cast}, {NULL, NULL}};
+
+  static const struct luaL_Reg index_funcs[] = {
+      {"__index", wrap_vpage_t_get_prop}, {"__newindex", wrap_vpage_t_set_prop}, {NULL, NULL}};
+
+  luaL_newmetatable(L, "awtk.vpage_t");
+  lua_pushstring(L, "__index");
+  lua_pushvalue(L, -2);
+  lua_settable(L, -3);
+  luaL_openlib(L, NULL, index_funcs, 0);
+  luaL_openlib(L, "Vpage", static_funcs, 0);
   lua_settop(L, 0);
 }
 static int wrap_prop_change_event_cast(lua_State* L) {
@@ -18821,6 +19046,36 @@ static int wrap_gif_image_create(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/gif_image_t/image_base_t/widget_t", "awtk.gif_image_t");
 }
 
+static int wrap_gif_image_play(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)gif_image_play(widget);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_gif_image_stop(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)gif_image_stop(widget);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
+static int wrap_gif_image_pause(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)gif_image_pause(widget);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_gif_image_cast(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -18829,7 +19084,10 @@ static int wrap_gif_image_cast(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/gif_image_t/image_base_t/widget_t", "awtk.gif_image_t");
 }
 
-static const struct luaL_Reg gif_image_t_member_funcs[] = {{NULL, NULL}};
+static const struct luaL_Reg gif_image_t_member_funcs[] = {{"play", wrap_gif_image_play},
+                                                           {"stop", wrap_gif_image_stop},
+                                                           {"pause", wrap_gif_image_pause},
+                                                           {NULL, NULL}};
 
 static int wrap_gif_image_t_set_prop(lua_State* L) {
   gif_image_t* obj = (gif_image_t*)tk_checkudata(L, 1, "gif_image_t");
@@ -20121,6 +20379,7 @@ void luaL_openawtk(lua_State* L) {
   widget_t_init(L);
   app_conf_t_init(L);
   indicator_default_paint_t_init(L);
+  vpage_event_t_init(L);
   asset_type_t_init(L);
   asset_info_t_init(L);
   color_t_init(L);
@@ -20178,6 +20437,7 @@ void luaL_openawtk(lua_State* L) {
   switch_t_init(L);
   text_selector_t_init(L);
   time_clock_t_init(L);
+  vpage_t_init(L);
   prop_change_event_t_init(L);
   progress_event_t_init(L);
   done_event_t_init(L);
