@@ -131,6 +131,8 @@ static int wrap_point_t_get_prop(lua_State* L);
 static int wrap_point_t_set_prop(lua_State* L);
 static int wrap_pointf_t_get_prop(lua_State* L);
 static int wrap_pointf_t_set_prop(lua_State* L);
+static int wrap_rectf_t_get_prop(lua_State* L);
+static int wrap_rectf_t_set_prop(lua_State* L);
 static int wrap_rect_t_get_prop(lua_State* L);
 static int wrap_rect_t_set_prop(lua_State* L);
 static int wrap_bitmap_t_get_prop(lua_State* L);
@@ -671,6 +673,65 @@ static void pointf_t_init(lua_State* L) {
   lua_settable(L, -3);
   luaL_openlib(L, NULL, index_funcs, 0);
   luaL_openlib(L, "Pointf", static_funcs, 0);
+  lua_settop(L, 0);
+}
+
+static const struct luaL_Reg rectf_t_member_funcs[] = {{NULL, NULL}};
+
+static int wrap_rectf_t_set_prop(lua_State* L) {
+  rectf_t* obj = (rectf_t*)tk_checkudata(L, 1, "rectf_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  (void)obj;
+  (void)name;
+  log_debug("%s: not supported %s\n", __FUNCTION__, name);
+  return 0;
+}
+
+static int wrap_rectf_t_get_prop(lua_State* L) {
+  rectf_t* obj = (rectf_t*)tk_checkudata(L, 1, "rectf_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  const luaL_Reg* ret = find_member(rectf_t_member_funcs, name);
+
+  (void)obj;
+  (void)name;
+  if (ret) {
+    lua_pushcfunction(L, ret->func);
+    return 1;
+  }
+  if (strcmp(name, "x") == 0) {
+    lua_pushnumber(L, (lua_Number)(obj->x));
+
+    return 1;
+  } else if (strcmp(name, "y") == 0) {
+    lua_pushnumber(L, (lua_Number)(obj->y));
+
+    return 1;
+  } else if (strcmp(name, "w") == 0) {
+    lua_pushnumber(L, (lua_Number)(obj->w));
+
+    return 1;
+  } else if (strcmp(name, "h") == 0) {
+    lua_pushnumber(L, (lua_Number)(obj->h));
+
+    return 1;
+  } else {
+    log_debug("%s: not supported %s\n", __FUNCTION__, name);
+    return 0;
+  }
+}
+
+static void rectf_t_init(lua_State* L) {
+  static const struct luaL_Reg static_funcs[] = {{NULL, NULL}};
+
+  static const struct luaL_Reg index_funcs[] = {
+      {"__index", wrap_rectf_t_get_prop}, {"__newindex", wrap_rectf_t_set_prop}, {NULL, NULL}};
+
+  luaL_newmetatable(L, "awtk.rectf_t");
+  lua_pushstring(L, "__index");
+  lua_pushvalue(L, -2);
+  lua_settable(L, -3);
+  luaL_openlib(L, NULL, index_funcs, 0);
+  luaL_openlib(L, "Rectf", static_funcs, 0);
   lua_settop(L, 0);
 }
 static int wrap_rect_create(lua_State* L) {
@@ -5146,6 +5207,16 @@ static int wrap_vgcanvas_set_transform(lua_State* L) {
   return 1;
 }
 
+static int wrap_vgcanvas_clip_path(lua_State* L) {
+  ret_t ret = 0;
+  vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
+  ret = (ret_t)vgcanvas_clip_path(vg);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_vgcanvas_clip_rect(lua_State* L) {
   ret_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
@@ -5441,6 +5512,7 @@ static const struct luaL_Reg vgcanvas_t_member_funcs[] = {
     {"translate", wrap_vgcanvas_translate},
     {"transform", wrap_vgcanvas_transform},
     {"set_transform", wrap_vgcanvas_set_transform},
+    {"clip_path", wrap_vgcanvas_clip_path},
     {"clip_rect", wrap_vgcanvas_clip_rect},
     {"intersect_clip_rect", wrap_vgcanvas_intersect_clip_rect},
     {"fill", wrap_vgcanvas_fill},
@@ -11029,6 +11101,17 @@ static int wrap_window_manager_set_show_fps(lua_State* L) {
   return 1;
 }
 
+static int wrap_window_manager_set_max_fps(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  uint32_t max_fps = (uint32_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)window_manager_set_max_fps(widget, max_fps);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_window_manager_set_ignore_input_events(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -11124,6 +11207,7 @@ static const struct luaL_Reg window_manager_t_member_funcs[] = {
     {"get_pointer_pressed", wrap_window_manager_get_pointer_pressed},
     {"is_animating", wrap_window_manager_is_animating},
     {"set_show_fps", wrap_window_manager_set_show_fps},
+    {"set_max_fps", wrap_window_manager_set_max_fps},
     {"set_ignore_input_events", wrap_window_manager_set_ignore_input_events},
     {"set_screen_saver_time", wrap_window_manager_set_screen_saver_time},
     {"set_cursor", wrap_window_manager_set_cursor},
@@ -20337,6 +20421,7 @@ void luaL_openawtk(lua_State* L) {
   emitter_t_init(L);
   point_t_init(L);
   pointf_t_init(L);
+  rectf_t_init(L);
   rect_t_init(L);
   bitmap_t_init(L);
   object_t_init(L);
