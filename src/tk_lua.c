@@ -15039,6 +15039,17 @@ static int wrap_slide_view_set_loop(lua_State* L) {
   return 1;
 }
 
+static int wrap_slide_view_remove_index(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  uint32_t index = (uint32_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)slide_view_remove_index(widget, index);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static const struct luaL_Reg slide_view_t_member_funcs[] = {
     {"set_auto_play", wrap_slide_view_set_auto_play},
     {"set_active", wrap_slide_view_set_active},
@@ -15046,6 +15057,7 @@ static const struct luaL_Reg slide_view_t_member_funcs[] = {
     {"set_vertical", wrap_slide_view_set_vertical},
     {"set_anim_hint", wrap_slide_view_set_anim_hint},
     {"set_loop", wrap_slide_view_set_loop},
+    {"remove_index", wrap_slide_view_remove_index},
     {NULL, NULL}};
 
 static int wrap_slide_view_t_set_prop(lua_State* L) {
@@ -19494,6 +19506,28 @@ static int wrap_object_array_push(lua_State* L) {
   return 1;
 }
 
+static int wrap_object_array_index_of(lua_State* L) {
+  int32_t ret = 0;
+  object_t* obj = (object_t*)tk_checkudata(L, 1, "object_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 2, "const value_t");
+  ret = (int32_t)object_array_index_of(obj, v);
+
+  lua_pushinteger(L, (lua_Integer)(ret));
+
+  return 1;
+}
+
+static int wrap_object_array_last_index_of(lua_State* L) {
+  int32_t ret = 0;
+  object_t* obj = (object_t*)tk_checkudata(L, 1, "object_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 2, "const value_t");
+  ret = (int32_t)object_array_last_index_of(obj, v);
+
+  lua_pushinteger(L, (lua_Integer)(ret));
+
+  return 1;
+}
+
 static int wrap_object_array_remove(lua_State* L) {
   ret_t ret = 0;
   object_t* obj = (object_t*)tk_checkudata(L, 1, "object_t");
@@ -19505,10 +19539,28 @@ static int wrap_object_array_remove(lua_State* L) {
   return 1;
 }
 
+static int wrap_object_array_get_and_remove(lua_State* L) {
+  ret_t ret = 0;
+  object_t* obj = (object_t*)tk_checkudata(L, 1, "object_t");
+  uint32_t index = (uint32_t)luaL_checkinteger(L, 2);
+  value_t* v = (value_t*)tk_checkudata(L, 3, "value_t");
+  ret = (ret_t)object_array_get_and_remove(obj, index, v);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static const struct luaL_Reg object_array_t_member_funcs[] = {
-    {"unref", wrap_object_array_unref},   {"clear_props", wrap_object_array_clear_props},
-    {"insert", wrap_object_array_insert}, {"push", wrap_object_array_push},
-    {"remove", wrap_object_array_remove}, {NULL, NULL}};
+    {"unref", wrap_object_array_unref},
+    {"clear_props", wrap_object_array_clear_props},
+    {"insert", wrap_object_array_insert},
+    {"push", wrap_object_array_push},
+    {"index_of", wrap_object_array_index_of},
+    {"last_index_of", wrap_object_array_last_index_of},
+    {"remove", wrap_object_array_remove},
+    {"get_and_remove", wrap_object_array_get_and_remove},
+    {NULL, NULL}};
 
 static int wrap_object_array_t_set_prop(lua_State* L) {
   object_array_t* obj = (object_array_t*)tk_checkudata(L, 1, "object_array_t");
