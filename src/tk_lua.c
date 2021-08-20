@@ -5853,6 +5853,10 @@ static void widget_prop_t_init(lua_State* L) {
   lua_pushstring(L, WIDGET_PROP_VALUE);
   lua_settable(L, -3);
 
+  lua_pushstring(L, "RADIO");
+  lua_pushstring(L, WIDGET_PROP_RADIO);
+  lua_settable(L, -3);
+
   lua_pushstring(L, "REVERSE");
   lua_pushstring(L, WIDGET_PROP_REVERSE);
   lua_settable(L, -3);
