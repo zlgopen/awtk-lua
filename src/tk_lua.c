@@ -10047,6 +10047,10 @@ static void value_type_t_init(lua_State* L) {
   lua_pushstring(L, "TOKEN");
   lua_pushinteger(L, VALUE_TYPE_TOKEN);
   lua_settable(L, -3);
+
+  lua_pushstring(L, "GRADIENT");
+  lua_pushinteger(L, VALUE_TYPE_GRADIENT);
+  lua_settable(L, -3);
 }
 
 static int wrap_assets_manager(lua_State* L) {
@@ -13099,6 +13103,17 @@ static int wrap_mledit_set_wrap_word(lua_State* L) {
   return 1;
 }
 
+static int wrap_mledit_set_overwrite(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t overwrite = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)mledit_set_overwrite(widget, overwrite);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_mledit_set_max_lines(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -13241,6 +13256,18 @@ static int wrap_mledit_get_selected_text(lua_State* L) {
   return 1;
 }
 
+static int wrap_mledit_insert_text(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  uint32_t offset = (uint32_t)luaL_checkinteger(L, 2);
+  const char* text = (const char*)luaL_checkstring(L, 3);
+  ret = (ret_t)mledit_insert_text(widget, offset, text);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_mledit_cast(lua_State* L) {
   widget_t* ret = NULL;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -13254,6 +13281,7 @@ static const struct luaL_Reg mledit_t_member_funcs[] = {
     {"set_cancelable", wrap_mledit_set_cancelable},
     {"set_focus", wrap_mledit_set_focus},
     {"set_wrap_word", wrap_mledit_set_wrap_word},
+    {"set_overwrite", wrap_mledit_set_overwrite},
     {"set_max_lines", wrap_mledit_set_max_lines},
     {"set_max_chars", wrap_mledit_set_max_chars},
     {"set_tips", wrap_mledit_set_tips},
@@ -13267,6 +13295,7 @@ static const struct luaL_Reg mledit_t_member_funcs[] = {
     {"set_close_im_when_blured", wrap_mledit_set_close_im_when_blured},
     {"set_select", wrap_mledit_set_select},
     {"get_selected_text", wrap_mledit_get_selected_text},
+    {"insert_text", wrap_mledit_insert_text},
     {NULL, NULL}};
 
 static int wrap_mledit_t_set_prop(lua_State* L) {
@@ -13308,12 +13337,16 @@ static int wrap_mledit_t_get_prop(lua_State* L) {
     lua_pushinteger(L, (lua_Integer)(obj->max_chars));
 
     return 1;
-  } else if (strcmp(name, "wrap_word") == 0) {
-    lua_pushboolean(L, (lua_Integer)(obj->wrap_word));
-
-    return 1;
   } else if (strcmp(name, "scroll_line") == 0) {
     lua_pushinteger(L, (lua_Integer)(obj->scroll_line));
+
+    return 1;
+  } else if (strcmp(name, "overwrite") == 0) {
+    lua_pushboolean(L, (lua_Integer)(obj->overwrite));
+
+    return 1;
+  } else if (strcmp(name, "wrap_word") == 0) {
+    lua_pushboolean(L, (lua_Integer)(obj->wrap_word));
 
     return 1;
   } else if (strcmp(name, "readonly") == 0) {
@@ -19729,6 +19762,15 @@ static int wrap_object_default_create(lua_State* L) {
                         "awtk.object_default_t");
 }
 
+static int wrap_object_default_create_ex(lua_State* L) {
+  object_t* ret = NULL;
+  bool_t enable_path = (bool_t)lua_toboolean(L, 1);
+  ret = (object_t*)object_default_create_ex(enable_path);
+
+  return tk_newuserdata(L, (void*)ret, "/object_default_t/object_t/emitter_t",
+                        "awtk.object_default_t");
+}
+
 static int wrap_object_default_unref(lua_State* L) {
   ret_t ret = 0;
   object_t* obj = (object_t*)tk_checkudata(L, 1, "object_t");
@@ -19779,6 +19821,7 @@ static int wrap_object_default_t_get_prop(lua_State* L) {
 
 static void object_default_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {{"create", wrap_object_default_create},
+                                                 {"create_ex", wrap_object_default_create_ex},
                                                  {NULL, NULL}};
 
   static const struct luaL_Reg index_funcs[] = {{"__index", wrap_object_default_t_get_prop},
