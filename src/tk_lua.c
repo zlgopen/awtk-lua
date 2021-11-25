@@ -4500,16 +4500,16 @@ static void style_id_t_init(lua_State* L) {
   lua_pushstring(L, STYLE_ID_ROUND_RADIUS);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "ROUND_RADIUS_TOP_LETF");
-  lua_pushstring(L, STYLE_ID_ROUND_RADIUS_TOP_LETF);
+  lua_pushstring(L, "ROUND_RADIUS_TOP_LEFT");
+  lua_pushstring(L, STYLE_ID_ROUND_RADIUS_TOP_LEFT);
   lua_settable(L, -3);
 
   lua_pushstring(L, "ROUND_RADIUS_TOP_RIGHT");
   lua_pushstring(L, STYLE_ID_ROUND_RADIUS_TOP_RIGHT);
   lua_settable(L, -3);
 
-  lua_pushstring(L, "ROUND_RADIUS_BOTTOM_LETF");
-  lua_pushstring(L, STYLE_ID_ROUND_RADIUS_BOTTOM_LETF);
+  lua_pushstring(L, "ROUND_RADIUS_BOTTOM_LEFT");
+  lua_pushstring(L, STYLE_ID_ROUND_RADIUS_BOTTOM_LEFT);
   lua_settable(L, -3);
 
   lua_pushstring(L, "ROUND_RADIUS_BOTTOM_RIGHT");
@@ -5244,14 +5244,14 @@ static int wrap_vgcanvas_clip_rect(lua_State* L) {
   return 1;
 }
 
-static int wrap_vgcanvas_is_rectf_int_clip_rect(lua_State* L) {
+static int wrap_vgcanvas_is_rectf_in_clip_rect(lua_State* L) {
   bool_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
   float_t left = (float_t)luaL_checknumber(L, 2);
   float_t top = (float_t)luaL_checknumber(L, 3);
   float_t right = (float_t)luaL_checknumber(L, 4);
   float_t bottom = (float_t)luaL_checknumber(L, 5);
-  ret = (bool_t)vgcanvas_is_rectf_int_clip_rect(vg, left, top, right, bottom);
+  ret = (bool_t)vgcanvas_is_rectf_in_clip_rect(vg, left, top, right, bottom);
 
   lua_pushboolean(L, (lua_Integer)(ret));
 
@@ -5562,7 +5562,7 @@ static const struct luaL_Reg vgcanvas_t_member_funcs[] = {
     {"set_transform", wrap_vgcanvas_set_transform},
     {"clip_path", wrap_vgcanvas_clip_path},
     {"clip_rect", wrap_vgcanvas_clip_rect},
-    {"is_rectf_int_clip_rect", wrap_vgcanvas_is_rectf_int_clip_rect},
+    {"is_rectf_in_clip_rect", wrap_vgcanvas_is_rectf_in_clip_rect},
     {"intersect_clip_rect", wrap_vgcanvas_intersect_clip_rect},
     {"fill", wrap_vgcanvas_fill},
     {"stroke", wrap_vgcanvas_stroke},
