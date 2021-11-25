@@ -15790,7 +15790,7 @@ static const struct luaL_Reg text_selector_t_member_funcs[] = {
     {"set_options", wrap_text_selector_set_options},
     {"set_range_options_ex", wrap_text_selector_set_range_options_ex},
     {"set_range_options", wrap_text_selector_set_range_options},
-    {"get_value", wrap_text_selector_get_value},
+    {"get_value_int", wrap_text_selector_get_value},
     {"set_value", wrap_text_selector_set_value},
     {"get_text_value", wrap_text_selector_get_text},
     {"set_text", wrap_text_selector_set_text},
@@ -20420,7 +20420,7 @@ static const struct luaL_Reg combo_box_t_member_funcs[] = {
     {"append_option", wrap_combo_box_append_option},
     {"remove_option", wrap_combo_box_remove_option},
     {"set_options", wrap_combo_box_set_options},
-    {"get_value", wrap_combo_box_get_value},
+    {"get_value_int", wrap_combo_box_get_value},
     {"get_text_value", wrap_combo_box_get_text},
     {NULL, NULL}};
 
