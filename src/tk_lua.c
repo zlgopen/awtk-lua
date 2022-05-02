@@ -1141,6 +1141,18 @@ static int wrap_tk_object_copy_prop(lua_State* L) {
   return 1;
 }
 
+static int wrap_tk_object_copy_props(lua_State* L) {
+  ret_t ret = 0;
+  tk_object_t* obj = (tk_object_t*)tk_checkudata(L, 1, "tk_object_t");
+  tk_object_t* src = (tk_object_t*)tk_checkudata(L, 2, "tk_object_t");
+  bool_t overwrite = (bool_t)lua_toboolean(L, 3);
+  ret = (ret_t)tk_object_copy_props(obj, src, overwrite);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_tk_object_has_prop(lua_State* L) {
   bool_t ret = 0;
   tk_object_t* obj = (tk_object_t*)tk_checkudata(L, 1, "tk_object_t");
@@ -1587,6 +1599,7 @@ static const struct luaL_Reg tk_object_t_member_funcs[] = {
     {"set_prop_float", wrap_tk_object_set_prop_float},
     {"set_prop_double", wrap_tk_object_set_prop_double},
     {"copy_prop", wrap_tk_object_copy_prop},
+    {"copy_props", wrap_tk_object_copy_props},
     {"has_prop", wrap_tk_object_has_prop},
     {"eval", wrap_tk_object_eval},
     {"can_exec", wrap_tk_object_can_exec},
@@ -18831,10 +18844,6 @@ static int wrap_slider_t_get_prop(lua_State* L) {
     lua_pushnumber(L, (lua_Number)(obj->step));
 
     return 1;
-  } else if (strcmp(name, "vertical") == 0) {
-    lua_pushboolean(L, (lua_Integer)(obj->vertical));
-
-    return 1;
   } else if (strcmp(name, "bar_size") == 0) {
     lua_pushinteger(L, (lua_Integer)(obj->bar_size));
 
@@ -18843,16 +18852,20 @@ static int wrap_slider_t_get_prop(lua_State* L) {
     lua_pushinteger(L, (lua_Integer)(obj->dragger_size));
 
     return 1;
+  } else if (strcmp(name, "line_cap") == 0) {
+    lua_pushstring(L, (char*)(obj->line_cap));
+
+    return 1;
+  } else if (strcmp(name, "vertical") == 0) {
+    lua_pushboolean(L, (lua_Integer)(obj->vertical));
+
+    return 1;
   } else if (strcmp(name, "dragger_adapt_to_icon") == 0) {
     lua_pushboolean(L, (lua_Integer)(obj->dragger_adapt_to_icon));
 
     return 1;
   } else if (strcmp(name, "slide_with_bar") == 0) {
     lua_pushboolean(L, (lua_Integer)(obj->slide_with_bar));
-
-    return 1;
-  } else if (strcmp(name, "line_cap") == 0) {
-    lua_pushstring(L, (char*)(obj->line_cap));
 
     return 1;
   } else {
