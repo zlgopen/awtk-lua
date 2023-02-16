@@ -1747,9 +1747,9 @@ static int wrap_value_set_uint8(lua_State* L) {
 }
 
 static int wrap_value_uint8(lua_State* L) {
-  int8_t ret = 0;
+  uint8_t ret = 0;
   value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  ret = (int8_t)value_uint8(v);
+  ret = (uint8_t)value_uint8(v);
 
   lua_pushinteger(L, (lua_Integer)(ret));
 
@@ -2046,11 +2046,11 @@ static int wrap_value_func_def(lua_State* L) {
 }
 
 static int wrap_value_bitmap(lua_State* L) {
-  bitmap_t* ret = NULL;
+  void* ret = NULL;
   value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
-  ret = (bitmap_t*)value_bitmap(v);
+  ret = (void*)value_bitmap(v);
 
-  return tk_newuserdata(L, (void*)ret, "/bitmap_t", "awtk.bitmap_t");
+  return tk_newuserdata(L, (void*)ret, "", "awtk.void");
 }
 
 static const struct luaL_Reg value_t_member_funcs[] = {{"set_bool", wrap_value_set_bool},
@@ -8962,12 +8962,12 @@ static int wrap_asset_info_is_in_rom(lua_State* L) {
 }
 
 static int wrap_asset_info_set_is_in_rom(lua_State* L) {
-  bool_t ret = 0;
+  ret_t ret = 0;
   asset_info_t* info = (asset_info_t*)tk_checkudata(L, 1, "asset_info_t");
   bool_t is_in_rom = (bool_t)lua_toboolean(L, 2);
-  ret = (bool_t)asset_info_set_is_in_rom(info, is_in_rom);
+  ret = (ret_t)asset_info_set_is_in_rom(info, is_in_rom);
 
-  lua_pushboolean(L, (lua_Integer)(ret));
+  lua_pushnumber(L, (lua_Number)(ret));
 
   return 1;
 }
@@ -10547,24 +10547,24 @@ static int wrap_assets_manager_set_theme(lua_State* L) {
 }
 
 static int wrap_assets_manager_ref(lua_State* L) {
-  asset_info_t* ret = NULL;
+  const asset_info_t* ret = NULL;
   assets_manager_t* am = (assets_manager_t*)tk_checkudata(L, 1, "assets_manager_t");
   asset_type_t type = (asset_type_t)luaL_checkinteger(L, 2);
   char* name = (char*)luaL_checkstring(L, 3);
-  ret = (asset_info_t*)assets_manager_ref(am, type, name);
+  ret = (const asset_info_t*)assets_manager_ref(am, type, name);
 
-  return tk_newuserdata(L, (void*)ret, "/asset_info_t", "awtk.asset_info_t");
+  return tk_newuserdata(L, (void*)ret, "", "awtk.const asset_info_t");
 }
 
 static int wrap_assets_manager_ref_ex(lua_State* L) {
-  asset_info_t* ret = NULL;
+  const asset_info_t* ret = NULL;
   assets_manager_t* am = (assets_manager_t*)tk_checkudata(L, 1, "assets_manager_t");
   asset_type_t type = (asset_type_t)luaL_checkinteger(L, 2);
   uint16_t subtype = (uint16_t)luaL_checkinteger(L, 3);
   char* name = (char*)luaL_checkstring(L, 4);
-  ret = (asset_info_t*)assets_manager_ref_ex(am, type, subtype, name);
+  ret = (const asset_info_t*)assets_manager_ref_ex(am, type, subtype, name);
 
-  return tk_newuserdata(L, (void*)ret, "/asset_info_t", "awtk.asset_info_t");
+  return tk_newuserdata(L, (void*)ret, "", "awtk.const asset_info_t");
 }
 
 static int wrap_assets_manager_unref(lua_State* L) {
