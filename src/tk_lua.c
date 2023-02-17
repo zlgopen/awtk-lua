@@ -1063,7 +1063,7 @@ static int wrap_tk_object_set_prop(lua_State* L) {
   ret_t ret = 0;
   tk_object_t* obj = (tk_object_t*)tk_checkudata(L, 1, "tk_object_t");
   const char* name = (const char*)luaL_checkstring(L, 2);
-  value_t* value = (value_t*)tk_checkudata(L, 3, "value_t");
+  const value_t* value = (const value_t*)tk_checkudata(L, 3, "const value_t");
   ret = (ret_t)tk_object_set_prop(obj, name, value);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -1304,7 +1304,7 @@ static int wrap_tk_object_set_prop_by_path(lua_State* L) {
   ret_t ret = 0;
   tk_object_t* obj = (tk_object_t*)tk_checkudata(L, 1, "tk_object_t");
   const char* path = (const char*)luaL_checkstring(L, 2);
-  value_t* value = (value_t*)tk_checkudata(L, 3, "value_t");
+  const value_t* value = (const value_t*)tk_checkudata(L, 3, "const value_t");
   ret = (ret_t)tk_object_set_prop_by_path(obj, path, value);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -1710,7 +1710,7 @@ static int wrap_value_set_bool(lua_State* L) {
 
 static int wrap_value_bool(lua_State* L) {
   bool_t ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (bool_t)value_bool(v);
 
   lua_pushboolean(L, (lua_Integer)(ret));
@@ -1729,7 +1729,7 @@ static int wrap_value_set_int8(lua_State* L) {
 
 static int wrap_value_int8(lua_State* L) {
   int8_t ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (int8_t)value_int8(v);
 
   lua_pushinteger(L, (lua_Integer)(ret));
@@ -1748,7 +1748,7 @@ static int wrap_value_set_uint8(lua_State* L) {
 
 static int wrap_value_uint8(lua_State* L) {
   uint8_t ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (uint8_t)value_uint8(v);
 
   lua_pushinteger(L, (lua_Integer)(ret));
@@ -1767,7 +1767,7 @@ static int wrap_value_set_int16(lua_State* L) {
 
 static int wrap_value_int16(lua_State* L) {
   int16_t ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (int16_t)value_int16(v);
 
   lua_pushinteger(L, (lua_Integer)(ret));
@@ -1786,7 +1786,7 @@ static int wrap_value_set_uint16(lua_State* L) {
 
 static int wrap_value_uint16(lua_State* L) {
   uint16_t ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (uint16_t)value_uint16(v);
 
   lua_pushinteger(L, (lua_Integer)(ret));
@@ -1805,7 +1805,7 @@ static int wrap_value_set_int32(lua_State* L) {
 
 static int wrap_value_int32(lua_State* L) {
   int32_t ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (int32_t)value_int32(v);
 
   lua_pushinteger(L, (lua_Integer)(ret));
@@ -1833,7 +1833,7 @@ static int wrap_value_set_int64(lua_State* L) {
 
 static int wrap_value_int64(lua_State* L) {
   int64_t ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (int64_t)value_int64(v);
 
   lua_pushinteger(L, (lua_Integer)(ret));
@@ -1852,7 +1852,7 @@ static int wrap_value_set_uint64(lua_State* L) {
 
 static int wrap_value_uint64(lua_State* L) {
   uint64_t ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (uint64_t)value_uint64(v);
 
   lua_pushinteger(L, (lua_Integer)(ret));
@@ -1871,7 +1871,7 @@ static int wrap_value_set_float(lua_State* L) {
 
 static int wrap_value_float32(lua_State* L) {
   float ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (float)value_float32(v);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -1890,7 +1890,7 @@ static int wrap_value_set_double(lua_State* L) {
 
 static int wrap_value_double(lua_State* L) {
   double ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (double)value_double(v);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -1909,7 +1909,7 @@ static int wrap_value_dup_str(lua_State* L) {
 
 static int wrap_value_str(lua_State* L) {
   const char* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (const char*)value_str(v);
 
   lua_pushstring(L, (char*)(ret));
@@ -1919,7 +1919,7 @@ static int wrap_value_str(lua_State* L) {
 
 static int wrap_value_str_ex(lua_State* L) {
   const char* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   char* buff = (char*)luaL_checkstring(L, 2);
   uint32_t size = (uint32_t)luaL_checkinteger(L, 3);
   ret = (const char*)value_str_ex(v, buff, size);
@@ -1959,7 +1959,7 @@ static int wrap_value_set_object(lua_State* L) {
 
 static int wrap_value_object(lua_State* L) {
   tk_object_t* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (tk_object_t*)value_object(v);
 
   return tk_newuserdata(L, (void*)ret, "/tk_object_t/emitter_t", "awtk.tk_object_t");
@@ -1976,7 +1976,7 @@ static int wrap_value_set_token(lua_State* L) {
 
 static int wrap_value_token(lua_State* L) {
   uint32_t ret = 0;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (uint32_t)value_token(v);
 
   lua_pushinteger(L, (lua_Integer)(ret));
@@ -2021,7 +2021,7 @@ static int wrap_value_cast(lua_State* L) {
 
 static int wrap_value_id(lua_State* L) {
   const char* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (const char*)value_id(v);
 
   lua_pushstring(L, (char*)(ret));
@@ -2031,7 +2031,7 @@ static int wrap_value_id(lua_State* L) {
 
 static int wrap_value_func(lua_State* L) {
   void* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (void*)value_func(v);
 
   return tk_newuserdata(L, (void*)ret, "", "awtk.void");
@@ -2039,7 +2039,7 @@ static int wrap_value_func(lua_State* L) {
 
 static int wrap_value_func_def(lua_State* L) {
   void* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (void*)value_func_def(v);
 
   return tk_newuserdata(L, (void*)ret, "", "awtk.void");
@@ -2047,10 +2047,18 @@ static int wrap_value_func_def(lua_State* L) {
 
 static int wrap_value_bitmap(lua_State* L) {
   void* ret = NULL;
-  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  const value_t* v = (const value_t*)tk_checkudata(L, 1, "const value_t");
   ret = (void*)value_bitmap(v);
 
   return tk_newuserdata(L, (void*)ret, "", "awtk.void");
+}
+
+static int wrap_value_rect(lua_State* L) {
+  rect_t* ret = NULL;
+  value_t* v = (value_t*)tk_checkudata(L, 1, "value_t");
+  ret = (rect_t*)value_rect(v);
+
+  return tk_newuserdata(L, (void*)ret, "/rect_t", "awtk.rect_t");
 }
 
 static const struct luaL_Reg value_t_member_funcs[] = {{"set_bool", wrap_value_set_bool},
@@ -2089,6 +2097,7 @@ static const struct luaL_Reg value_t_member_funcs[] = {{"set_bool", wrap_value_s
                                                        {"func", wrap_value_func},
                                                        {"func_def", wrap_value_func_def},
                                                        {"bitmap", wrap_value_bitmap},
+                                                       {"rect", wrap_value_rect},
                                                        {NULL, NULL}};
 
 static int wrap_value_t_set_prop(lua_State* L) {
@@ -3517,7 +3526,7 @@ static int wrap_image_manager(lua_State* L) {
 static int wrap_image_manager_get_bitmap(lua_State* L) {
   ret_t ret = 0;
   image_manager_t* imm = (image_manager_t*)tk_checkudata(L, 1, "image_manager_t");
-  char* name = (char*)luaL_checkstring(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   bitmap_t* image = (bitmap_t*)tk_checkudata(L, 3, "bitmap_t");
   ret = (ret_t)image_manager_get_bitmap(imm, name, image);
 
@@ -3529,7 +3538,7 @@ static int wrap_image_manager_get_bitmap(lua_State* L) {
 static int wrap_image_manager_preload(lua_State* L) {
   ret_t ret = 0;
   image_manager_t* imm = (image_manager_t*)tk_checkudata(L, 1, "image_manager_t");
-  char* name = (char*)luaL_checkstring(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)image_manager_preload(imm, name);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -4417,8 +4426,8 @@ static int wrap_locale_info_tr(lua_State* L) {
 static int wrap_locale_info_change(lua_State* L) {
   ret_t ret = 0;
   locale_info_t* locale_info = (locale_info_t*)tk_checkudata(L, 1, "locale_info_t");
-  char* language = (char*)luaL_checkstring(L, 2);
-  char* country = (char*)luaL_checkstring(L, 3);
+  const char* language = (const char*)luaL_checkstring(L, 2);
+  const char* country = (const char*)luaL_checkstring(L, 3);
   ret = (ret_t)locale_info_change(locale_info, language, country);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -5472,7 +5481,7 @@ static int wrap_vgcanvas_paint(lua_State* L) {
 static int wrap_vgcanvas_set_font(lua_State* L) {
   ret_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
-  char* font = (char*)luaL_checkstring(L, 2);
+  const char* font = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)vgcanvas_set_font(vg, font);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -5494,7 +5503,7 @@ static int wrap_vgcanvas_set_font_size(lua_State* L) {
 static int wrap_vgcanvas_set_text_align(lua_State* L) {
   ret_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
-  char* value = (char*)luaL_checkstring(L, 2);
+  const char* value = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)vgcanvas_set_text_align(vg, value);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -5505,7 +5514,7 @@ static int wrap_vgcanvas_set_text_align(lua_State* L) {
 static int wrap_vgcanvas_set_text_baseline(lua_State* L) {
   ret_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
-  char* value = (char*)luaL_checkstring(L, 2);
+  const char* value = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)vgcanvas_set_text_baseline(vg, value);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -5516,7 +5525,7 @@ static int wrap_vgcanvas_set_text_baseline(lua_State* L) {
 static int wrap_vgcanvas_fill_text(lua_State* L) {
   ret_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
-  char* text = (char*)luaL_checkstring(L, 2);
+  const char* text = (const char*)luaL_checkstring(L, 2);
   float_t x = (float_t)luaL_checknumber(L, 3);
   float_t y = (float_t)luaL_checknumber(L, 4);
   float_t max_width = (float_t)luaL_checknumber(L, 5);
@@ -5530,7 +5539,7 @@ static int wrap_vgcanvas_fill_text(lua_State* L) {
 static int wrap_vgcanvas_measure_text(lua_State* L) {
   float_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
-  char* text = (char*)luaL_checkstring(L, 2);
+  const char* text = (const char*)luaL_checkstring(L, 2);
   ret = (float_t)vgcanvas_measure_text(vg, text);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -5655,7 +5664,7 @@ static int wrap_vgcanvas_set_stroke_color_str(lua_State* L) {
 static int wrap_vgcanvas_set_line_cap(lua_State* L) {
   ret_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
-  char* value = (char*)luaL_checkstring(L, 2);
+  const char* value = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)vgcanvas_set_line_cap(vg, value);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -5666,7 +5675,7 @@ static int wrap_vgcanvas_set_line_cap(lua_State* L) {
 static int wrap_vgcanvas_set_line_join(lua_State* L) {
   ret_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
-  char* value = (char*)luaL_checkstring(L, 2);
+  const char* value = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)vgcanvas_set_line_join(vg, value);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -6577,6 +6586,10 @@ static void widget_prop_t_init(lua_State* L) {
 
   lua_pushstring(L, "ANIMATE_ANIMATING_TIME");
   lua_pushstring(L, WIDGET_PROP_ANIMATE_ANIMATING_TIME);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "DIRTY_RECT");
+  lua_pushstring(L, WIDGET_PROP_DIRTY_RECT);
   lua_settable(L, -3);
 }
 
@@ -10526,6 +10539,10 @@ static void value_type_t_init(lua_State* L) {
   lua_pushstring(L, "BITMAP");
   lua_pushinteger(L, VALUE_TYPE_BITMAP);
   lua_settable(L, -3);
+
+  lua_pushstring(L, "RECT");
+  lua_pushinteger(L, VALUE_TYPE_RECT);
+  lua_settable(L, -3);
 }
 
 static int wrap_assets_manager(lua_State* L) {
@@ -10550,7 +10567,7 @@ static int wrap_assets_manager_ref(lua_State* L) {
   const asset_info_t* ret = NULL;
   assets_manager_t* am = (assets_manager_t*)tk_checkudata(L, 1, "assets_manager_t");
   asset_type_t type = (asset_type_t)luaL_checkinteger(L, 2);
-  char* name = (char*)luaL_checkstring(L, 3);
+  const char* name = (const char*)luaL_checkstring(L, 3);
   ret = (const asset_info_t*)assets_manager_ref(am, type, name);
 
   return tk_newuserdata(L, (void*)ret, "", "awtk.const asset_info_t");
@@ -10561,7 +10578,7 @@ static int wrap_assets_manager_ref_ex(lua_State* L) {
   assets_manager_t* am = (assets_manager_t*)tk_checkudata(L, 1, "assets_manager_t");
   asset_type_t type = (asset_type_t)luaL_checkinteger(L, 2);
   uint16_t subtype = (uint16_t)luaL_checkinteger(L, 3);
-  char* name = (char*)luaL_checkstring(L, 4);
+  const char* name = (const char*)luaL_checkstring(L, 4);
   ret = (const asset_info_t*)assets_manager_ref_ex(am, type, subtype, name);
 
   return tk_newuserdata(L, (void*)ret, "", "awtk.const asset_info_t");
@@ -10570,7 +10587,7 @@ static int wrap_assets_manager_ref_ex(lua_State* L) {
 static int wrap_assets_manager_unref(lua_State* L) {
   ret_t ret = 0;
   assets_manager_t* am = (assets_manager_t*)tk_checkudata(L, 1, "assets_manager_t");
-  asset_info_t* info = (asset_info_t*)tk_checkudata(L, 2, "asset_info_t");
+  const asset_info_t* info = (const asset_info_t*)tk_checkudata(L, 2, "const asset_info_t");
   ret = (ret_t)assets_manager_unref(am, info);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -11373,7 +11390,7 @@ static void system_event_t_init(lua_State* L) {
 static int wrap_font_manager_unload_font(lua_State* L) {
   ret_t ret = 0;
   font_manager_t* fm = (font_manager_t*)tk_checkudata(L, 1, "font_manager_t");
-  char* name = (char*)luaL_checkstring(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   font_size_t size = (font_size_t)luaL_checkinteger(L, 3);
   ret = (ret_t)font_manager_unload_font(fm, name, size);
 
@@ -11450,7 +11467,7 @@ static void font_manager_t_init(lua_State* L) {
 static int wrap_image_base_set_image(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* name = (char*)luaL_checkstring(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)image_base_set_image(widget, name);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -13044,7 +13061,7 @@ static int wrap_gauge_cast(lua_State* L) {
 static int wrap_gauge_set_image(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* name = (char*)luaL_checkstring(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)gauge_set_image(widget, name);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -14029,7 +14046,7 @@ static int wrap_mledit_set_max_chars(lua_State* L) {
 static int wrap_mledit_set_tips(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* tips = (char*)luaL_checkstring(L, 2);
+  const char* tips = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)mledit_set_tips(widget, tips);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -14051,7 +14068,7 @@ static int wrap_mledit_set_tr_tips(lua_State* L) {
 static int wrap_mledit_set_keyboard(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* keyboard = (char*)luaL_checkstring(L, 2);
+  const char* keyboard = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)mledit_set_keyboard(widget, keyboard);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -14542,7 +14559,7 @@ static int wrap_rich_text_create(lua_State* L) {
 static int wrap_rich_text_set_text(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* text = (char*)luaL_checkstring(L, 2);
+  const char* text = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)rich_text_set_text(widget, text);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -16607,7 +16624,7 @@ static int wrap_text_selector_append_option(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
   int32_t value = (int32_t)luaL_checkinteger(L, 2);
-  char* text = (char*)luaL_checkstring(L, 3);
+  const char* text = (const char*)luaL_checkstring(L, 3);
   ret = (ret_t)text_selector_append_option(widget, value, text);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -16618,7 +16635,7 @@ static int wrap_text_selector_append_option(lua_State* L) {
 static int wrap_text_selector_set_options(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* options = (char*)luaL_checkstring(L, 2);
+  const char* options = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)text_selector_set_options(widget, options);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -18768,7 +18785,7 @@ static int wrap_edit_set_input_type(lua_State* L) {
 static int wrap_edit_set_action_text(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* action_text = (char*)luaL_checkstring(L, 2);
+  const char* action_text = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)edit_set_action_text(widget, action_text);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -18779,7 +18796,7 @@ static int wrap_edit_set_action_text(lua_State* L) {
 static int wrap_edit_set_tips(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* tips = (char*)luaL_checkstring(L, 2);
+  const char* tips = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)edit_set_tips(widget, tips);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -18801,7 +18818,7 @@ static int wrap_edit_set_tr_tips(lua_State* L) {
 static int wrap_edit_set_keyboard(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* keyboard = (char*)luaL_checkstring(L, 2);
+  const char* keyboard = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)edit_set_keyboard(widget, keyboard);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -19419,7 +19436,7 @@ static int wrap_pages_set_auto_focused(lua_State* L) {
 static int wrap_pages_set_active_by_name(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* name = (char*)luaL_checkstring(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)pages_set_active_by_name(widget, name);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -20021,7 +20038,7 @@ static int wrap_tab_button_set_value(lua_State* L) {
 static int wrap_tab_button_set_icon(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* name = (char*)luaL_checkstring(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)tab_button_set_icon(widget, name);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -20032,7 +20049,7 @@ static int wrap_tab_button_set_icon(lua_State* L) {
 static int wrap_tab_button_set_active_icon(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* name = (char*)luaL_checkstring(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)tab_button_set_active_icon(widget, name);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -20043,7 +20060,7 @@ static int wrap_tab_button_set_active_icon(lua_State* L) {
 static int wrap_tab_button_set_load_ui(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* name = (char*)luaL_checkstring(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)tab_button_set_load_ui(widget, name);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -20311,7 +20328,7 @@ static int wrap_dialog_open(lua_State* L) {
 static int wrap_dialog_set_title(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* title = (char*)luaL_checkstring(L, 2);
+  const char* title = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)dialog_set_title(widget, title);
 
   lua_pushnumber(L, (lua_Number)(ret));
@@ -21079,7 +21096,7 @@ static int wrap_svg_image_create(lua_State* L) {
 static int wrap_svg_image_set_image(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  char* name = (char*)luaL_checkstring(L, 2);
+  const char* name = (const char*)luaL_checkstring(L, 2);
   ret = (ret_t)svg_image_set_image(widget, name);
 
   lua_pushnumber(L, (lua_Number)(ret));
