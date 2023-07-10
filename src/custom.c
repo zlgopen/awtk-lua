@@ -262,3 +262,8 @@ static int wrap_idle_add(lua_State* L) {
     return 0;
   }
 }
+
+static int wrap_locale_infos_on(lua_State* L) {
+  assert(!"not supported yet");
+  return 0;
+}
