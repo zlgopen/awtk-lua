@@ -49,7 +49,11 @@ static ret_t application_init() {
   return RET_OK;
 }
 
-static ret_t application_exit() {
+static ret_t application_exit(void) {
+  return RET_OK;
+}
+
+static ret_t final_exit(void) {
   lua_close(L);
 
   return RET_OK;
@@ -57,6 +61,7 @@ static ret_t application_exit() {
 
 #define APP_NAME "AWTK-LUA"
 #define ON_CMD_LINE on_cmd_line
+#define FINAL_EXIT() final_exit()
 
 #include "../res/assets.inc"
 #include "awtk_main.inc"
