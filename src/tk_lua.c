@@ -828,22 +828,6 @@ static int wrap_bitmap_create_ex3(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/bitmap_t", "awtk.bitmap_t");
 }
 
-static int wrap_bitmap_init_ex2(lua_State* L) {
-  ret_t ret = 0;
-  bitmap_t* bitmap = (bitmap_t*)tk_checkudata(L, 1, "bitmap_t");
-  uint32_t w = (uint32_t)luaL_checkinteger(L, 2);
-  uint32_t h = (uint32_t)luaL_checkinteger(L, 3);
-  uint32_t line_length = (uint32_t)luaL_checkinteger(L, 4);
-  bitmap_format_t format = (bitmap_format_t)luaL_checkinteger(L, 5);
-  uint8_t* data = (uint8_t*)tk_checkudata(L, 6, "uint8_t");
-  uint8_t* physical_data_addr = (uint8_t*)tk_checkudata(L, 7, "uint8_t");
-  bool_t should_free_data = (bool_t)lua_toboolean(L, 8);
-  ret = (ret_t)bitmap_init_ex2(bitmap, w, h, line_length, format, data, physical_data_addr,
-                               should_free_data);
-
-  return tk_newuserdata(L, (void*)ret, "/bitmap_t", "awtk.bitmap_t");
-}
-
 static int wrap_bitmap_get_bpp(lua_State* L) {
   uint32_t ret = 0;
   bitmap_t* bitmap = (bitmap_t*)tk_checkudata(L, 1, "bitmap_t");
@@ -933,7 +917,6 @@ static void bitmap_t_init(lua_State* L) {
       {"create_ex", wrap_bitmap_create_ex},
       {"create_ex2", wrap_bitmap_create_ex2},
       {"create_ex3", wrap_bitmap_create_ex3},
-      {"init_ex2", wrap_bitmap_init_ex2},
       {"get_bpp_of_format", wrap_bitmap_get_bpp_of_format},
       {NULL, NULL}};
 
@@ -1277,19 +1260,6 @@ static int wrap_tk_object_exec(lua_State* L) {
   const char* name = (const char*)luaL_checkstring(L, 2);
   const char* args = (const char*)luaL_checkstring(L, 3);
   ret = (ret_t)tk_object_exec(obj, name, args);
-
-  lua_pushnumber(L, (lua_Number)(ret));
-
-  return 1;
-}
-
-static int wrap_tk_object_exec_ex(lua_State* L) {
-  ret_t ret = 0;
-  tk_object_t* obj = (tk_object_t*)tk_checkudata(L, 1, "tk_object_t");
-  const char* name = (const char*)luaL_checkstring(L, 2);
-  const char* args = (const char*)luaL_checkstring(L, 3);
-  value_t* result = (value_t*)tk_checkudata(L, 4, "value_t");
-  ret = (ret_t)tk_object_exec_ex(obj, name, args, result);
 
   lua_pushnumber(L, (lua_Number)(ret));
 
@@ -1710,7 +1680,6 @@ static const struct luaL_Reg tk_object_t_member_funcs[] = {
     {"eval", wrap_tk_object_eval},
     {"can_exec", wrap_tk_object_can_exec},
     {"execute", wrap_tk_object_exec},
-    {"execute_ex", wrap_tk_object_exec_ex},
     {"notify_changed", wrap_tk_object_notify_changed},
     {"has_prop_by_path", wrap_tk_object_has_prop_by_path},
     {"get_prop_str_by_path", wrap_tk_object_get_prop_str_by_path},
