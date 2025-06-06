@@ -800,34 +800,6 @@ static int wrap_bitmap_create_ex(lua_State* L) {
   return tk_newuserdata(L, (void*)ret, "/bitmap_t", "awtk.bitmap_t");
 }
 
-static int wrap_bitmap_create_ex2(lua_State* L) {
-  bitmap_t* ret = NULL;
-  uint32_t w = (uint32_t)luaL_checkinteger(L, 1);
-  uint32_t h = (uint32_t)luaL_checkinteger(L, 2);
-  uint32_t line_length = (uint32_t)luaL_checkinteger(L, 3);
-  bitmap_format_t format = (bitmap_format_t)luaL_checkinteger(L, 4);
-  uint8_t* data = (uint8_t*)tk_checkudata(L, 5, "uint8_t");
-  bool_t should_free_data = (bool_t)lua_toboolean(L, 6);
-  ret = (bitmap_t*)bitmap_create_ex2(w, h, line_length, format, data, should_free_data);
-
-  return tk_newuserdata(L, (void*)ret, "/bitmap_t", "awtk.bitmap_t");
-}
-
-static int wrap_bitmap_create_ex3(lua_State* L) {
-  bitmap_t* ret = NULL;
-  uint32_t w = (uint32_t)luaL_checkinteger(L, 1);
-  uint32_t h = (uint32_t)luaL_checkinteger(L, 2);
-  uint32_t line_length = (uint32_t)luaL_checkinteger(L, 3);
-  bitmap_format_t format = (bitmap_format_t)luaL_checkinteger(L, 4);
-  uint8_t* data = (uint8_t*)tk_checkudata(L, 5, "uint8_t");
-  uint8_t* physical_data_addr = (uint8_t*)tk_checkudata(L, 6, "uint8_t");
-  bool_t should_free_data = (bool_t)lua_toboolean(L, 7);
-  ret = (bitmap_t*)bitmap_create_ex3(w, h, line_length, format, data, physical_data_addr,
-                                     should_free_data);
-
-  return tk_newuserdata(L, (void*)ret, "/bitmap_t", "awtk.bitmap_t");
-}
-
 static int wrap_bitmap_get_bpp(lua_State* L) {
   uint32_t ret = 0;
   bitmap_t* bitmap = (bitmap_t*)tk_checkudata(L, 1, "bitmap_t");
@@ -915,8 +887,6 @@ static void bitmap_t_init(lua_State* L) {
   static const struct luaL_Reg static_funcs[] = {
       {"create", wrap_bitmap_create},
       {"create_ex", wrap_bitmap_create_ex},
-      {"create_ex2", wrap_bitmap_create_ex2},
-      {"create_ex3", wrap_bitmap_create_ex3},
       {"get_bpp_of_format", wrap_bitmap_get_bpp_of_format},
       {NULL, NULL}};
 
@@ -3659,21 +3629,9 @@ static int wrap_idle_remove(lua_State* L) {
   return 1;
 }
 
-static int wrap_idle_remove_all_by_ctx(lua_State* L) {
-  ret_t ret = 0;
-  void* ctx = NULL;
-  ret = (ret_t)idle_remove_all_by_ctx(ctx);
-
-  lua_pushnumber(L, (lua_Number)(ret));
-
-  return 1;
-}
-
 static void idle_t_init(lua_State* L) {
-  static const struct luaL_Reg static_funcs[] = {{"add", wrap_idle_add},
-                                                 {"remove", wrap_idle_remove},
-                                                 {"remove_all_by_ctx", wrap_idle_remove_all_by_ctx},
-                                                 {NULL, NULL}};
+  static const struct luaL_Reg static_funcs[] = {
+      {"add", wrap_idle_add}, {"remove", wrap_idle_remove}, {NULL, NULL}};
 
   luaL_openlib(L, "Idle", static_funcs, 0);
   lua_settop(L, 0);
@@ -5163,16 +5121,6 @@ static int wrap_timer_remove(lua_State* L) {
   return 1;
 }
 
-static int wrap_timer_remove_all_by_ctx(lua_State* L) {
-  ret_t ret = 0;
-  void* ctx = NULL;
-  ret = (ret_t)timer_remove_all_by_ctx(ctx);
-
-  lua_pushnumber(L, (lua_Number)(ret));
-
-  return 1;
-}
-
 static int wrap_timer_reset(lua_State* L) {
   ret_t ret = 0;
   uint32_t timer_id = (uint32_t)luaL_checkinteger(L, 1);
@@ -5215,15 +5163,13 @@ static int wrap_timer_modify(lua_State* L) {
 }
 
 static void timer_t_init(lua_State* L) {
-  static const struct luaL_Reg static_funcs[] = {
-      {"add", wrap_timer_add},
-      {"remove", wrap_timer_remove},
-      {"remove_all_by_ctx", wrap_timer_remove_all_by_ctx},
-      {"reset", wrap_timer_reset},
-      {"suspend", wrap_timer_suspend},
-      {"resume", wrap_timer_resume},
-      {"modify", wrap_timer_modify},
-      {NULL, NULL}};
+  static const struct luaL_Reg static_funcs[] = {{"add", wrap_timer_add},
+                                                 {"remove", wrap_timer_remove},
+                                                 {"reset", wrap_timer_reset},
+                                                 {"suspend", wrap_timer_suspend},
+                                                 {"resume", wrap_timer_resume},
+                                                 {"modify", wrap_timer_modify},
+                                                 {NULL, NULL}};
 
   luaL_openlib(L, "Timer", static_funcs, 0);
   lua_settop(L, 0);
@@ -8239,18 +8185,6 @@ static int wrap_widget_get_prop_str(lua_State* L) {
   return 1;
 }
 
-static int wrap_widget_set_prop_pointer(lua_State* L) {
-  ret_t ret = 0;
-  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
-  const char* name = (const char*)luaL_checkstring(L, 2);
-  void* v = (void*)lua_touserdata(L, 3);
-  ret = (ret_t)widget_set_prop_pointer(widget, name, v);
-
-  lua_pushnumber(L, (lua_Number)(ret));
-
-  return 1;
-}
-
 static int wrap_widget_get_prop_pointer(lua_State* L) {
   void* ret = NULL;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -8897,7 +8831,6 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
     {"set_props", wrap_widget_set_props},
     {"set_prop_str", wrap_widget_set_prop_str},
     {"get_prop_str", wrap_widget_get_prop_str},
-    {"set_prop_pointer", wrap_widget_set_prop_pointer},
     {"get_prop_pointer", wrap_widget_get_prop_pointer},
     {"set_prop_float", wrap_widget_set_prop_float},
     {"get_prop_float", wrap_widget_get_prop_float},
