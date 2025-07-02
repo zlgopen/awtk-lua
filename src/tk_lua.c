@@ -5328,6 +5328,24 @@ static void bitmap_flag_t_init(lua_State* L) {
   lua_settable(L, -3);
 }
 
+static void vgcanvas_fill_mode_t_init(lua_State* L) {
+  lua_newtable(L);
+  lua_setglobal(L, "VgcanvasFillMode");
+  lua_getglobal(L, "VgcanvasFillMode");
+
+  lua_pushstring(L, "ALL_FILL");
+  lua_pushinteger(L, VGCANVAS_FILL_MODE_ALL_FILL);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "NON_ZERO");
+  lua_pushinteger(L, VGCANVAS_FILL_MODE_NON_ZERO);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "EVEN_ODD");
+  lua_pushinteger(L, VGCANVAS_FILL_MODE_EVEN_ODD);
+  lua_settable(L, -3);
+}
+
 static int wrap_vgcanvas_cast(lua_State* L) {
   vgcanvas_t* ret = NULL;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
@@ -5506,11 +5524,11 @@ static int wrap_vgcanvas_close_path(lua_State* L) {
   return 1;
 }
 
-static int wrap_vgcanvas_path_winding(lua_State* L) {
+static int wrap_vgcanvas_set_fill_mode(lua_State* L) {
   ret_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
-  bool_t dir = (bool_t)lua_toboolean(L, 2);
-  ret = (ret_t)vgcanvas_path_winding(vg, dir);
+  vgcanvas_fill_mode_t fill_mode = (vgcanvas_fill_mode_t)luaL_checkinteger(L, 2);
+  ret = (ret_t)vgcanvas_set_fill_mode(vg, fill_mode);
 
   lua_pushnumber(L, (lua_Number)(ret));
 
@@ -5918,7 +5936,7 @@ static const struct luaL_Reg vgcanvas_t_member_funcs[] = {
     {"rounded_rect", wrap_vgcanvas_rounded_rect},
     {"ellipse", wrap_vgcanvas_ellipse},
     {"close_path", wrap_vgcanvas_close_path},
-    {"path_winding", wrap_vgcanvas_path_winding},
+    {"set_fill_mode", wrap_vgcanvas_set_fill_mode},
     {"rotate", wrap_vgcanvas_rotate},
     {"scale", wrap_vgcanvas_scale},
     {"translate", wrap_vgcanvas_translate},
@@ -10442,6 +10460,24 @@ static void object_prop_t_init(lua_State* L) {
 
   lua_pushstring(L, "TK_SELECTED_INDEX");
   lua_pushstring(L, TK_OBJECT_PROP_SELECTED_INDEX);
+  lua_settable(L, -3);
+}
+
+static void tk_object_life_t_init(lua_State* L) {
+  lua_newtable(L);
+  lua_setglobal(L, "TkObjectLife");
+  lua_getglobal(L, "TkObjectLife");
+
+  lua_pushstring(L, "NONE");
+  lua_pushinteger(L, TK_OBJECT_LIFE_NONE);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "OWN");
+  lua_pushinteger(L, TK_OBJECT_LIFE_OWN);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "HOLD");
+  lua_pushinteger(L, TK_OBJECT_LIFE_HOLD);
   lua_settable(L, -3);
 }
 
@@ -16145,6 +16181,16 @@ static int wrap_scroll_view_set_virtual_h(lua_State* L) {
   return 1;
 }
 
+static int wrap_scroll_view_fix_offset(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  ret = (ret_t)scroll_view_fix_offset(widget);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_scroll_view_set_xslidable(lua_State* L) {
   ret_t ret = 0;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -16275,6 +16321,7 @@ static int wrap_scroll_view_scroll_delta_to(lua_State* L) {
 static const struct luaL_Reg scroll_view_t_member_funcs[] = {
     {"set_virtual_w", wrap_scroll_view_set_virtual_w},
     {"set_virtual_h", wrap_scroll_view_set_virtual_h},
+    {"fix_offset", wrap_scroll_view_fix_offset},
     {"set_xslidable", wrap_scroll_view_set_xslidable},
     {"set_yslidable", wrap_scroll_view_set_yslidable},
     {"set_snap_to_page", wrap_scroll_view_set_snap_to_page},
@@ -23866,6 +23913,7 @@ void luaL_openawtk(lua_State* L) {
   app_type_t_init(L);
   bitmap_format_t_init(L);
   bitmap_flag_t_init(L);
+  vgcanvas_fill_mode_t_init(L);
   vgcanvas_t_init(L);
   vgcanvas_line_cap_t_init(L);
   vgcanvas_line_join_t_init(L);
@@ -23889,6 +23937,7 @@ void luaL_openawtk(lua_State* L) {
   MIME_TYPE_init(L);
   object_cmd_t_init(L);
   object_prop_t_init(L);
+  tk_object_life_t_init(L);
   rlog_t_init(L);
   time_now_t_init(L);
   timer_manager_t_init(L);
