@@ -8203,6 +8203,18 @@ static int wrap_widget_get_prop_str(lua_State* L) {
   return 1;
 }
 
+static int wrap_widget_set_prop_pointer(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  const char* name = (const char*)luaL_checkstring(L, 2);
+  void* v = (void*)lua_touserdata(L, 3);
+  ret = (ret_t)widget_set_prop_pointer(widget, name, v);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_widget_get_prop_pointer(lua_State* L) {
   void* ret = NULL;
   widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
@@ -8849,6 +8861,7 @@ static const struct luaL_Reg widget_t_member_funcs[] = {
     {"set_props", wrap_widget_set_props},
     {"set_prop_str", wrap_widget_set_prop_str},
     {"get_prop_str", wrap_widget_get_prop_str},
+    {"set_prop_pointer", wrap_widget_set_prop_pointer},
     {"get_prop_pointer", wrap_widget_get_prop_pointer},
     {"set_prop_float", wrap_widget_set_prop_float},
     {"get_prop_float", wrap_widget_get_prop_float},
