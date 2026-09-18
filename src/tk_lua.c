@@ -9,7 +9,6 @@
 #include "tkc/object.h"
 #include "tkc/value.h"
 #include "src/awtk_global.h"
-#include "base/bidi.h"
 #include "base/canvas_offline.h"
 #include "base/canvas.h"
 #include "base/clip_board.h"
@@ -2304,40 +2303,6 @@ static void global_t_init(lua_State* L) {
   luaL_openlib(L, "Global", static_funcs, 0);
   lua_settop(L, 0);
 }
-static void bidi_type_t_init(lua_State* L) {
-  lua_newtable(L);
-  lua_setglobal(L, "BidiType");
-  lua_getglobal(L, "BidiType");
-
-  lua_pushstring(L, "AUTO");
-  lua_pushinteger(L, BIDI_TYPE_AUTO);
-  lua_settable(L, -3);
-
-  lua_pushstring(L, "LTR");
-  lua_pushinteger(L, BIDI_TYPE_LTR);
-  lua_settable(L, -3);
-
-  lua_pushstring(L, "RTL");
-  lua_pushinteger(L, BIDI_TYPE_RTL);
-  lua_settable(L, -3);
-
-  lua_pushstring(L, "LRO");
-  lua_pushinteger(L, BIDI_TYPE_LRO);
-  lua_settable(L, -3);
-
-  lua_pushstring(L, "RLO");
-  lua_pushinteger(L, BIDI_TYPE_RLO);
-  lua_settable(L, -3);
-
-  lua_pushstring(L, "WLTR");
-  lua_pushinteger(L, BIDI_TYPE_WLTR);
-  lua_settable(L, -3);
-
-  lua_pushstring(L, "WRTL");
-  lua_pushinteger(L, BIDI_TYPE_WRTL);
-  lua_settable(L, -3);
-}
-
 static void image_draw_type_t_init(lua_State* L) {
   lua_newtable(L);
   lua_setglobal(L, "ImageDrawType");
@@ -3628,6 +3593,40 @@ static void event_t_init(lua_State* L) {
   luaL_openlib(L, "Event", static_funcs, 0);
   lua_settop(L, 0);
 }
+static void font_bidi_type_t_init(lua_State* L) {
+  lua_newtable(L);
+  lua_setglobal(L, "FontBidiType");
+  lua_getglobal(L, "FontBidiType");
+
+  lua_pushstring(L, "AUTO");
+  lua_pushinteger(L, FONT_BIDI_TYPE_AUTO);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "LTR");
+  lua_pushinteger(L, FONT_BIDI_TYPE_LTR);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "RTL");
+  lua_pushinteger(L, FONT_BIDI_TYPE_RTL);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "LRO");
+  lua_pushinteger(L, FONT_BIDI_TYPE_LRO);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "RLO");
+  lua_pushinteger(L, FONT_BIDI_TYPE_RLO);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "WLTR");
+  lua_pushinteger(L, FONT_BIDI_TYPE_WLTR);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "WRTL");
+  lua_pushinteger(L, FONT_BIDI_TYPE_WRTL);
+  lua_settable(L, -3);
+}
+
 static void glyph_format_t_init(lua_State* L) {
   lua_newtable(L);
   lua_setglobal(L, "GlyphFormat");
@@ -5792,6 +5791,22 @@ static int wrap_vgcanvas_fill_text(lua_State* L) {
   return 1;
 }
 
+static int wrap_vgcanvas_fill_text_by_glyphs(lua_State* L) {
+  ret_t ret = 0;
+  vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
+  glyphs_t* glyphs = (glyphs_t*)tk_checkudata(L, 2, "glyphs_t");
+  uint32_t start = (uint32_t)luaL_checkinteger(L, 3);
+  uint32_t len = (uint32_t)luaL_checkinteger(L, 4);
+  xy_t x = (xy_t)luaL_checkinteger(L, 5);
+  xy_t y = (xy_t)luaL_checkinteger(L, 6);
+  float_t max_width = (float_t)luaL_checknumber(L, 7);
+  ret = (ret_t)vgcanvas_fill_text_by_glyphs(vg, glyphs, start, len, x, y, max_width);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static int wrap_vgcanvas_measure_text(lua_State* L) {
   float_t ret = 0;
   vgcanvas_t* vg = (vgcanvas_t*)tk_checkudata(L, 1, "vgcanvas_t");
@@ -6002,6 +6017,7 @@ static const struct luaL_Reg vgcanvas_t_member_funcs[] = {
     {"set_text_align", wrap_vgcanvas_set_text_align},
     {"set_text_baseline", wrap_vgcanvas_set_text_baseline},
     {"fill_text", wrap_vgcanvas_fill_text},
+    {"fill_text_by_glyphs", wrap_vgcanvas_fill_text_by_glyphs},
     {"measure_text", wrap_vgcanvas_measure_text},
     {"draw_image", wrap_vgcanvas_draw_image},
     {"draw_image_repeat", wrap_vgcanvas_draw_image_repeat},
@@ -6230,6 +6246,10 @@ static void widget_prop_t_init(lua_State* L) {
 
   lua_pushstring(L, "BIDI");
   lua_pushstring(L, WIDGET_PROP_BIDI);
+  lua_settable(L, -3);
+
+  lua_pushstring(L, "SHAPING");
+  lua_pushstring(L, WIDGET_PROP_SHAPING);
   lua_settable(L, -3);
 
   lua_pushstring(L, "CANVAS");
@@ -17594,6 +17614,10 @@ static int wrap_slide_view_t_get_prop(lua_State* L) {
     lua_pushinteger(L, (lua_Integer)(obj->animating_time));
 
     return 1;
+  } else if (strcmp(name, "active") == 0) {
+    lua_pushinteger(L, (lua_Integer)(obj->active));
+
+    return 1;
   } else {
     return wrap_widget_t_get_prop(L);
   }
@@ -20641,6 +20665,17 @@ static int wrap_edit_set_focus_next_when_enter(lua_State* L) {
   return 1;
 }
 
+static int wrap_edit_set_scroll_to_begin_on_blur(lua_State* L) {
+  ret_t ret = 0;
+  widget_t* widget = (widget_t*)tk_checkudata(L, 1, "widget_t");
+  bool_t scroll_to_begin_on_blur = (bool_t)lua_toboolean(L, 2);
+  ret = (ret_t)edit_set_scroll_to_begin_on_blur(widget, scroll_to_begin_on_blur);
+
+  lua_pushnumber(L, (lua_Number)(ret));
+
+  return 1;
+}
+
 static const struct luaL_Reg edit_t_member_funcs[] = {
     {"get_int", wrap_edit_get_int},
     {"get_int64", wrap_edit_get_int64},
@@ -20669,6 +20704,7 @@ static const struct luaL_Reg edit_t_member_funcs[] = {
     {"set_select", wrap_edit_set_select},
     {"get_selected_text", wrap_edit_get_selected_text},
     {"set_focus_next_when_enter", wrap_edit_set_focus_next_when_enter},
+    {"set_scroll_to_begin_on_blur", wrap_edit_set_scroll_to_begin_on_blur},
     {NULL, NULL}};
 
 static int wrap_edit_t_set_prop(lua_State* L) {
@@ -20756,6 +20792,10 @@ static int wrap_edit_t_get_prop(lua_State* L) {
     return 1;
   } else if (strcmp(name, "focus_next_when_enter") == 0) {
     lua_pushboolean(L, (lua_Integer)(obj->focus_next_when_enter));
+
+    return 1;
+  } else if (strcmp(name, "scroll_to_begin_on_blur") == 0) {
+    lua_pushboolean(L, (lua_Integer)(obj->scroll_to_begin_on_blur));
 
     return 1;
   } else {
@@ -24705,7 +24745,6 @@ void luaL_openawtk(lua_State* L) {
   tk_object_t_init(L);
   value_t_init(L);
   global_t_init(L);
-  bidi_type_t_init(L);
   image_draw_type_t_init(L);
   canvas_offline_t_init(L);
   canvas_t_init(L);
@@ -24714,6 +24753,7 @@ void luaL_openawtk(lua_State* L) {
   dialog_quit_code_t_init(L);
   event_type_t_init(L);
   event_t_init(L);
+  font_bidi_type_t_init(L);
   glyph_format_t_init(L);
   idle_t_init(L);
   image_manager_t_init(L);
